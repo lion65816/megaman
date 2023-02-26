@@ -1,0 +1,19 @@
+QuickRecover_Pre:
+
+	BANKORG_D $1C82FB
+	jmp $82FF
+	BANKORG_D $1C8308
+	jmp $830E
+	BANKORG_D $1C831A
+	jmp $8320
+
+	BANKORG_D $1C833B
+	jmp $833F
+	BANKORG_D $1C8347
+	jmp $834D
+	BANKORG_D $1C8358
+	jmp $835E
+	BANKORG_D $1C8361
+	rts
+
+	BANKORG QuickRecover_Pre

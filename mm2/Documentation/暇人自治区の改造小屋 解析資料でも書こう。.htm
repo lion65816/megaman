@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();<link type="text/css" href="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/icon_data/index.css"></script><script src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/ruffle.js"></script><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta name="author" content="暇人自治区長">
+  <meta name="description" content="ロックマンの改造や解析なんかを主に書いていきたい。">
+  <title>暇人自治区の改造小屋 解析資料でも書こう。</title>
+  <link rel="stylesheet" type="text/css" href="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/522f1.css" media="all">
+  <link rel="alternate" type="application/rss+xml" href="http://himaq.blog.fc2.com/?xml" title="RSS">
+  <link rel="top" href="http://himaq.blog.fc2.com/" title="Top">
+  <link rel="index" href="http://himaq.blog.fc2.com/?all" title="インデックス">
+  <link href="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/css.css" rel="stylesheet" type="text/css">
+      <link rel="next" href="http://himaq.blog.fc2.com/blog-entry-40.html" title="とうとう上に広告を載せられてしまった。">  <link rel="prev" href="http://himaq.blog.fc2.com/blog-entry-38.html" title="リンクを追加できるらしい。">
+<script language="javascript" charset="utf-8"> 
+function jclock() {
+  var nowDate;
+  var intYear, strYear;
+  var intMonth, strMonth;
+  var intDate, strDate;
+  var intHour, strHour;
+  var intMinute, strMinute;
+
+  nowDate = new Date();
+  intYear   = nowDate.getYear();
+  intMonth  = nowDate.getMonth() + 1;
+  intDate  = nowDate.getDate()
+  intHour   = nowDate.getHours();
+  intMinute = nowDate.getMinutes();
+  
+  if( intYear < 2000 ){
+    strYear = intYear + 1900; 
+  } else { 
+    strYear = intYear; 
+  } 
+  if( intMonth < 10 ){
+    strMonth = "0" + intMonth; 
+  } else { 
+    strMonth = intMonth; 
+  }
+  if( intDate < 10 ){
+    strDate = "0" + intDate; 
+  } else { 
+    strDate = intDate; 
+  }
+  
+  if(intHour == 0){
+    strHour = "00";
+  } else if (intHour < 10){
+    strHour = 0 + intHour;
+  } else {
+    strHour  = intHour; 
+  }
+
+  if(intMinute == 0){
+    strMinute = "00";
+  } else if( intMinute < 10 ){
+    strMinute = "0" + intMinute; 
+  } else { 
+    strMinute = intMinute; 
+  }
+
+  var timeStr = "<dl><dt id='nowDay'>" + strYear + "/" + strMonth + "/" + strDate + "</dt>" + "<dd id='nowTime'>" + strHour + ":" + strMinute + "</dd></dl>";
+  document.getElementById("now_time").innerHTML = timeStr;
+  window.setTimeout("jclock()", 1000);
+}
+</script>
+<link href="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/120710style.css" rel="stylesheet" type="text/css" media="all">
+<script charset="utf-8" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/button.d2f864f87f544dc0c11d7d712a191c1f.js"></script><script src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/comment_toolbar.lang.js"></script></head>
+<body>
+<div id="sh_fc2blogheadbar">
+	<div class="sh_fc2blogheadbar_body">
+		<div id="sh_fc2blogheadbar_menu">
+			<a href="https://blog.fc2.com/" rel="nofollow"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/sh_fc2blogheadbar_logo.png" alt="fc2ブログ"></a>
+		</div>
+		<div id="sh_fc2blogheadbar_search">
+			<form name="barForm" method="get" action="" target="blank">
+				<input class="sh_fc2blogheadbar_searchform" type="text" name="q" maxlength="30" onclick="this.style.color='#000000';" onfocus="this.select();" onblur="this.style.color='#999999'">
+				<input type="hidden" name="charset" value="utf-8">
+				<input class="sh_fc2blogheadbar_searchbtn" type="submit" value="ブログ内検索">
+			</form>
+		</div>
+		<div id="sh_fc2blogheadbar_link_box" class="sh_fc2blogheadbar_link" style="visibility: hidden;"></div>
+	</div>
+</div>
+
+  <div id="container">
+    <div id="header">
+    <div id="now_time"><dl><dt id="nowDay">2022/11/01</dt><dd id="nowTime">22:12</dd></dl></div>
+      <h1><a href="http://himaq.blog.fc2.com/" accesskey="0" title="暇人自治区の改造小屋">暇人自治区の改造小屋</a></h1>
+      <p>ロックマンの改造や解析なんかを主に書いていきたい。</p>
+    </div><!-- /header -->
+    <div id="main">
+                  <div class="content" id="e39">
+        <h2 class="entry_header">解析資料でも書こう。</h2>
+        <div class="entry_body">
+          ある程度改造に慣れてる中～上級者向けの解析資料になるかと。<br>すべてヘッダなしのアドレスなので、弄るときは+10してね<br>書いてあること：<br>　├ 雑魚敵の当たり判定テーブル<br>　├ 便利なサブルーチン<br>　├ 数値だけいじるときに便利な場所<br>　└ エアーマンステージの鬼の設置がうまくいかないとき<br><br>                    <div id="more"><hr size="1"><br><br>【雑魚敵の当たり判定テーブルとか】<br>雑魚敵、オブジェクトには6F0-6FFまで、固有の当たり判定番号を持っている。<br>その番号は、別の場所で幅と高さを指定しているテーブルの、<br>何番目の数値かを決めるものである。<br><br>幅を決めるテーブルは<br>3D4E1 から、中心から何ドットの幅を持つか。<br><br>3D581 から、中心から何ドットの高さを持つか。<br><br>注意点が2つ。<br>　　ここの数値は、ロックマンの中心点までの幅、高さを指定している。<br>　　実際の高さよりも広めにとるといい。<br>　　　└ ロックマンの当たり判定の大きさを指定している箇所はなさそうである。<br>　　　　　もし見つけた人がいたら、報告してくれると助かる...<br><br>　　なぜか値が実際の幅、高さの2倍の数値になっているので、合わせること。<br>　　　└ オブジェクト全体のサイズを指定している、ともとれる。<br><br><span style="color:#BBBBBB">それぞれサイズは0xA0まであるので、クリエイターな人は意外と贅沢に使っても余る。<br>というかオブジェクトの種類が0x80までなので、個別に指定しても余る。<br>　　└ と書いたが、実は後半の方はなにか別のことに使っているかもしれない。<br>　　　さらっと見たところ使ってなさそうだが、FFで埋まっているとかそういうことではないので<br>　　　この辺をいじった後で変なところでバグが出たらおそらくこの辺が原因かと。</span><br><br>----訂正があったので。------------------<br>サイズは0xA0まであるが、その中で0x20ずつ<br>ロックマン本体、8x8の武器、16x16の武器、アトミックファイヤLv3、リーフシールド<br>と分かれているらしい。<br>すると全然贅沢できないことになる。<br>----------------------------------------<br><br><br><hr size="1"><br><br><br>【便利なサブルーチン】<br>プログラム中で使えるサブルーチンを書く。一部別資料と被るものもあるだろう。<br><br><font size="3">メインバンクにあるもの</font><br><br>20 EA D2: jsr $3D2EA ;ロックマンの色を装備している武器に合わせて変える。<br>引数、戻り値特になし。非常に使いやすい、<br><br><br>20 EC C8: jsr $3C8EC ;指定した座標にBG画像の出力を予約するのに使う。<br>即死レーザーで使用しているルーチン。やることの割りには扱いが面倒。<br><br>引数<br>　$08　X座標。　8ドット単位で書き込まれるので、端数は切り捨てられる。<br>　$09　ネームテーブルの画面番号を指定する。0か1を書けば機能的には大丈夫だが、<br>　　　　　オブジェクトのページ数（440+x）をコピーすると楽。<br>　$0A　Y座標。　これも8ドット単位で書き込まれるので、端数は切り捨て。<br>　　　　　F8とか極端に大きい値だと書き込まれないことがあったりするが、<br>　　　　　さほど気にする必要はない。<br><br>戻り値　　Xレジスタ<br>　戻り値からもう一段階自分で処理を書かないとBGに書き込んでくれない。<br>　Ⅰ）　書き込みたいパターン番号を 9D C2 03　sta 03C2,x で書き込む。<br>　　　　　└ レーザー用に最適化されているためか、縦に2つ書き込むようになっている、<br>　　　　　　その上半分のパターンをここに書く。下半分は自動的に（上半分+1）になる、<br>　Ⅱ）　メモリ$51をインクリメントする。<br>　　　　　└ あとで書き込むサイズをまとめて書き込むのもあり。<br>　Ⅲ）　A6 2B: ldx $2B　　最後にこれを添える。<br>　　　　　└ オブジェクトの処理の中で使う場合、これをしてから続きの処理を書く。<br>　　　　　　　この後の処理でオブジェクトの縦横座標、速度などを一切変えないのなら不要。<br><br><br>20 37 F1: jsr 3F137　;オブジェクトを出現させる。<br>弾を出すなど、よく使う。<br>引数　　Aレジスタ　　オブジェクトナンバーを指定する。0x35で汎用弾。<br>オブジェクトのリストもいつか上げるかも。<br><br>戻り値　　Yレジスタ　　出したオブジェクトをいじるときのインデックス番号。<br>オブジェクトを処理するとき、10～1Fの入ったxをインデックスにして操作するが、<br>この戻り値は00～0Fが入っている。　いじるときはアドレスに注意。<br><br>Ex.　縦速度上位に06を書く　（どうも言葉では説明しにくい）<br>普通のオブジェクト<br><font size="2" face="ＭＳ ゴシック">A9 06 　:　lda #$06<br>9D <strong>4</strong>0 06:　sta $0640,x</font><br><br>処理中に出したオブジェクト<br><font size="2" face="ＭＳ ゴシック">A9 06 　:　lda #$06<br>99 <strong>5</strong>0 06:　sta $0950,y</font><br><br><br>20 75 F1: jsr 3F175　;ロックマンに直撃するように速度値を設定する。<br>壁判定とかは全く考えてくれない。縦の画面外判定についても考慮しないようだ。<br>試しにこの処理を使ってるテリーがいるヒートマンステージの穴に落ちてみよう。<br>あいつら、上に行くぞ。<br><br>引数　$08-$09　速度<br>　└ $08が下位、$09が上位。　<br>　　　きちんと三平方の定理とか三角関数とか使うわけではなさそうなので、<br>　　　どんな速度かは不明。　縦横の速度指定のときの感覚と大体同じかと。<br><br>戻り値は、おそらくない。<br><br><font size="3">ボス処理のバンクにあるもの</font><br>未解析な場所も多いので、書いてあることには間違いがある...と思う。<br>ボスによって同じ処理でもアドレスが違ったりするから困る。<br><br>20 09 A2: jsr 2E209 ;ボスがロックマンのほうを向く。それだけ。<br>引数特になし、$00にロックマンとボスとの横距離。<br><br><br>20 D4 A2: jsr 2E2D4 ;壁判定らしい。当たると自動で止まってくれる親切設計。<br>引数<br>　　$01　横の判定範囲　中心から何ドットか。<br>　　$02　縦の判定範囲　中心から何ドットか。<br><br>戻り値<br>　　$03　横の判定結果　当たったら1...かな<br>　　$00　縦の判定結果<br><br><br><hr size="1"><br><br><br>【数値だけいじるときにいい場所】<br><br>オープニング<br>36A91～36AA4: 2F 3C 02 C0 37 ...<br>　---タイトルロゴ　ROCKMAN 2　のNの部分にあるスプライトテーブル。<br>　　　　タイトルを変えようとしたらなぜかNの右下が残る！なんで！？<br>　　　　というときはここを全部F8にすると消える。<br><br>36DB0～36DD6: 0F 00 10 20 30 30 ... 30 30 20 10 00 0F<br>　---文章のフェードイン・アウトのテーブル。<br>　　　　後ろ側からフェードイン、前側にフェードアウトする、<br><br><br>武器取得画面<br>37DCB: 2C 11<br>　---元のロックマンの色、そこから2バイトずつ黄金配列順に点滅時の色がある。<br><br>37A96: 01<br>---点滅の周期。01, 03, 07, 0F, 1F…辺りだと等間隔に点滅する。理由は長いので略。<br><br>37C41: 07<br>　---メッセージの速さ。上と同じ数字で等間隔に流れる。あえて違う数字を書くと<br>　　　　4文字ずつ等間隔に、とかできる。<br><br><br>クイックマンステージのレーザー<br>39E2B: 74<br>　---即死レーザーのBGパターン左側<br>39E34: 76<br>　---即死レーザーのBGパターン右側<br>3DA06: 04 40<br>　---レーザーの速度。　上位 下位　の順で指定。 08 00 以上でレーザーが途切れる。<br><br><br>メインバンク 3C000-3FFFF<br>3D281: 20<br>　---シャッターを閉じるときに使うパターンテーブルの番号。YY-CHRなんかを使うといい。<br>3D347: 6F <br>　---被弾後の無敵時間の長さ。0にすると毎フレーム連続ダメージで即死する。<br><br><br><hr size="1"><br><br><br>【エアーマンの鬼の設置がうまくいかないとき】<br>需要はないものと。CXじゃ鬼そのものを潰しちゃったし。<br><br>オブジェクト番号40と41は両方エアーマンの鬼だが、片方いらないじゃんとかいって<br>40だけ設置したりするとこうなる。<br>エアーマンステージのパレットは3番目と4番目が未使用っぽく空いているが、<br>3番目は40番の鬼が出てくるときに使い、4番目は41番の鬼が出てくるときに使っている。<br>また、42番と43番はアイテムとして設置されているオブジェクトで、<br>3番目と4番目のパレットをリセットするオブジェクトである。これも鬼を続けて配置する<br>ときに間に置かないと鬼の出方がおかしくなる。<br><br><hr size="1"><div class="fc2_footer" style="text-align:right;vertical-align:middle;height:auto;">
+<div class="fc2button-clap" data-clap-url="//blogvote.fc2.com/pickup/himaq/39/clap" id="fc2button-clap-39" style="vertical-align:top;border:none;display:inline;margin-right:2px;">
+<script type="text/javascript">
+(function(d) {
+var img = new Image();
+d.getElementById("fc2button-clap-39").appendChild(img);
+img.src = '//static.fc2.com/image/clap/number/white/1.gif';
+(function(s) { s.cursor = 'pointer'; s.border = 0; s.verticalAlign = 'top'; s.margin = '0'; s.padding = '0'; })(img.style);
+var clap = function() { window.open('//blogvote.fc2.com/pickup/himaq/39/clap')};
+if (img.addEventListener) { img.addEventListener('click', clap, false); } else if (img.attachEvent) { img.attachEvent('onclick', clap); }
+})(document);
+</script><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/1.gif" style="cursor: pointer; border: 0px none; vertical-align: top; margin: 0px; padding: 0px;">
+</div>
+
+<div class="fc2button-twitter" style="vertical-align:top;border:none;margin-right:2px;display:inline-block;*display:inline;">
+<iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 89px; height: 20px;" data-ruffle-polyfilled="" title="Twitter Tweet Button" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/tweet_button.htm" data-url="http://himaq.blog.fc2.com/blog-entry-39.html" frameborder="0"></iframe>
+<script type="text/javascript" charset="utf-8" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/widgets.js"></script>
+</div>
+</div>
+
+
+<dl class="relate_dl fc2relate_entry_thumbnail_off">
+	<dt class="relate_dt">関連記事</dt>
+	<dd class="relate_dd">
+		<ul class="relate_ul">
+								<li class="relate_li">
+				<a href="http://himaq.blog.fc2.com/blog-entry-61.html">
+					ボス選択画面の資料を書こう (2014/08/12)				</a>
+			</li>
+											<li class="relate_li_nolink">
+				解析資料でも書こう。 (2013/09/30)			</li>
+
+											<li class="relate_li">
+				<a href="http://himaq.blog.fc2.com/blog-entry-1.html">
+					テストも兼ねて解析資料。ボス選択のスプライト配置について (2013/04/01)				</a>
+			</li>
+							</ul>
+	</dd>
+</dl>
+
+</div>                  </div><!--/entry_body-->
+        <ul class="entry_footer">
+          <li>2013-09-30(16:48) : </li>
+          <li><a href="http://himaq.blog.fc2.com/blog-category-1.html" title="このカテゴリ一覧を見る">解析資料</a> : </li>
+                    <li><a href="http://himaq.blog.fc2.com/blog-entry-39.html#cm" title="コメントの投稿">コメント 0</a> : </li>
+                                        <li><a href="http://himaq.blog.fc2.com/blog-entry-39.html#tb" title="トラックバック">トラックバック 0</a></li>
+                            </ul>
+        <div class="pagetop"><a href="#container" title="このページのトップへ">このページのトップへ</a></div>
+      </div><!--/content-->                        <div class="page_navi">
+        <a href="http://himaq.blog.fc2.com/blog-entry-40.html" title="とうとう上に広告を載せられてしまった。">前の記事</a>&nbsp;«&nbsp;        <a href="http://himaq.blog.fc2.com/" title="ホーム">ホーム</a>
+        &nbsp;»&nbsp;<a href="http://himaq.blog.fc2.com/blog-entry-38.html" title="リンクを追加できるらしい。">次の記事</a>      </div>
+      <div id="tb" class="content">
+          <p class="sub_header">トラックバック</p>
+        <p class="trackback_url">
+          <input onfocus="this.select()" value="http://himaq.blog.fc2.com/tb.php/39-fecd050e" readonly="readOnly"><br>
+          <a href="javascript:window.location.replace('http://blog.fc2.com/?url='+window.location.href);" title="この記事にトラックバックする(FC2ブログユーザー)">この記事にトラックバックする(FC2ブログユーザー)</a>
+        </p>
+                <div class="pagetop"><a href="#container" title="このページのトップへ">このページのトップへ</a></div>
+      </div><!--/content-->
+          
+        
+      <div id="cm" class="content">
+        <p class="sub_header">コメントの投稿</p>
+        <div class="form">
+        <form action="http://himaq.blog.fc2.com/blog-entry-39.html" method="post" name="comment_form" id="comment_form">
+          <dl>
+            <dt>
+              <input type="hidden" name="mode" value="regist">
+              <input type="hidden" name="comment[no]" value="39">
+              <label for="name">名前</label>
+            </dt>
+            <dd><input id="name" type="text" name="comment[name]" size="30"></dd>
+            <dt><label for="subject">タイトル</label></dt>
+            <dd><input id="subject" name="comment[title]" type="text" size="30" value="No title" onblur="if(this.value == '') this.value='No title';" onfocus="if(this.value == 'No title') this.value='';"></dd>
+            <dt><label for="mail">メールアドレス</label></dt>
+            <dd><input id="mail" type="text" name="comment[mail]" size="30"></dd>
+            <dt><label for="url">URL</label></dt>
+            <dd><input id="url" type="text" name="comment[url]" size="30"></dd>
+            <dt><label for="comment">本文</label></dt>
+            <dd><script type="text/javascript" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/comment_toolbar_ja.min.js"></script><div id="tools_container" style="position: relative; width: 267px; display: inline-block;"><a href="javascript:;" name="fc2CommentToolbar"></a><iframe id="tools_dialog" style="height: 30px; border: 0px none; overflow: hidden; width: 267px;" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/comment_toolbar.htm" data-ruffle-polyfilled=""></iframe><div style="display: none; position: absolute; top: 27px; left: 0px; z-index: 100000;" id="FC2_comment_palette"><iframe src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/palette.htm" style="border: 0 none; height: 200px;" data-ruffle-polyfilled="" frameborder="0"></iframe></div><div style="display: none; position: absolute; top: 27px; left: 0px; z-index: 100000;" id="FC2_comment_icon"><iframe src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/icon.htm" style="border: 0 none; height: 391px;width: 267px;" data-ruffle-polyfilled="" frameborder="0"></iframe></div></div></dd>
+            <dd><textarea id="comment" cols="50" rows="5" name="comment[body]"></textarea></dd>
+            <dt><label for="pass">パスワード</label></dt>
+            <dd><input id="pass" type="password" name="comment[pass]" size="20"></dd>
+            <dt>非公開コメント</dt>
+            <dd><input id="himitu" type="checkbox" name="comment[himitu]"><label for="himitu">管理者にだけ表示を許可する</label></dd>
+          </dl>
+          <p class="form_btn"><input type="submit" value="送信"></p>
+        </form>
+        </div><!--/form-->
+                <div class="pagetop"><a href="#container" title="このページのトップへ">このページのトップへ</a></div>
+      </div><!--/content-->
+                              <div class="page_navi">
+                    <a href="http://himaq.blog.fc2.com/blog-entry-40.html" title="とうとう上に広告を載せられてしまった。">«&nbsp;前の記事</a>&nbsp;        <a href="http://himaq.blog.fc2.com/" title="ホーム">ホーム</a>
+        &nbsp;<a href="http://himaq.blog.fc2.com/blog-entry-38.html" title="リンクを追加できるらしい。">次の記事&nbsp;»</a>            </div><!--/page_navi-->
+            <div class="content">
+        
+        <div class="pagetop"><a href="#container" title="このページのトップへ">このページのトップへ</a></div>
+      </div><!--/content-->
+          </div><!-- /main -->
+    <div id="sidemenu">
+            
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">見てくれたやさしい人の数</dt>
+                <dd class="plg_body" style="text-align:left"><div class="plugin-counter" style="text-align:left">
+	<script language="JavaScript" type="text/javascript" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/counter.js"></script><a href="https://counter.fc2.com/" rel="noopener" target="_blank" onmouseover="_FC2COUNTER19149458_1.show_graph(event);" onmouseout="_FC2COUNTER19149458_1.hide_graph(event);"><span><nobr><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/2.gif" alt="FC2無料カウンター" "="" title="FC2無料カウンター" style="display:inline;margin:0px;padding:0px;border:none;" border="0"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/6.gif" alt="FC2無料カウンター" "="" title="FC2無料カウンター" style="display:inline;margin:0px;padding:0px;border:none;" border="0"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/0.gif" alt="FC2無料カウンター" "="" title="FC2無料カウンター" style="display:inline;margin:0px;padding:0px;border:none;" border="0"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/1_002.gif" alt="FC2無料カウンター" "="" title="FC2無料カウンター" style="display:inline;margin:0px;padding:0px;border:none;" border="0"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/6.gif" alt="FC2無料カウンター" "="" title="FC2無料カウンター" style="display:inline;margin:0px;padding:0px;border:none;" border="0"></nobr><span></span></span></a><script src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/counter_js.js" charset="UTF-8"></script>
+	<noscript><img src="http://counter1.fc2.com/counter_img.php?id=19149458&main=1"></noscript>
+</div></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">プロフィール</dt>
+                <dd class="plg_body" style="text-align:left"><p class="plugin-myimage" style="text-align:left">
+<img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/20130401213450bb1s.jpg" alt="暇人自治区長">
+</p>
+<p style="text-align:left">
+Author:暇人自治区長<br>
+GMODとか改造ロックマンとか、<br>興味のあるものが特殊らしい。</p></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">最新記事</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+<li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-89.html" title="ロックマン2のメモリマップ">ロックマン2のメモリマップ (08/20)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-88.html" title="ロックマン2のサブルーチン一覧">ロックマン2のサブルーチン一覧 (05/19)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-87.html" title="改造環境が強化された!!">改造環境が強化された!! (04/27)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-86.html" title="ロックマンCXがなんと更新です。">ロックマンCXがなんと更新です。 (03/04)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-85.html" title="ロックマン2パラメータエディタの修正。">ロックマン2パラメータエディタの修正。 (01/14)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-84.html" title="回復中も動けるパッチを作ったよ。">回復中も動けるパッチを作ったよ。 (01/08)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-83.html" title="クリスマスツリーになったウッドマンの謎">クリスマスツリーになったウッドマンの謎 (12/25)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-82.html" title="大変お待たせいたしました。ロックマンCX Ver1.0です。">大変お待たせいたしました。ロックマンCX Ver1.0です。 (08/22)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-81.html" title="ステージ設定エディタ、さらに更新。">ステージ設定エディタ、さらに更新。 (03/17)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-80.html" title="ステージ設定エディタ　まさかの更新">ステージ設定エディタ　まさかの更新 (02/15)</a>
+</li></ul></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">最新コメント</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+<li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-73.html#comment39" title="Re: No title">暇人自治区長:自機狙い処理について解析。 (02/03)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-73.html#comment38" title="No title">野生の自治区民:自機狙い処理について解析。 (02/02)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-86.html#comment37" title="返信: リメイク制作の話">暇人自治区長:ロックマンCXがなんと更新です。 (08/19)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-86.html#comment36" title="ロックマンCXをPC同人ゲームにリメイク">野生の自治区民:ロックマンCXがなんと更新です。 (08/19)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-2.html#comment34" title="No title">野生の自治区民:改造ロックマン作成中なり (05/05)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-16.html#comment33" title="No title">野生の自治区民:オープニングステージの動画をアップしました。 (05/05)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-entry-47.html#comment32" title="No title">野生の自治区民:ロックマン(ボス)を制作中… (04/01)</a>
+</li></ul></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">最新トラックバック</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+</ul></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">月別アーカイブ</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+<li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201908.html" title="2019/08">2019/08 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201705.html" title="2017/05">2017/05 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201704.html" title="2017/04">2017/04 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201703.html" title="2017/03">2017/03 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201701.html" title="2017/01">2017/01 (2)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201612.html" title="2016/12">2016/12 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201608.html" title="2016/08">2016/08 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201603.html" title="2016/03">2016/03 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201602.html" title="2016/02">2016/02 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201601.html" title="2016/01">2016/01 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201512.html" title="2015/12">2015/12 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201507.html" title="2015/07">2015/07 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201504.html" title="2015/04">2015/04 (2)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201502.html" title="2015/02">2015/02 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201501.html" title="2015/01">2015/01 (5)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201412.html" title="2014/12">2014/12 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201411.html" title="2014/11">2014/11 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201410.html" title="2014/10">2014/10 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201409.html" title="2014/09">2014/09 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201408.html" title="2014/08">2014/08 (5)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201406.html" title="2014/06">2014/06 (2)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201404.html" title="2014/04">2014/04 (2)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201403.html" title="2014/03">2014/03 (1)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201402.html" title="2014/02">2014/02 (4)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201401.html" title="2014/01">2014/01 (4)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201312.html" title="2013/12">2013/12 (3)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201311.html" title="2013/11">2013/11 (4)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201309.html" title="2013/09">2013/09 (4)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201308.html" title="2013/08">2013/08 (4)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201307.html" title="2013/07">2013/07 (9)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201306.html" title="2013/06">2013/06 (12)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201305.html" title="2013/05">2013/05 (6)</a>
+</li><li style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-date-201304.html" title="2013/04">2013/04 (3)</a>
+</li></ul></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">カテゴリ</dt>
+                <dd class="plg_body" style="text-align:left"><div>
+<div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-0.html" title="未分類">未分類 (8)</a>
+</div><div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-1.html" title="解析資料">解析資料 (12)</a>
+</div><div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-2.html" title="RockmanCX">RockmanCX (44)</a>
+</div><div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-4.html" title="改造ツール類">改造ツール類 (18)</a>
+</div><div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-3.html" title="Team Fortress 2">Team Fortress 2 (1)</a>
+</div><div style="text-align:left">
+<a href="http://himaq.blog.fc2.com/blog-category-5.html" title="配布物">配布物 (5)</a>
+</div></div></dd>
+              </dl>
+       
+                  
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">検索フォーム</dt>
+                <dd class="plg_body" style="text-align:left"><form action="http://himaq.blog.fc2.com/blog-entry-39.html" method="get">
+<p class="plugin-search" style="text-align:left">
+<input type="text" size="20" name="q" maxlength="200"><br>
+<input type="submit" value=" 検索 ">
+</p>
+</form></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">RSSリンクの表示</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+<li style="text-align:left"><a href="http://himaq.blog.fc2.com/?xml">最近記事のRSS</a></li>
+<li style="text-align:left"><a href="http://himaq.blog.fc2.com/?xml&amp;comment">最新コメントのRSS</a></li>
+<li style="text-align:left"><a href="http://himaq.blog.fc2.com/?xml&amp;trackback">最新トラックバックのRSS</a></li>
+</ul></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">リンク</dt>
+                <dd class="plg_body" style="text-align:left"><ul>
+<li style="text-align:left"><a href="http://rg20.web.fc2.com/grayarea.html" title="Function 20" target="_blank">Function 20</a></li><li style="text-align:left"><a href="http://minatonoitiba.web.fc2.com/mainpage.html" title="GUN HO GUNSより愛を込めて" target="_blank">GUN HO GUNSより愛を込めて</a></li><li style="text-align:left"><a href="http://borokobo.web.fc2.com/index.html" title="Neoぼろくず工房" target="_blank">Neoぼろくず工房</a></li><li style="text-align:left"><a href="http://nikumo.seesaa.net/" title="ニクモ働く" target="_blank">ニクモ働く</a></li><li style="text-align:left"><a href="http://awedxz.blog.fc2.com/" title="続・ナイスピブログ" target="_blank">続・ナイスピブログ</a></li><li style="text-align:left"><a href="http://www.futureworld601x-x.com/8yehldd6q711-sjhd32aaa/index.htm" title="改造ロックマンWiktionary" target="_blank">改造ロックマンWiktionary</a></li><li style="text-align:left"><a href="http://www.himaq5.xyz/rock5easily/" title="Rock5easily" target="_blank">Rock5easily</a></li><li><a href="http://himaq.blog.fc2.com/?admin">管理画面</a></li>
+</ul></dd>
+        <dd class="plg_footer" style="text-align:left"><a href="javascript:window.location.replace('http://blog.fc2.com/?linkid=himaq');">このブログをリンクに追加する</a></dd>      </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">ブロとも申請フォーム</dt>
+                <dd class="plg_body" style="text-align:left"><p class="plugin-friends" style="text-align:left"><a href="http://himaq.blog.fc2.com/?mode=friends">この人とブロともになる</a></p></dd>
+              </dl>
+      
+      <dl class="sidemenu_body">
+        <dt class="plg_title" style="text-align:left">ＱＲコード</dt>
+                <dd class="plg_body" style="text-align:left"><div class="plugin-qrcode" style="text-align:left"><img src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/6b014ffa2.jpg" alt="QR"></div></dd>
+              </dl>
+      
+          </div><!-- /sidemenu -->
+    <div id="footer">
+      <p class="powered">Powered by <a href="http://blog.fc2.com/" title="FC2ブログ">FC2ブログ</a></p>
+      <!--Don't delete--><p class="ad"><!-- genre:10 --><!-- sub_genre:74 --><!-- sp_banner:1 --><!-- passive:0 --><!-- lang:ja --><!-- HeadBar:1 --><!-- VT:blog --><!-- nad:1 --> </p>
+      <p class="copyright">Copyright © 暇人自治区の改造小屋 All Rights Reserved.</p>
+    </div><!-- /footer -->
+  </div><!-- /container -->
+
+<script language="javascript" charset="utf-8"> 
+jclock();
+</script> 
+<script type="text/javascript" charset="utf-8" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/comment.js" defer="defer"></script>
+<script type="text/javascript" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/blog_res.js" defer="defer"></script>
+
+
+<iframe scrolling="no" allowtransparency="true" src="%E6%9A%87%E4%BA%BA%E8%87%AA%E6%B2%BB%E5%8C%BA%E3%81%AE%E6%94%B9%E9%80%A0%E5%B0%8F%E5%B1%8B%20%E8%A7%A3%E6%9E%90%E8%B3%87%E6%96%99%E3%81%A7%E3%82%82%E6%9B%B8%E3%81%93%E3%81%86%E3%80%82_files/widget_iframe.htm" title="Twitter settings iframe" style="display: none;" data-ruffle-polyfilled="" frameborder="0"></iframe><iframe id="rufous-sandbox" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: medium none;" data-ruffle-polyfilled="" data-frame-id="440234147921" title="Twitter analytics iframe" frameborder="0"></iframe></body></html>

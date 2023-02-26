@@ -1,0 +1,22 @@
+/* Pill style */
+#scrollUp {
+	bottom: 10px;
+	right: 10px;
+	background: #555;
+	color: #fff;
+	font-size: 10px;
+	font-family: sans-serif;
+	text-decoration: none;
+	opacity: .9;
+	padding: 12px 12px 0px 12px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+	-webkit-transition: background 200ms linear;
+	-moz-transition: background 200ms linear;
+	transition: background 200ms linear;
+	-webkit-backface-visibility: hidden;
+}
+	#scrollUp:hover {
+		background: #000;
+	}

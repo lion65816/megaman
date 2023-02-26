@@ -1,0 +1,7 @@
+	BANKORG_D $3FFE39
+	lda #$06
+	sta $8000
+	lda #BANK(RESET_31_Org)
+	sta $8001
+	jmp RESET_31_Org
+	END_BOUNDARY_TEST $3FFE55

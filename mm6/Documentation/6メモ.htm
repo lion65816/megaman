@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6メモ</title>
+<script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="6%E3%83%A1%E3%83%A2_files/ruffle.js"></script></head>
+<body>
+<p><br></p>
+<font size="1">Last Update 08/09/26</font>
+<pre><hr>
+<a name="memorymap">◇メモリマップ</a>
+
+; スレッド関係
+21-24 スレッドの状態(00 -&gt; 未使用, 01 -&gt; 休止中, 02 -&gt; 実行中, 04 -&gt; 実行可能, 08 -&gt; 新規登録)
+25-28 スレッドのスリープカウンタ
+29-2C 新規スレッドのThread handler(low) / スレッドのスタックポインタ
+2D-30 新規スレッドのThread handler(high)
+31-32 新規スレッドのThread handlerを展開
+33 Current thread (現在のスレッドのスロット番号)
+34-37 8000-9FFFにマップするバンク
+38-3B A000-BFFFにマップするバンク
+3C-3F 
+	; スレッド番号
+	00 メイン(使用スロット0)
+	01 パターンテーブル書き込みキュー監視(使用スロット3)
+	02 チャージ中のパレットアニメ(使用スロット1)
+
+; パッド入力関係
+40 Keys held on pad 1 1Pパッド入力(押しっぱなし)
+41 Keys held on pad 2 2Pパッド入力(押しっぱなし)
+42 Keys pressed on pad 1 1Pパッド入力(押した瞬間)
+43 Keys pressed on pad 2 2Pパッド入力(押した瞬間)
+44 40の値を全bit反転(42の値作成のため)
+45 41の値を全bit反転(43の値作成のため)
+  01 右
+  02 左
+  04 下
+  08 上
+  10 スタート 
+  20 セレクト
+  40 B
+  80 A
+
+
+46 Palette changed(パレットの更新するなら0以外の値を入れる)
+47 VRAM書き込みフラグ(0以外でVBlank中に$780～Drawing bufferのデータを元に書き込み。Drawing bufferのデータの総バイト数)
+48 パレットの明るさ？(パレット更新の際,色の値からこの値を引いたものが書き込まれる)
+49 パレットの明るさ？(jsr $CA71で使用)
+4A New PRG bank 8000-9FFF
+4B New PRG bank A000-BFFF
+4C Last MMC3 command
+4D チップ属性チェックX座標(low)
+4E チップ属性チェックY座標(low)
+4F チップ属性チェックX座標(high)
+
+50 チップ属性チェックY座標(high)
+51 Curent level
+	00 ブリザードマンステージ
+	01 ウインドマンステージ
+	02 プラントマンステージ
+	03 フレイムマンステージ
+	04 ヤマトマンステージ
+	05 トマホークマンステージ
+	06 ナイトマンステージ
+	07 ケンタウロスマンステージ
+	08-0B エックスステージ1-4
+	0C-0F ワイリーステージ1-4
+52-53 マップデータ読み出しベースアドレス？
+54-55 マップデータ読み出しアドレス？
+56 Scroll X
+57 Scroll X(high)
+58
+59
+5A
+5B
+5C-5D 縦/横スクロール用VRAM書き込み開始アドレス
+5E-5F アトリビュート用VRAM書き込み開始アドレス
+
+60 VRAM書き込みフラグ($7B0から読み込み, 値が#$68ならばVRAMアドレスインクリメント値+32)
+61 
+62-63 16x16チップデータ読み出しベースアドレス？
+64-65 16x16チップデータ読み出しアドレス？
+66-67 32x32チップデータ読み出しベースアドレス？
+68-69 32x32チップデータ読み出しアドレス？
+6A
+6B
+6C 
+6D 画面スクロール速度？
+6E マップデータ読み出しバンク？(8000-9FFFにマップ)
+6F マップデータ読み出しバンク？(A000-BFFFにマップ)
+
+70 一番最近のスクロール方向？(01 -&gt; 右, 02 -&gt; 左)
+71 エリア内移動可能なスクロール方向(+01 -&gt; 右, +02 -&gt; 左)
+72 スクロール時のパレット変更番号
+73 スクロール時のパターンテーブル書き込み番号
+74-75 設置オブジェクトの部屋番号テーブルの先頭アドレス
+76-77 設置オブジェクトの部屋番号テーブルの先頭アドレス(オリジナル)
+78-79 設置オブジェクトのX座標テーブルの先頭アドレス
+7A-7B 設置オブジェクトのX座標テーブルの先頭アドレス(オリジナル)
+7C-7D 設置オブジェクトのY座標テーブルの先頭アドレス
+7E-7F 設置オブジェクトのObjectIDテーブルの先頭アドレス
+
+80 この値の16x16チップがDestroyed blocksに登録される
+81-82 パターンテーブル書き込みデータ展開用
+83-84 パターンテーブル書き込み用のグラフィックソースアドレス
+85-86 パターンテーブル書き込みアドレス
+87 書き込む8x8パターンの残数
+88 書き込んだ8x8パターンの個数
+89 パターンテーブルに書き込んだバイト数
+8A グラフィックソースバンク
+8B
+8C Next OAM table offset
+8D tmp
+8E
+8F Current sprite
+
+90 Enemy Handler処理ルーチン突入時にスタックポインタを退避
+91
+92-93
+94 ロックマンの状態
+   00 -&gt; 静止
+   01 -&gt; すり足
+   02 -&gt; 歩行
+   03 -&gt; スライディング
+   04 -&gt; はしご
+   05 -&gt; はしご(頂上)
+   06 -&gt; ジェットロックマンで飛行
+   07 -&gt; ジャンプ
+95 スライディングカウンター(ロックマン用の汎用カウンタ？)
+96 ロックマンのダメージ計算フラグ(1フレームの間に同時に複数の敵からダメージを受けるのを防ぐため？)
+97
+98 ショットポーズフラグ(ショット中は#$18。他は0)
+99 ロックマンの進行方向(左右, パッド入力中に立つ)
+9A Aボタンチェック(Aボタンを押し始めたフレームならば#$80)
+9B Current Rush Adaptor (01 -&gt; ジェット, 02 -&gt; パワー)
+9C ジェットアダプターのゲージ量
+9D 0ならジェットアダプターの残量回復を許可
+9E チャージカウンター
+9F ロックマンのX座標(low)？
+
+A0-A1 ロックマンのX方向速度？
+A2 ロックマンの無敵カウンター
+A3 
+A4
+A5 パワーロックマンのゲージ量
+A6
+A7
+A8 ロックマンの画面左端侵入制限？(この値(X座標(low))より左に侵入できなくなる)
+A9
+AA-AB スクロール関係データ読み出しポインタ？
+AC スクロールデータ読み出し時に利用
+AD
+AE 現在のロックマンのパレット変更番号
+AF
+
+B0-BF Sound queue
+
+C0-D8 サウンドドライバ関係
+D9 Sound queue Write pointer
+DA tmp
+DB Sound queue Read pointer
+DC 再生したいトラックを書き込む
+
+DF-E0? 擬似乱数
+
+E3-E6 パレットアニメーションの更新フレーム間隔？
+E7-EA パレットアニメーションのパレット番号？
+
+; オブジェクト移動サブルーチン$E4D5関係 (符号付整数)
+EB オブジェクトのX方向速度(low) / 画面スクロール時のX方向速度(high)
+EC オブジェクトのY方向速度(low) / 画面スクロール時のX方向速度(screen)
+ED オブジェクトのX方向速度(high) / 画面スクロール時のY方向速度(high)
+EE オブジェクトのY方向速度(high) / 画面スクロール時のY方向速度(screen)
+
+F0 メインループ脱出フラグ(01でステージクリア時,02で死んだとき,03でゲームオーバー)
+F1 ネームテーブル書き込みアドレス(high)に加算(多分00, 04, 08, 0C)
+F2 VBL flag (1フレームで行う各スレッドの処理がすべて完了した時0となり, NMIでの画面更新が行われる.)
+F3 Synchronous frame counter
+F4 Split effect enabled(ラスタースクロール使用なら1,使用しないなら0)
+F5
+F6
+F7 Scroll X
+F8
+F9 Scroll Y
+FA Current nametable(00 -&gt; $2000～, 01 -&gt; $2800～)
+FB ミラーリング方向(00 -&gt; 垂直, 01 -&gt; 水平)
+FC Display Setting 1($2000に書き込む)
+FD Display Setting 2($2001に書き込む) ？
+FE
+FF
+
+100-1FF スタック
+
+200-2FF OAM table
+	0	Y座標-1 
+	1	パターンインデックス 
+	2 	アトリビュート
+		VHP000CC
+		|||   ||
+		|||   ++-カラーパレット上位2ビット
+		||+------BGとの優先順位、0:SPR優先、1:BG優先
+		|+-------左右反転フラグ、1:反転
+		+--------上下反転フラグ、1:反転
+	3	X座標
+
+300-33F Attribute table
+340-35F Destroyed blocks (1bitで破壊された16x16チップ番号を表す)
+360-37F パレット
+380-39F オリジナルパレット
+
+; オブジェクトメモリ関係(スロット$16はObjectID:80の処理専用？)
+3A0-3B6 ObjectID
+3B7-3CD Display Flags
+  bit7 -&gt; 上下反転
+  bit6 -&gt; 左右反転
+  bit5 -&gt; 背景に隠れる
+  
+  bit1 -&gt; 不可視(アニメーションもストップ)
+  bit0 -&gt; 不可視(アニメーションは進む)
+3CE-3E4 方向 (01=右,02=左: 16方向の場合, 時計周りで00 = 北, 01 = 北北東, 02 = 北東,…)
+3E5-3FB HP(00で1を表すため実際より1小さい値を入れる)
+3FC-412 設置オブジェクトのインデックス(設置オブジェクトでない場合FF)
+413-429 Enemy Handler(high)
+42A-440 Enemy Handler(low)
+441-457 PRG Bank
+458-46E Sprite Bank
+46F-485 X座標(high)
+486-49C X座標(low)
+49D-4B3 X座標(fraction)
+4B4-4CA Y座標(high)
+4CB-4E1 Y座標(low)
+4E2-4F8 Y座標(fraction)
+4F9-50F アニメーションデータのサイズ？
+510-526 アニメーションデータ読み出しポインタ？
+527-53D アニメーションデータのアドレス(high)
+53E-554 アニメーションデータのアドレス(low)
+555-56B アニメーションタイマー
+56C-582 オブジェクトの受けるダメージ
+  bit7-4 6で2ダメージを受ける
+  bit3-0 このフレームで受けるダメージ
+583-599 属性？
+  bit7-4 -&gt; ロックマン/武器との接触時の動作番号
+    番号 ロックマンと接触       武器と接触
+    00   何もなし
+    01   ダメージ               ダメージ
+    02   ブロック               武器を弾く
+    03   ダメージ
+    04   ダメージ
+    05   ブロック               何もなし
+    06   ダメージ               武器を弾く
+    07                          何もなし
+    08   ダメージ＆ブロック     武器を弾く
+    09   ブロック               ダメージ
+    0A   何もなし               ダメージ
+    0B   ダメージ               ダメージ
+    0C   ダメージ               ×(アドレスがおかしい)
+    0D   ダメージ               何もなし
+    0E   ダメージ               ダメージ
+    0F   ダメージ               ダメージ
+  bit3-0 -&gt; 接触時のダメージ量
+59A-5B0 当たり判定番号(00～68)
+5B1-5C7 Y方向速度(low)？変数A？
+5C8-5DE Y方向速度(high)？変数B？
+5DF-5F5 Y方向速度(low)？変数C？
+5F6-60C Y方向速度(high)？変数D？
+60D-623 Y方向速度(low)？変数E？
+624-63A Y方向速度(high)？変数F？
+
+63D ボス番号？
+
+
+642 0以外でボスゲージ表示($3EDの値を表示)
+
+649 Next enemy in level
+64A Previous enemy in level
+64B
+
+64E ステージ開始時のパターンテーブル書き込み番号
+64F 一番最近のスクロール時のパターンテーブル書き込み番号
+
+650-65F? アイテム回収フラグ
+
+672 Current split position
+676 Current split effect number
+677 Next split effect number
+
+67C
+67D 0でなければデモプレイ用の入力がパッド入力($40,$42)に入る
+67E デモプレイ入力用カウンタ
+67F デモプレイ入力読み出しポインタ
+
+680 一番最近のパターンテーブル先読みを行った部屋番号
+681 
+682 ネームテーブル書き込みデータ番号の保持？(パワーピストン戦での使用を確認)
+683
+
+684 中間復帰時の部屋番号
+685 中間復帰時のパターンテーブル書き込み番号
+686 中間復帰時のパレット変更番号
+
+687 スクロール時のパレット変更番号($72と同じ？)
+
+688-691 Weapon energy
+	688 ロックバスター
+	689 ヤマトピア
+	68A ウインドストーム
+	68B ブリザードアタック
+	68C フレイムブラスト
+	68D プラントバリア
+	68E ナイトクラッシュ
+	68F シルバートマホーク
+	690 ケンタウロスフラッシュ
+	691 ビート
+692-695 ステージクリア・プレートフラグ
+	692 - bit2 Bプレート
+	      bit1 トマホークマン
+	      bit0 ブリザードマン
+	693 - bit2 Eプレート
+	      bit1 ヤマトマン
+	      bit0 ウインドマン
+	694 - bit2 Tプレート
+	      bit1 ケンタウロスマン
+	      bit0 フレイムマン
+	695 - bit2 Aプレート
+	      bit1 ナイトマン
+	      bit0 プラントマン
+696
+697 スクロール元部屋番号
+698
+699 Current weapon
+
+69C Vertical screen offset
+69D Horizonal screen offset
+69E 一番最近のスクロール時のパレット変更番号
+69F 01でネームテーブル書き込み時に効果音を鳴らす
+
+6A0
+
+6A5 ビートプレート取得ボスを倒せば#$04
+6A6 ネームテーブル書き込み時に出す効果音番号
+
+6A7 Xスクロール値 (NMIで計算)
+6A8 X Scroll(high) (NMIで$57の値をコピー)
+6A9 ステージ選択画面のボス顔塗りつぶし用のカウンタに使用
+6AB チャージカウンター上限
+
+6AD
+6AE Yレジスタの値退避？
+
+700-77F サウンドドライバ関係
+780-7D8 Drawing Buffer?
+  ; フォーマット
+  byte0 -&gt; bit7 = 1ならばVRAMインクリメント値=+32
+           bit6-0 -&gt; 書き込むデータのバイト数
+  byte1 -&gt; VRAM書き込みアドレス(high)
+  byte2 -&gt; VRAM書き込みアドレス(low)
+  byte3- -&gt; 書き込む値(byte0のbit6-0で指定した数だけ書き込む)
+  そしてbyte0に戻る
+  ※データの総バイト数は$47で指定
+
+7B0-7D8 Drawing Buffer?
+  ;マップ描画用
+  ;5C-5D 縦/横スクロール用VRAM書き込み開始アドレス
+  ;5E-5F アトリビュート用VRAM書き込み開始アドレス
+  ;60 VRAM書き込みフラグ($7B0から読み込み, 値が#$68ならばVRAMアドレスインクリメント値+32)
+  ; $7B0～には単に書き込むデータをそのまま羅列
+
+7D9-7EF OAM tableへのスプライトデータ展開順
+  7E8-7EF パターンテーブル先読み関係
+7F0-7F7 パターンテーブル書き込みキュー
+7F8 パターンテーブル書き込みデータ読み込みポインタ
+7F9 パターンテーブル書き込みデータ書き込みポインタ
+
+<hr>
+
+<a name="subroutine">◇サブルーチン</a>
+
+; Xレジスタで指定した番号のスレッドを作成
+jsr	$C5C7
+	; スレッド番号
+	; 00 メイン(使用スロット0)
+	; 01 パターンテーブル書き込みキュー監視(使用スロット3)
+	; 02 チャージ中のパレットアニメ(使用スロット1)
+	; 03
+	; 04 フレイムマンステージのパレットアニメ(使用スロット2)
+	; 05
+	; 06
+	; 07
+	; 08
+	; 09
+	; 0A Mr.Xステージ1のパレットアニメ(使用スロット02)
+
+
+; 現在のスレッドを終了しスレッド監視ループに入る
+jsr	$C5E6
+
+; Yレジスタで指定したスロットのスレッドを終了する
+jsr	$C5F0
+
+; Aレジスタで指定したフレーム数だけスレッドを休止
+jsr	$C5F6
+
+; 1フレームだけスレッドを休止
+jsr	$C62B
+
+; Aレジスタで指定したトラックをサウンドキューに登録
+jsr	$C8B2
+
+; ネームテーブルのタイルを0クリア
+jsr	$C9BF
+
+; Aレジスタの値でパレット指定？パレット変更ルーチン
+jsr	$C9EF
+
+; パレットのフェードアウト($48を利用)
+jsr	$CA3D
+
+; 4色分パレットを#$10だけ暗くする($380～の値から$360～に格納)(Xレジスタの値=一番右の暗くするパレット)
+jsr	$CA59
+
+; 4色分パレットを$49の値だけ暗くする($380～の値から$360～に格納)(Xレジスタの値=一番右の暗くするパレット)
+jsr	$CA71
+
+; パレットのフェードイン($48を利用)
+jsr	$CA89
+
+; Aレジスタの値をパターンテーブル書き込みキューに登録(BG・スプライト非表示時はキューに登録せずに書き込み)
+jsr	$CAA4
+
+; Aレジスタの値をパターンテーブル書き込みキューに登録
+jsr	$CAAA
+
+; パラメータ毎に処理内容が変わる？
+jsr	$CB28
+	; パラメータは
+	;	jsr $CB28
+	;	.db $00
+	; のようにサブルーチン呼び出し命令の後の1byteで指定する
+	; --- パラメータ ---
+	; 00 … Aレジスタで指定した番号に応じてネームテーブル書き込み？
+	; 01 … オープニングデモの処理
+	; 40 … 設置オブジェクト生成ルーチン
+	; 41 … Yレジスタで指定した番号のオブジェクトを生成
+	; 42 … Yレジスタで指定したステージの設置オブジェクト生成関係のアドレスをセット
+	;       オブジェクトメモリ内のオブジェクトを全消去するため、ステージ以外のシーンでは単にオブジェクト消去ルーチンとしても使われる？
+	; 44 … オブジェクトのスプライトパターン先読み
+	; 46 … スクロール時のオブジェクトのスプライトパターン先読み
+	; 47 … Mr.Xステージ2よりも前ならば取得している武器残量を満タンにする(ライフエネルギー除く)
+	; 4A … 武器取得画面処理
+	; 4B … 取得している武器残量を満タンにする(ライフエネルギー除く)
+	; 4C … パスワード画面を描画
+
+; Aレジスタで指定したバンクに$8000-9FFFを切り替える(切り替え前の$8000-9FFF,$A000-BFFFのバンク番号がスタックに格納される)
+jsr	$CB91
+
+; Yレジスタで指定したバンク番号にバンク切り替え(連番)
+jsr	$CBC0
+
+; Aレジスタで指定したバンクに$A000-BFFFを切り替える
+jsr	$CBDA
+
+; スタックに格納した値のバンクに$8000-9FFF,$A000-BFFFを切り替える(jsr	$CB91とセット？)
+jsr	$CBE9
+
+; $04,$05,$06,$07の値をスタックに退避
+jsr	$CC20
+
+; スタックに退避させていた値を$04,$05,$06,$07に書き戻す(jsr $CC20とセット？)
+jsr	$CC3A
+
+; $00-01 / $02-03 の商を$04-05に格納？($05 -&gt; 整数部, $04 -&gt; 小数部)
+jsr	$CC70
+
+; アイテム回収フラグ, Destroyed blocksを0クリア ///
+jsr	$CE44
+
+; ロックマン・スクロールオブジェクト以外を消去
+jsr	$D6F5
+
+; $00=相対X座標, $01=相対Y座標, $11=00 で呼び出し？ ///
+; チップ属性チェックルーチン？ $11にチップ属性, $13に16x16チップ番号が入る？ ///
+jsr	$D9D1
+	; 00 背景	01 ブロック	02 オイル	03 はしご(頂点)	
+	; 04 はしご(途中)	05 氷	06 前景		07 触れると背景に隠れるブロック
+	; 08 水中	09 オイルの床	0A 		0B パワーロックマンで破壊可能
+	; 0C 風		0D フレイムブラストで破壊可能	0E 送風機の下		0F トゲ
+	; 10		11				13
+	; 15				17
+	; 19				1B
+	; 1D 落下ブロック
+
+
+; $80 = 16x16チップ番号で呼び出し？ 対象チップをDestroyed blocksに登録
+jsr	$DB98
+
+; Current move(Aレジスタで指定)を更新・ショットフラグ($98)からロックマンのアニメーション番号をセット
+jsr	$E101
+
+; OAM tableにオブジェクトのグラフィックを展開(Next OAM tableを初期化して開始)(展開の際にスプライトのアニメーション処理が行われる)
+jsr	$E1E1
+; OAM tableにオブジェクトのグラフィックを展開 (Next OAM tableを初期化しない場合)(展開の際にスプライトのアニメーション処理が行われる)
+jsr	$E1E5
+
+; xを消滅させて次のオブジェクトの処理へ移る
+jmp	$E45A
+
+; xのEnemy Handlerをこの次の命令のアドレスにセットし次のオブジェクトの処理へ移る
+jsr	$E46C	(アドレスをスタックに積むためにjmpでなくjsrを使用する)
+
+
+; 次のオブジェクトの処理に移る
+jsr	$E47B
+
+; $08-09で表されるアドレスにジャンプ
+jsr	$E486
+
+; xの座標が画面内に存在するかチェック。存在するならキャリークリア
+jsr	$E489
+
+; Yレジスタで指定した値(00～08)でテーブルの値からxのX,Y座標(low)をセット
+jsr	$E4AB
+
+; オブジェクトを移動する(EB,ECの値が最初に0クリアされる以外は下と同じ)
+jsr	$E4CF
+; $8Fで指定されたオブジェクトを移動する(EB,ED -&gt; X方向速度(low, high), EC,EE -&gt; Y方向速度(low, high))
+jsr	$E4D5
+; Xレジスタで指定したオブジェクトを移動する(EB,ED -&gt; X方向速度(low, high), EC,EE -&gt; Y方向速度(low, high))
+jsr	$E4D7
+
+; xのアニメーションをYレジスタで指定した番号にセット
+jsr	$E526
+
+; xのアニメーションをYレジスタで指定した番号にセット(アニメーションデータ読み出しポインタに変更なし)
+jsr	$E561
+
+; 設置オブジェクトメモリ領域取得。Xレジスタにインデックスが入る。取得できない(or既にそのオブジェクトが存在する)ならばキャリー1
+jsr	$E594
+
+; 設置オブジェクト以外でのオブジェクトメモリ領域取得
+jsr	$E59F
+
+; Yレジスタで指定したObjectIDのオブジェクトを生成
+jsr	$E5AF
+
+; xとロックマンとのX座標を比較。ロックマンのX座標 ＜ xのX座標 ならば $11 = 0C, そうでなければ$11 = 04 (16方向データでの左右を返す)
+jsr	$E5BA
+
+; xの方向(16方向データ)に合わせてグラフィックの向き(上下・左右反転)をセット
+jsr	$E5E3
+
+; xの初期パラメータをセットする(6bytes)
+jsr	$EBD5	(アドレスをスタックに積むためにjmpでなくjsrを使用する)
+	初期パラメータ
+	byte0 -&gt; アニメーションデータ番号
+	byte1 -&gt; パレット番号(00で変更なし)
+	byte2 -&gt; パターンテーブル書き込みデータ番号
+	byte3 -&gt; 当たり判定番号
+	byte4 -&gt; HP
+	byte5 -&gt; 属性
+
+; xと他のオブジェクトとの接触判定？Yレジスタに接触しているオブジェクトのインデックス, 接触していなければC=0
+jsr	$ECC8
+
+; xの変数E,FをY方向速度(low,high)とみなしてYレジスタで指定した加速度を加算した後$EC,$EEにセット
+jsr	$EE9E
+	Yレジスタで指定する加速度
+	00 -&gt; 00.10	01 -&gt; 00.08	02 -&gt; 00.40	03 -&gt; 00.2A
+	04 -&gt; 00.1A	05 -&gt; 00.80	06 -&gt; 01.00	07 -&gt; 00.20
+	08 -&gt; 0C.00	09 -&gt; 00.30
+
+; xの変数E,FをY方向速度(low,high)とみなしてYレジスタで指定した加速度を減算した後$EC,$EEにセット
+jsr	$EECD
+	Yレジスタで指定する加速度は上を参照
+
+</pre>
+
+
+
+</body><div id="tenten-safe-area-provider" style="all: initial;"></div></html>

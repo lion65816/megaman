@@ -1,0 +1,288 @@
+                              Mega Man V
+                        Hex editing documentation
+
+                                 v1.1
+                              by MetHy
+
+
+
+----------
+
+
+This file regroups hex editing notes I took during the making of my MM5 hack called Second Strike.
+
+If you're interested in hacking MM5, the first thing you should do before reading this file, 
+is to check the information available on MM5 at datacrystal. 
+Then, you should check rock5easily's documentation (his website is in Japanese but google translate helps).
+
+This current documentation only aims at being a small addition to rock5easily's documentation. 
+His doc is the real deal and I don't know if I would have done anything without it.
+
+I'm only a noob and some of the info here might be incorrect, so I apologize. This was my first steps 
+into hex editing, but maybe this can help someone else who's just starting as well.
+
+
+----------
+
+
+Enemies:
+
+Skull Dropper (enemy ID 02):
+38dfc: distance away from rockman to drop bomb (also count for Y axis??)
+
+
+Cannon Metool (enemy ID 08):
+38ca2: speed of bullet
+38cbb: how long in between 2 bullets
+38b84: distance from MM to trigger cannon
+
+
+Rockets going up (enemy ID 10):
+3979b: distance from MM to trigger rocket
+397f4: speed when retreating
+397bd: distance velocity
+397c2: distance up
+397a4: hit judgement
+
+
+Shielded cannons (enemy ID 14):
+39961: speed of anim shield coming up? 
+3999f: + = less wait time between shots? 
+
+
+Crystal Joes (enemy ID 18):
+38f19: wait time before spawning another crystal
+38ed2: crystal speed
+38ea2: hit judgment when shooting 
+38f1e: hit judgment when charging
+
+Star man stage meteorites: 
+3924a: 0A->25 = less meteorites
+
+
+----------
+
+
+Effects:
+
+Wily fortress stage 1 background up/down
+a401: how much down it goes
+a412: wait time before coming down again
+
+Star man stage background up/down:
+a085: Screen number it uses to draw the top of the screen
+a0c3 and a0c7: speed velocity and speed?? 
+
+---------
+
+
+Weapons:
+
+Crystal Eye weapon:
+3b3d0: number of orbs to spawn
+3b413: counter for small orb disappearance
+3b41c: added for X placement of small orb 1 ?
+
+
+Power stone weapon:
+3b6c6 and 3b6ca: subroutine for stone movement 
+3743d: number of stones?
+3743f: anim number
+37438: sound played
+
+
+---------
+BOSSES:
+
+Hit judgement table:
+143f4 -> 143ff
+For all 8 robot masters and all 4 Darkman. 1 address per boss.
+
+Wave man stage mid boss:
+656b: added to X for how far he goes
+657a: added to Y for how high he goes
+65a1: how far back down he goes?
+6634: added for the Y axis placement of the projectile
+663d: added for the X axis placement of the projectile
+6652: speed of shot (argument subroutine f470, possible values:00,10,20,30,40,08,18,28,38,48)
+
+
+Wave Man boss:
+e485: number of frames anim for wave
+e47e (2 bytes): 'anchor' point in the ram for X coordinate of the wave. Default = Mega Man. 38 03 = Wave Man.
+E556: Harpoon speed
+ 
+
+Gyro Man boss:
+c502: added for Y position of the dust.
+boss gyro shot: c63c: In the Downward->Xaxis movement: number of frames to wait before the shot goes on the x axis
+
+
+Darkman 1:
+12339: set to 00 to nullify speed increasing behaviour
+12364: number of frames before changing direction
+123c3+123d1: speed of shots
+
+
+Darkman 2:
+120c1+120c9: how much is added to speed
+120ec: anim number when waiting (after MM change direction)
+120e7: wait time after stopping when changing direction
+
+
+Darkman 3:
+12156: reference value apart or not from MM
+12174: walking speed fraction 
+12179: walking speed high
+12183: number of steps walk beavhiour
+1217e: anim called for walking
+1225d: anim called when waiting after walking
+12258: number of frames to wait after a walk
+1219e: anim called for jumping up?
+12210: anim called for jumping down?
+122b7: anim of darkman 3 while onion rings moving
+12284: direction of onion rings?
+12288: number of onion rings
+1229b: anim called for rings
+122a9: speed of onion rings ?
+121de: number of regular shots? (less only)
+121ee: shotz X away from canon
+12208: speed of shots?
+122d0 -> 122E8 : routines called for shots movement
+
+Darkman 4:
+1249e: subroutine for jump (JSR 854D)
+1249c: Y for that subroutine?
+1252c: anim for bullet
+1252d: routine for bullet placement
+12528: X/Y sum added for bullet placement
+12501: number of frames during shooting anim. 07->02 : shoot only 1 bullet and the action ends
+1248c: number of frames to wait before jump
+1254b: number of frames to wait after shooting?
+124b9: number of frames to wait after jump?
+124ab(+124a6?): anim during jump 
+124d6 (+124c4?): anim when standing after jump
+12550: anim during standing
+1246f: anim during shooting
+
+
+Wily stage 1 boss:
+414e: Speed of the platforms when going left
+4195: Speed of the platforms when going right
+4167: how long the platform remains waiting on the left of the screen
+4243 + 423b + 424b: speed of the falling green heads
+4250: related to the X coordinate spawn of heads?
+40af: speed of head when going up
+409f added for Y placement of head when going up
+407d: how much time to wait before firing another head
+
+Wily stage 2 boss:
+
+Boss BG pal: 45b4 -> 45bf
+Boss enemy pal (Ball & door): 45c1->45c3
+
+437b+437e: subroutines for first movement
+439d+43a2: subroutine for 2nd movement?
+4392: how long first movement lasts
+4359: speed of first movement L/R
+4374: speed of first movement U/D
+43a7+43ac: speed of 2nd movement L/R
+43b1+43b6: speed of 2nd movement U/D
+4469: Y location of boss?
+4471: X location of boss?
+4318: X location of boss at the start of the first movement?
+431d: Y location of boss at the start of the first movement?
+43e8: speed of the 'doors' last movement
+450f: Y coordinate of the platform at fight start
+45a5: Y coordinate of platform after riding it
+42ec: X coordinate of left platform
+42f0: X coordinate of right platform
+4514+451c: speed of platform?
+44ed: speed of bullet
+4422: added for location of ball
+447f: anim number for ball
+
+
+Wily stage 3 boss:
+47cd+47d1: Boss background palette (default= 20 27 07 and 30 2c c)
+47de: Boss sprite palette (default= 22)
+46c6+46e3+46d6+46dc+46e3: related to distances L/R
+46ff: related to number of movements L/R before coming down. 01->02=less
+4716: when stopping, number of frames to wait before coming down
+4734: number of frames for capsule opening animation
+475c: number of frames to wait when down (and when waiting after coming back up)
+4745: how much Y added when coming down
+4792: Y coordinate of BG relative to sprite
+479a: X coordinate of BG relative to sprite
+4725+471b(+4720?)+472a+478d: anims of wily sprite
+476d: anim for smoke effect
+4772: Y for smoke effect
+47a2: Y coordinate of the floor
+
+
+Wily Stage 4 boss:
+Tank form:
+8234: speed of missile? (argument of subroutine f470)
+80bd: x placement of cover sprite relative to tank
+808c: subroutine that tells the tank to move when shot. replace EF F8 by 85 1A = always move
+80a8: speed?
+809b: how far the tank moves forward
+80d1: how far the tank moves backward
+81be: Y axis point for ball bouncing
+811e+811f: ref point for ball speeds?
+814a: number of rockets?
+
+Capsule form:
+860f+8613: palette (default= 30 2c 13 and 30 36 13)
+8474: added for Y axis placement?
+862c to 8632: related to X coordinates capsule spawn placements
+8622 to 8629: related to Y coordinate capsule spawn placements
+84a0: how long before capsule goes from dark to bright
+841a: how long capsule stays before disappearing
+84ac: how long to wait before spinning shots attack
+854c: Shot coming down: Y axis point when it splits on the X axis
+855f: movement routine for shot after it split on the X axis
+84e9: speed of shot after split
+83d2: anim for rotating shot
+83e1: relative Y coordinate for rotating shot
+8513: speed of rotating shots (argument of subroutine f470)
+83bb: number of rotating shots
+
+
+---------
+
+TITLE SCREEN:
+2eca9: X placement of selection arrow
+
+----------
+
+Credits:
+
+1e060 onward: Text in 1st part of the credits (with blue BG)
+1e4aa onward: Text in 2nd part of the credits (scrolling down)
+
+
+---------
+
+Proto Man Castle screen:
+
+I started checking the Protoman Fortress level select screen, before deciding it wasn't worth the trouble.
+Here is what I gathered about the "red dots" and the "white path" :
+
+2f9f7 onward defines the white path. 
+From what I gathered there are four bytes per sprite. X placement, Y placement, Type, and Orientation.
+
+Types: 
+(24: red dot)
+25: straight line Y axis
+26: straight line X axis
+27: Junction
+
+Orientation seem to only matter for the Junction type:
+42: junction down
+C2: junction up
+
+
+2f86e onward : placement for the red dots? 4 bytes per dot? 
+
+

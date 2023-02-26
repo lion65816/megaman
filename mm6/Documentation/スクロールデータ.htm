@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja"><div id="tenten-safe-area-provider" style="all: initial;"></div><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF_files/ruffle.js"></script><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スクロールデータ</title>
+</head>
+<body>
+<p><br></p>
+<font size="1">Last Update 08/09/23</font>
+<hr>
+<pre>◇スクロール
+マップ上に$80番オブジェクトを設置することで行われる。設置Y座標によって処理内容が変わる。
+
+$722FB-7237A (80) = 設置Y座標: スクロール処理データのアドレス(low)
+$7237B-723FA (80) = 設置Y座標: スクロール処理データのアドレス(high)
+
+
+◇スクロール処理データ
+byte0-1 -&gt; コードアドレス1(ビッグエンディアン)(生成された後1回だけ実行)(省略可能)
+           byte0の値が$80未満の場合、省略されたと見なされる。
+           ボス登場やMr.Xステージ2の落下ブロックの落下フラグの消去などに使われている。
+           
+byte2   -&gt; エリア内進行可能なスクロール方向(00 -&gt; 左右進行不可, +01 -&gt; 右, +02 -&gt; 左)
+
+byte3-4 -&gt; コードアドレス2(ビッグエンディアン)(毎フレーム実行)(省略不可・何も処理しない場合はbyte3に00を入れておく。
+           但し、コード1でjmp $E45Aのような次のオブジェクト処理へ移行する場合はその限りではない)
+           中間地点の設定などの用途に使われている。
+           
+byte5   -&gt; スクロール方向(00～06) (byte5に00又は$80以上があった時点でデータ終端)
+           00 無し,
+           01 = 下(部屋番号増加), 02 = 上(部屋番号増加),
+           03 = 下(部屋番号減少), 04 = 上(部屋番号減少),
+           05 = 右(部屋番号増加), 06 = 左(部屋番号減少)
+
+byte6   -&gt; スクロール時のパターンテーブル書き込み番号(00で書き込み無し)
+
+byte7   -&gt; スクロール時のパレット変更番号(00で変更無し)
+
+byte8   -&gt; bit7=0で省略されたとみなされる, bit6-0=スクロール元とする部屋番号
+           部屋番号の離れた部屋へスクロールする際に使用。
+           省略された場合は現在の部屋番号がそのままスクロール元の部屋番号。
+
+byte9-  -&gt; スクロールする方向分だけbyte5-8を繰り返す
+
+
+
+
+・例1 (01 00 00 00)
+01    -&gt; $80未満の値なのでbyte0-1は省略されたと見なし、これをbyte2の値と考える。
+         byte2 エリア内を右に進行可能
+00 00 -&gt; byte3-4 実行するコード無し
+00    -&gt; byte5 スクロール方向無しでデータ終端
+
+
+・例2 (02 00 00 01 00 00 00)
+02    -&gt; $80未満の値なのでbyte0-1は省略されたと見なし、これをbyte2の値と考える。
+         byte2 エリア内を左に進行可能
+00 00 -&gt; byte3-4 実行するコード無し
+01    -&gt; byte5 下にスクロール可能(部屋番号増加)
+00    -&gt; byte6 パターンテーブルへの書き込み無し
+00    -&gt; byte7 パレットの変更無し
+00    -&gt; bit7=0なのでbyte8は省略。スクロール先部屋番号は現在の部屋番号 + 1
+         byte9 他にスクロール方向無しでデータ終端
+
+
+・例3 (00 84 11 01 85 1A 04 84 00 00)
+00    -&gt; $80未満の値なのでbyte0-1は省略されたと見なし、これをbyte2の値と考える。
+         byte2 エリア内での左右進行不可(1部屋分の広さのエリア)
+84 11 -&gt; byte3-4 コードアドレス2 $8411(現在の部屋番号が$0Dなら中間復帰部屋番号を$0Dにセット)
+01    -&gt; byte5 下にスクロール可能(部屋番号増加)
+85    -&gt; byte6 パターンテーブル書き込み番号85
+1A    -&gt; byte7 パレット変更番号1A
+04    -&gt; bit7=0なのでbyte8は省略。下スクロール先部屋番号は現在の部屋番号 + 1
+         byte9 上にスクロール可能(部屋番号減少)
+84    -&gt; byte10 パターンテーブル書き込み番号84
+00    -&gt; byte11 パレット変更無し
+00    -&gt; bit7=0なのでbyte12は省略。上スクロール先部屋番号は現在の部屋番号 - 1
+         byte13 他にスクロール方向無しでデータ終端
+
+
+・例4 (02 00 00 02 98 58 05 00 00 8B 00)
+02    -&gt; $80未満の値なのでbyte0-1は省略されたと見なし、これをbyte2の値と考える。
+         byte2 エリア内を左に進行可能
+00 00 -&gt; byte3-4 実行するコード無し
+02    -&gt; byte5 上にスクロール可能(部屋番号増加)
+98    -&gt; byte6 パターンテーブル書き込み番号98
+58    -&gt; byte7 パレット変更番号58
+05    -&gt; bit7=0なのでbyte8は省略。上スクロール先部屋番号は現在の部屋番号 + 1
+         byte9 右にスクロール可能(部屋番号増加)
+00    -&gt; byte10 パターンテーブルへの書き込み無し
+00    -&gt; byte11 パレットの変更無し
+8B    -&gt; byte12 bi7=1なのでbit6-0がスクロール元部屋番号。
+                右スクロール先部屋番号は $0B + 1 =$0C
+00    -&gt; byte13 他にスクロール方向無しでデータ終端
+
+
+・例5 (92 36 01 00 00 00)
+95 36 -&gt; byte0-1 コードアドレス1 $9536(Mr.Xステージ2の落下ブロックの落下フラグを消去)
+01    -&gt; byte2 エリア内を右に進行可能
+00 00 -&gt; byte3-4 実行するコード無し
+00    -&gt; byte5 スクロール方向無しでデータ終端
+
+</pre>
+
+
+
+</body></html>

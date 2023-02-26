@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja"><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="palette_data/ruffle.js"></script><head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>ajax test</title>
+<link media="all" href="icon_data/index.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="comment_toolbar.lang.js"></script>
+<script type="text/javascript" src="icon_data/json2.js"></script>
+<style type="text/css">
+html,body,div,
+dl,dt,dd,ul,ol,li,
+h1,h2,h3,h4,h5,h6,
+pre,form,fieldset,input,textarea,
+blockquote,th,td,p {
+	margin: 0;
+	padding: 0;
+}
+iframe { border: 0 none; width: 100%; overflow: hidden; }
+</style>
+</head>
+<body>
+	<div id="table_color">
+		<div id="sample" align="left">テキストの色</div>
+		<a class="close" onclick="toggleSubMenu();" href="javascript:void(0);"><img src="icon_data/close.gif"></a>
+		<table cellspacing="1px" cellpadding="0px" border="0" bgcolor="#000000">
+			<tbody>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('003300');" onmouseover="javascript:previewColor('003300');" title="#003300" width="11px" height="11px" bgcolor="#003300"></td>
+					<td onmousedown="insertColorTag('006600');" onmouseover="javascript:previewColor('006600');" title="#006600" width="11px" height="11px" bgcolor="#006600"></td>
+					<td onmousedown="insertColorTag('009900');" onmouseover="javascript:previewColor('009900');" title="#009900" width="11px" height="11px" bgcolor="#009900"></td>
+					<td onmousedown="insertColorTag('00CC00');" onmouseover="javascript:previewColor('00CC00');" title="#00CC00" width="11px" height="11px" bgcolor="#00CC00"></td>
+					<td onmousedown="insertColorTag('00FF00');" onmouseover="javascript:previewColor('00FF00');" title="#00FF00" width="11px" height="11px" bgcolor="#00FF00"></td>
+					<td onmousedown="insertColorTag('330000');" onmouseover="javascript:previewColor('330000');" title="#330000" width="11px" height="11px" bgcolor="#330000"></td>
+					<td onmousedown="insertColorTag('333300');" onmouseover="javascript:previewColor('333300');" title="#333300" width="11px" height="11px" bgcolor="#333300"></td>
+					<td onmousedown="insertColorTag('336600');" onmouseover="javascript:previewColor('336600');" title="#336600" width="11px" height="11px" bgcolor="#336600"></td>
+					<td onmousedown="insertColorTag('339900');" onmouseover="javascript:previewColor('339900');" title="#339900" width="11px" height="11px" bgcolor="#339900"></td>
+					<td onmousedown="insertColorTag('33CC00');" onmouseover="javascript:previewColor('33CC00');" title="#33CC00" width="11px" height="11px" bgcolor="#33CC00"></td>
+					<td onmousedown="insertColorTag('33FF00');" onmouseover="javascript:previewColor('33FF00');" title="#33FF00" width="11px" height="11px" bgcolor="#33FF00"></td>
+					<td onmousedown="insertColorTag('660000');" onmouseover="javascript:previewColor('660000');" title="#660000" width="11px" height="11px" bgcolor="#660000"></td>
+					<td onmousedown="insertColorTag('663300');" onmouseover="javascript:previewColor('663300');" title="#663300" width="11px" height="11px" bgcolor="#663300"></td>
+					<td onmousedown="insertColorTag('666600');" onmouseover="javascript:previewColor('666600');" title="#666600" width="11px" height="11px" bgcolor="#666600"></td>
+					<td onmousedown="insertColorTag('669900');" onmouseover="javascript:previewColor('669900');" title="#669900" width="11px" height="11px" bgcolor="#669900"></td>
+					<td onmousedown="insertColorTag('66CC00');" onmouseover="javascript:previewColor('66CC00');" title="#66CC00" width="11px" height="11px" bgcolor="#66CC00"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('333333');" onmouseover="javascript:previewColor('333333');" title="#333333" width="11px" height="11px" bgcolor="#333333"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000033');" onmouseover="javascript:previewColor('000033');" title="#000033" width="11px" height="11px" bgcolor="#000033"></td>
+					<td onmousedown="insertColorTag('003333');" onmouseover="javascript:previewColor('003333');" title="#003333" width="11px" height="11px" bgcolor="#003333"></td>
+					<td onmousedown="insertColorTag('006633');" onmouseover="javascript:previewColor('006633');" title="#006633" width="11px" height="11px" bgcolor="#006633"></td>
+					<td onmousedown="insertColorTag('009933');" onmouseover="javascript:previewColor('009933');" title="#009933" width="11px" height="11px" bgcolor="#009933"></td>
+					<td onmousedown="insertColorTag('00CC33');" onmouseover="javascript:previewColor('00CC33');" title="#00CC33" width="11px" height="11px" bgcolor="#00CC33"></td>
+					<td onmousedown="insertColorTag('00FF33');" onmouseover="javascript:previewColor('00FF33');" title="#00FF33" width="11px" height="11px" bgcolor="#00FF33"></td>
+					<td onmousedown="insertColorTag('330033');" onmouseover="javascript:previewColor('330033');" title="#330033" width="11px" height="11px" bgcolor="#330033"></td>
+					<td onmousedown="insertColorTag('333333');" onmouseover="javascript:previewColor('333333');" title="#333333" width="11px" height="11px" bgcolor="#333333"></td>
+					<td onmousedown="insertColorTag('336633');" onmouseover="javascript:previewColor('336633');" title="#336633" width="11px" height="11px" bgcolor="#336633"></td>
+					<td onmousedown="insertColorTag('339933');" onmouseover="javascript:previewColor('339933');" title="#339933" width="11px" height="11px" bgcolor="#339933"></td>
+					<td onmousedown="insertColorTag('33CC33');" onmouseover="javascript:previewColor('33CC33');" title="#33CC33" width="11px" height="11px" bgcolor="#33CC33"></td>
+					<td onmousedown="insertColorTag('33FF33');" onmouseover="javascript:previewColor('33FF33');" title="#33FF33" width="11px" height="11px" bgcolor="#33FF33"></td>
+					<td onmousedown="insertColorTag('660033');" onmouseover="javascript:previewColor('660033');" title="#660033" width="11px" height="11px" bgcolor="#660033"></td>
+					<td onmousedown="insertColorTag('663333');" onmouseover="javascript:previewColor('663333');" title="#663333" width="11px" height="11px" bgcolor="#663333"></td>
+					<td onmousedown="insertColorTag('666633');" onmouseover="javascript:previewColor('666633');" title="#666633" width="11px" height="11px" bgcolor="#666633"></td>
+					<td onmousedown="insertColorTag('669933');" onmouseover="javascript:previewColor('669933');" title="#669933" width="11px" height="11px" bgcolor="#669933"></td>
+					<td onmousedown="insertColorTag('66CC33');" onmouseover="javascript:previewColor('66CC33');" title="#66CC33" width="11px" height="11px" bgcolor="#66CC33"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('666666');" onmouseover="javascript:previewColor('666666');" title="#666666" width="11px" height="11px" bgcolor="#666666"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000066');" onmouseover="javascript:previewColor('000066');" title="#000066" width="11px" height="11px" bgcolor="#000066"></td>
+					<td onmousedown="insertColorTag('003366');" onmouseover="javascript:previewColor('003366');" title="#003366" width="11px" height="11px" bgcolor="#003366"></td>
+					<td onmousedown="insertColorTag('006666');" onmouseover="javascript:previewColor('006666');" title="#006666" width="11px" height="11px" bgcolor="#006666"></td>
+					<td onmousedown="insertColorTag('009966');" onmouseover="javascript:previewColor('009966');" title="#009966" width="11px" height="11px" bgcolor="#009966"></td>
+					<td onmousedown="insertColorTag('00CC66');" onmouseover="javascript:previewColor('00CC66');" title="#00CC66" width="11px" height="11px" bgcolor="#00CC66"></td>
+					<td onmousedown="insertColorTag('00FF66');" onmouseover="javascript:previewColor('00FF66');" title="#00FF66" width="11px" height="11px" bgcolor="#00FF66"></td>
+					<td onmousedown="insertColorTag('330066');" onmouseover="javascript:previewColor('330066');" title="#330066" width="11px" height="11px" bgcolor="#330066"></td>
+					<td onmousedown="insertColorTag('333366');" onmouseover="javascript:previewColor('333366');" title="#333366" width="11px" height="11px" bgcolor="#333366"></td>
+					<td onmousedown="insertColorTag('336666');" onmouseover="javascript:previewColor('336666');" title="#336666" width="11px" height="11px" bgcolor="#336666"></td>
+					<td onmousedown="insertColorTag('339966');" onmouseover="javascript:previewColor('339966');" title="#339966" width="11px" height="11px" bgcolor="#339966"></td>
+					<td onmousedown="insertColorTag('33CC66');" onmouseover="javascript:previewColor('33CC66');" title="#33CC66" width="11px" height="11px" bgcolor="#33CC66"></td>
+					<td onmousedown="insertColorTag('33FF66');" onmouseover="javascript:previewColor('33FF66');" title="#33FF66" width="11px" height="11px" bgcolor="#33FF66"></td>
+					<td onmousedown="insertColorTag('660066');" onmouseover="javascript:previewColor('660066');" title="#660066" width="11px" height="11px" bgcolor="#660066"></td>
+					<td onmousedown="insertColorTag('663366');" onmouseover="javascript:previewColor('663366');" title="#663366" width="11px" height="11px" bgcolor="#663366"></td>
+					<td onmousedown="insertColorTag('666666');" onmouseover="javascript:previewColor('666666');" title="#666666" width="11px" height="11px" bgcolor="#666666"></td>
+					<td onmousedown="insertColorTag('669966');" onmouseover="javascript:previewColor('669966');" title="#669966" width="11px" height="11px" bgcolor="#669966"></td>
+					<td onmousedown="insertColorTag('66CC66');" onmouseover="javascript:previewColor('66CC66');" title="#66CC66" width="11px" height="11px" bgcolor="#66CC66"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('999999');" onmouseover="javascript:previewColor('999999');" title="#999999" width="11px" height="11px" bgcolor="#999999"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('000099');" onmouseover="javascript:previewColor('000099');" title="#000099" width="11px" height="11px" bgcolor="#000099"></td>
+					<td onmousedown="insertColorTag('003399');" onmouseover="javascript:previewColor('003399');" title="#003399" width="11px" height="11px" bgcolor="#003399"></td>
+					<td onmousedown="insertColorTag('006699');" onmouseover="javascript:previewColor('006699');" title="#006699" width="11px" height="11px" bgcolor="#006699"></td>
+					<td onmousedown="insertColorTag('009999');" onmouseover="javascript:previewColor('009999');" title="#009999" width="11px" height="11px" bgcolor="#009999"></td>
+					<td onmousedown="insertColorTag('00CC99');" onmouseover="javascript:previewColor('00CC99');" title="#00CC99" width="11px" height="11px" bgcolor="#00CC99"></td>
+					<td onmousedown="insertColorTag('00FF99');" onmouseover="javascript:previewColor('00FF99');" title="#00FF99" width="11px" height="11px" bgcolor="#00FF99"></td>
+					<td onmousedown="insertColorTag('330099');" onmouseover="javascript:previewColor('330099');" title="#330099" width="11px" height="11px" bgcolor="#330099"></td>
+					<td onmousedown="insertColorTag('333399');" onmouseover="javascript:previewColor('333399');" title="#333399" width="11px" height="11px" bgcolor="#333399"></td>
+					<td onmousedown="insertColorTag('336699');" onmouseover="javascript:previewColor('336699');" title="#336699" width="11px" height="11px" bgcolor="#336699"></td>
+					<td onmousedown="insertColorTag('339999');" onmouseover="javascript:previewColor('339999');" title="#339999" width="11px" height="11px" bgcolor="#339999"></td>
+					<td onmousedown="insertColorTag('33CC99');" onmouseover="javascript:previewColor('33CC99');" title="#33CC99" width="11px" height="11px" bgcolor="#33CC99"></td>
+					<td onmousedown="insertColorTag('33FF99');" onmouseover="javascript:previewColor('33FF99');" title="#33FF99" width="11px" height="11px" bgcolor="#33FF99"></td>
+					<td onmousedown="insertColorTag('660099');" onmouseover="javascript:previewColor('660099');" title="#660099" width="11px" height="11px" bgcolor="#660099"></td>
+					<td onmousedown="insertColorTag('663399');" onmouseover="javascript:previewColor('663399');" title="#663399" width="11px" height="11px" bgcolor="#663399"></td>
+					<td onmousedown="insertColorTag('666699');" onmouseover="javascript:previewColor('666699');" title="#666699" width="11px" height="11px" bgcolor="#666699"></td>
+					<td onmousedown="insertColorTag('669999');" onmouseover="javascript:previewColor('669999');" title="#669999" width="11px" height="11px" bgcolor="#669999"></td>
+					<td onmousedown="insertColorTag('66CC99');" onmouseover="javascript:previewColor('66CC99');" title="#66CC99" width="11px" height="11px" bgcolor="#66CC99"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('CCCCCC');" onmouseover="javascript:previewColor('CCCCCC');" title="#CCCCCC" width="11px" height="11px" bgcolor="#CCCCCC"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('0000CC');" onmouseover="javascript:previewColor('0000CC');" title="#0000CC" width="11px" height="11px" bgcolor="#0000CC"></td>
+					<td onmousedown="insertColorTag('0033CC');" onmouseover="javascript:previewColor('0033CC');" title="#0033CC" width="11px" height="11px" bgcolor="#0033CC"></td>
+					<td onmousedown="insertColorTag('0066CC');" onmouseover="javascript:previewColor('0066CC');" title="#0066CC" width="11px" height="11px" bgcolor="#0066CC"></td>
+					<td onmousedown="insertColorTag('0099CC');" onmouseover="javascript:previewColor('0099CC');" title="#0099CC" width="11px" height="11px" bgcolor="#0099CC"></td>
+					<td onmousedown="insertColorTag('00CCCC');" onmouseover="javascript:previewColor('00CCCC');" title="#00CCCC" width="11px" height="11px" bgcolor="#00CCCC"></td>
+					<td onmousedown="insertColorTag('00FFCC');" onmouseover="javascript:previewColor('00FFCC');" title="#00FFCC" width="11px" height="11px" bgcolor="#00FFCC"></td>
+					<td onmousedown="insertColorTag('3300CC');" onmouseover="javascript:previewColor('3300CC');" title="#3300CC" width="11px" height="11px" bgcolor="#3300CC"></td>
+					<td onmousedown="insertColorTag('3333CC');" onmouseover="javascript:previewColor('3333CC');" title="#3333CC" width="11px" height="11px" bgcolor="#3333CC"></td>
+					<td onmousedown="insertColorTag('3366CC');" onmouseover="javascript:previewColor('3366CC');" title="#3366CC" width="11px" height="11px" bgcolor="#3366CC"></td>
+					<td onmousedown="insertColorTag('3399CC');" onmouseover="javascript:previewColor('3399CC');" title="#3399CC" width="11px" height="11px" bgcolor="#3399CC"></td>
+					<td onmousedown="insertColorTag('33CCCC');" onmouseover="javascript:previewColor('33CCCC');" title="#33CCCC" width="11px" height="11px" bgcolor="#33CCCC"></td>
+					<td onmousedown="insertColorTag('33FFCC');" onmouseover="javascript:previewColor('33FFCC');" title="#33FFCC" width="11px" height="11px" bgcolor="#33FFCC"></td>
+					<td onmousedown="insertColorTag('6600CC');" onmouseover="javascript:previewColor('6600CC');" title="#6600CC" width="11px" height="11px" bgcolor="#6600CC"></td>
+					<td onmousedown="insertColorTag('6633CC');" onmouseover="javascript:previewColor('6633CC');" title="#6633CC" width="11px" height="11px" bgcolor="#6633CC"></td>
+					<td onmousedown="insertColorTag('6666CC');" onmouseover="javascript:previewColor('6666CC');" title="#6666CC" width="11px" height="11px" bgcolor="#6666CC"></td>
+					<td onmousedown="insertColorTag('6699CC');" onmouseover="javascript:previewColor('6699CC');" title="#6699CC" width="11px" height="11px" bgcolor="#6699CC"></td>
+					<td onmousedown="insertColorTag('66CCCC');" onmouseover="javascript:previewColor('66CCCC');" title="#66CCCC" width="11px" height="11px" bgcolor="#66CCCC"></td>
+				</tr>
+				<tr><td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('FFFFFF');" onmouseover="javascript:previewColor('FFFFFF');" title="#FFFFFF" width="11px" height="11px" bgcolor="#FFFFFF"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('0000FF');" onmouseover="javascript:previewColor('0000FF');" title="#0000FF" width="11px" height="11px" bgcolor="#0000FF"></td>
+					<td onmousedown="insertColorTag('0033FF');" onmouseover="javascript:previewColor('0033FF');" title="#0033FF" width="11px" height="11px" bgcolor="#0033FF"></td>
+					<td onmousedown="insertColorTag('0066FF');" onmouseover="javascript:previewColor('0066FF');" title="#0066FF" width="11px" height="11px" bgcolor="#0066FF"></td>
+					<td onmousedown="insertColorTag('0099FF');" onmouseover="javascript:previewColor('0099FF');" title="#0099FF" width="11px" height="11px" bgcolor="#0099FF"></td>
+					<td onmousedown="insertColorTag('00CCFF');" onmouseover="javascript:previewColor('00CCFF');" title="#00CCFF" width="11px" height="11px" bgcolor="#00CCFF"></td>
+					<td onmousedown="insertColorTag('00FFFF');" onmouseover="javascript:previewColor('00FFFF');" title="#00FFFF" width="11px" height="11px" bgcolor="#00FFFF"></td>
+					<td onmousedown="insertColorTag('3300FF');" onmouseover="javascript:previewColor('3300FF');" title="#3300FF" width="11px" height="11px" bgcolor="#3300FF"></td>
+					<td onmousedown="insertColorTag('3333FF');" onmouseover="javascript:previewColor('3333FF');" title="#3333FF" width="11px" height="11px" bgcolor="#3333FF"></td>
+					<td onmousedown="insertColorTag('3366FF');" onmouseover="javascript:previewColor('3366FF');" title="#3366FF" width="11px" height="11px" bgcolor="#3366FF"></td>
+					<td onmousedown="insertColorTag('3399FF');" onmouseover="javascript:previewColor('3399FF');" title="#3399FF" width="11px" height="11px" bgcolor="#3399FF"></td>
+					<td onmousedown="insertColorTag('33CCFF');" onmouseover="javascript:previewColor('33CCFF');" title="#33CCFF" width="11px" height="11px" bgcolor="#33CCFF"></td>
+					<td onmousedown="insertColorTag('33FFFF');" onmouseover="javascript:previewColor('33FFFF');" title="#33FFFF" width="11px" height="11px" bgcolor="#33FFFF"></td>
+					<td onmousedown="insertColorTag('6600FF');" onmouseover="javascript:previewColor('6600FF');" title="#6600FF" width="11px" height="11px" bgcolor="#6600FF"></td>
+					<td onmousedown="insertColorTag('6633FF');" onmouseover="javascript:previewColor('6633FF');" title="#6633FF" width="11px" height="11px" bgcolor="#6633FF"></td>
+					<td onmousedown="insertColorTag('6666FF');" onmouseover="javascript:previewColor('6666FF');" title="#6666FF" width="11px" height="11px" bgcolor="#6666FF"></td>
+					<td onmousedown="insertColorTag('6699FF');" onmouseover="javascript:previewColor('6699FF');" title="#6699FF" width="11px" height="11px" bgcolor="#6699FF"></td>
+					<td onmousedown="insertColorTag('66CCFF');" onmouseover="javascript:previewColor('66CCFF');" title="#66CCFF" width="11px" height="11px" bgcolor="#66CCFF"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('FF0000');" onmouseover="javascript:previewColor('FF0000');" title="#FF0000" width="11px" height="11px" bgcolor="#FF0000"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('990000');" onmouseover="javascript:previewColor('990000');" title="#990000" width="11px" height="11px" bgcolor="#990000"></td>
+					<td onmousedown="insertColorTag('993300');" onmouseover="javascript:previewColor('993300');" title="#993300" width="11px" height="11px" bgcolor="#993300"></td>
+					<td onmousedown="insertColorTag('996600');" onmouseover="javascript:previewColor('996600');" title="#996600" width="11px" height="11px" bgcolor="#996600"></td>
+					<td onmousedown="insertColorTag('999900');" onmouseover="javascript:previewColor('999900');" title="#999900" width="11px" height="11px" bgcolor="#999900"></td>
+					<td onmousedown="insertColorTag('99CC00');" onmouseover="javascript:previewColor('99CC00');" title="#99CC00" width="11px" height="11px" bgcolor="#99CC00"></td>
+					<td onmousedown="insertColorTag('99FF00');" onmouseover="javascript:previewColor('99FF00');" title="#99FF00" width="11px" height="11px" bgcolor="#99FF00"></td>
+					<td onmousedown="insertColorTag('CC0000');" onmouseover="javascript:previewColor('CC0000');" title="#CC0000" width="11px" height="11px" bgcolor="#CC0000"></td>
+					<td onmousedown="insertColorTag('CC3300');" onmouseover="javascript:previewColor('CC3300');" title="#CC3300" width="11px" height="11px" bgcolor="#CC3300"></td>
+					<td onmousedown="insertColorTag('CC6600');" onmouseover="javascript:previewColor('CC6600');" title="#CC6600" width="11px" height="11px" bgcolor="#CC6600"></td>
+					<td onmousedown="insertColorTag('CC9900');" onmouseover="javascript:previewColor('CC9900');" title="#CC9900" width="11px" height="11px" bgcolor="#CC9900"></td>
+					<td onmousedown="insertColorTag('CCCC00');" onmouseover="javascript:previewColor('CCCC00');" title="#CCCC00" width="11px" height="11px" bgcolor="#CCCC00"></td>
+					<td onmousedown="insertColorTag('CCFF00');" onmouseover="javascript:previewColor('CCFF00');" title="#CCFF00" width="11px" height="11px" bgcolor="#CCFF00"></td>
+					<td onmousedown="insertColorTag('FF0000');" onmouseover="javascript:previewColor('FF0000');" title="#FF0000" width="11px" height="11px" bgcolor="#FF0000"></td>
+					<td onmousedown="insertColorTag('FF3300');" onmouseover="javascript:previewColor('FF3300');" title="#FF3300" width="11px" height="11px" bgcolor="#FF3300"></td>
+					<td onmousedown="insertColorTag('FF6600');" onmouseover="javascript:previewColor('FF6600');" title="#FF6600" width="11px" height="11px" bgcolor="#FF6600"></td>
+					<td onmousedown="insertColorTag('FF9900');" onmouseover="javascript:previewColor('FF9900');" title="#FF9900" width="11px" height="11px" bgcolor="#FF9900"></td>
+					<td onmousedown="insertColorTag('FFCC00');" onmouseover="javascript:previewColor('FFCC00');" title="#FFCC00" width="11px" height="11px" bgcolor="#FFCC00"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('00FF00');" onmouseover="javascript:previewColor('00FF00');" title="#00FF00" width="11px" height="11px" bgcolor="#00FF00"></td>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('990033');" onmouseover="javascript:previewColor('990033');" title="#990033" width="11px" height="11px" bgcolor="#990033"></td>
+					<td onmousedown="insertColorTag('993333');" onmouseover="javascript:previewColor('993333');" title="#993333" width="11px" height="11px" bgcolor="#993333"></td>
+					<td onmousedown="insertColorTag('996633');" onmouseover="javascript:previewColor('996633');" title="#996633" width="11px" height="11px" bgcolor="#996633"></td>
+					<td onmousedown="insertColorTag('999933');" onmouseover="javascript:previewColor('999933');" title="#999933" width="11px" height="11px" bgcolor="#999933"></td>
+					<td onmousedown="insertColorTag('99CC33');" onmouseover="javascript:previewColor('99CC33');" title="#99CC33" width="11px" height="11px" bgcolor="#99CC33"></td>
+					<td onmousedown="insertColorTag('99FF33');" onmouseover="javascript:previewColor('99FF33');" title="#99FF33" width="11px" height="11px" bgcolor="#99FF33"></td>
+					<td onmousedown="insertColorTag('CC0033');" onmouseover="javascript:previewColor('CC0033');" title="#CC0033" width="11px" height="11px" bgcolor="#CC0033"></td>
+					<td onmousedown="insertColorTag('CC3333');" onmouseover="javascript:previewColor('CC3333');" title="#CC3333" width="11px" height="11px" bgcolor="#CC3333"></td>
+					<td onmousedown="insertColorTag('CC6633');" onmouseover="javascript:previewColor('CC6633');" title="#CC6633" width="11px" height="11px" bgcolor="#CC6633"></td>
+					<td onmousedown="insertColorTag('CC9933');" onmouseover="javascript:previewColor('CC9933');" title="#CC9933" width="11px" height="11px" bgcolor="#CC9933"></td>
+					<td onmousedown="insertColorTag('CCCC33');" onmouseover="javascript:previewColor('CCCC33');" title="#CCCC33" width="11px" height="11px" bgcolor="#CCCC33"></td>
+					<td onmousedown="insertColorTag('CCFF33');" onmouseover="javascript:previewColor('CCFF33');" title="#CCFF33" width="11px" height="11px" bgcolor="#CCFF33"></td>
+					<td onmousedown="insertColorTag('FF0033');" onmouseover="javascript:previewColor('FF0033');" title="#FF0033" width="11px" height="11px" bgcolor="#FF0033"></td>
+					<td onmousedown="insertColorTag('FF3333');" onmouseover="javascript:previewColor('FF3333');" title="#FF3333" width="11px" height="11px" bgcolor="#FF3333"></td>
+					<td onmousedown="insertColorTag('FF6633');" onmouseover="javascript:previewColor('FF6633');" title="#FF6633" width="11px" height="11px" bgcolor="#FF6633"></td>
+					<td onmousedown="insertColorTag('FF9933');" onmouseover="javascript:previewColor('FF9933');" title="#FF9933" width="11px" height="11px" bgcolor="#FF9933"></td>
+					<td onmousedown="insertColorTag('FFCC33');" onmouseover="javascript:previewColor('FFCC33');" title="#FFCC33" width="11px" height="11px" bgcolor="#FFCC33"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td>
+					<td onmousedown="insertColorTag('0000FF');" onmouseover="javascript:previewColor('0000FF');" title="#0000FF" width="11px" height="11px" bgcolor="#0000FF"></td><td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('990066');" onmouseover="javascript:previewColor('990066');" title="#990066" width="11px" height="11px" bgcolor="#990066"></td><td onmousedown="insertColorTag('993366');" onmouseover="javascript:previewColor('993366');" title="#993366" width="11px" height="11px" bgcolor="#993366"></td><td onmousedown="insertColorTag('996666');" onmouseover="javascript:previewColor('996666');" title="#996666" width="11px" height="11px" bgcolor="#996666"></td><td onmousedown="insertColorTag('999966');" onmouseover="javascript:previewColor('999966');" title="#999966" width="11px" height="11px" bgcolor="#999966"></td><td onmousedown="insertColorTag('99CC66');" onmouseover="javascript:previewColor('99CC66');" title="#99CC66" width="11px" height="11px" bgcolor="#99CC66"></td><td onmousedown="insertColorTag('99FF66');" onmouseover="javascript:previewColor('99FF66');" title="#99FF66" width="11px" height="11px" bgcolor="#99FF66"></td><td onmousedown="insertColorTag('CC0066');" onmouseover="javascript:previewColor('CC0066');" title="#CC0066" width="11px" height="11px" bgcolor="#CC0066"></td><td onmousedown="insertColorTag('CC3366');" onmouseover="javascript:previewColor('CC3366');" title="#CC3366" width="11px" height="11px" bgcolor="#CC3366"></td><td onmousedown="insertColorTag('CC6666');" onmouseover="javascript:previewColor('CC6666');" title="#CC6666" width="11px" height="11px" bgcolor="#CC6666"></td><td onmousedown="insertColorTag('CC9966');" onmouseover="javascript:previewColor('CC9966');" title="#CC9966" width="11px" height="11px" bgcolor="#CC9966"></td><td onmousedown="insertColorTag('CCCC66');" onmouseover="javascript:previewColor('CCCC66');" title="#CCCC66" width="11px" height="11px" bgcolor="#CCCC66"></td><td onmousedown="insertColorTag('CCFF66');" onmouseover="javascript:previewColor('CCFF66');" title="#CCFF66" width="11px" height="11px" bgcolor="#CCFF66"></td><td onmousedown="insertColorTag('FF0066');" onmouseover="javascript:previewColor('FF0066');" title="#FF0066" width="11px" height="11px" bgcolor="#FF0066"></td><td onmousedown="insertColorTag('FF3366');" onmouseover="javascript:previewColor('FF3366');" title="#FF3366" width="11px" height="11px" bgcolor="#FF3366"></td><td onmousedown="insertColorTag('FF6666');" onmouseover="javascript:previewColor('FF6666');" title="#FF6666" width="11px" height="11px" bgcolor="#FF6666"></td><td onmousedown="insertColorTag('FF9966');" onmouseover="javascript:previewColor('FF9966');" title="#FF9966" width="11px" height="11px" bgcolor="#FF9966"></td><td onmousedown="insertColorTag('FFCC66');" onmouseover="javascript:previewColor('FFCC66');" title="#FFCC66" width="11px" height="11px" bgcolor="#FFCC66"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('FFFF00');" onmouseover="javascript:previewColor('FFFF00');" title="#FFFF00" width="11px" height="11px" bgcolor="#FFFF00"></td><td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('990099');" onmouseover="javascript:previewColor('990099');" title="#990099" width="11px" height="11px" bgcolor="#990099"></td><td onmousedown="insertColorTag('993399');" onmouseover="javascript:previewColor('993399');" title="#993399" width="11px" height="11px" bgcolor="#993399"></td><td onmousedown="insertColorTag('996699');" onmouseover="javascript:previewColor('996699');" title="#996699" width="11px" height="11px" bgcolor="#996699"></td><td onmousedown="insertColorTag('999999');" onmouseover="javascript:previewColor('999999');" title="#999999" width="11px" height="11px" bgcolor="#999999"></td><td onmousedown="insertColorTag('99CC99');" onmouseover="javascript:previewColor('99CC99');" title="#99CC99" width="11px" height="11px" bgcolor="#99CC99"></td><td onmousedown="insertColorTag('99FF99');" onmouseover="javascript:previewColor('99FF99');" title="#99FF99" width="11px" height="11px" bgcolor="#99FF99"></td><td onmousedown="insertColorTag('CC0099');" onmouseover="javascript:previewColor('CC0099');" title="#CC0099" width="11px" height="11px" bgcolor="#CC0099"></td><td onmousedown="insertColorTag('CC3399');" onmouseover="javascript:previewColor('CC3399');" title="#CC3399" width="11px" height="11px" bgcolor="#CC3399"></td><td onmousedown="insertColorTag('CC6699');" onmouseover="javascript:previewColor('CC6699');" title="#CC6699" width="11px" height="11px" bgcolor="#CC6699"></td><td onmousedown="insertColorTag('CC9999');" onmouseover="javascript:previewColor('CC9999');" title="#CC9999" width="11px" height="11px" bgcolor="#CC9999"></td><td onmousedown="insertColorTag('CCCC99');" onmouseover="javascript:previewColor('CCCC99');" title="#CCCC99" width="11px" height="11px" bgcolor="#CCCC99"></td><td onmousedown="insertColorTag('CCFF99');" onmouseover="javascript:previewColor('CCFF99');" title="#CCFF99" width="11px" height="11px" bgcolor="#CCFF99"></td><td onmousedown="insertColorTag('FF0099');" onmouseover="javascript:previewColor('FF0099');" title="#FF0099" width="11px" height="11px" bgcolor="#FF0099"></td><td onmousedown="insertColorTag('FF3399');" onmouseover="javascript:previewColor('FF3399');" title="#FF3399" width="11px" height="11px" bgcolor="#FF3399"></td><td onmousedown="insertColorTag('FF6699');" onmouseover="javascript:previewColor('FF6699');" title="#FF6699" width="11px" height="11px" bgcolor="#FF6699"></td><td onmousedown="insertColorTag('FF9999');" onmouseover="javascript:previewColor('FF9999');" title="#FF9999" width="11px" height="11px" bgcolor="#FF9999"></td><td onmousedown="insertColorTag('FFCC99');" onmouseover="javascript:previewColor('FFCC99');" title="#FFCC99" width="11px" height="11px" bgcolor="#FFCC99"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('00FFFF');" onmouseover="javascript:previewColor('00FFFF');" title="#00FFFF" width="11px" height="11px" bgcolor="#00FFFF"></td><td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('9900CC');" onmouseover="javascript:previewColor('9900CC');" title="#9900CC" width="11px" height="11px" bgcolor="#9900CC"></td><td onmousedown="insertColorTag('9933CC');" onmouseover="javascript:previewColor('9933CC');" title="#9933CC" width="11px" height="11px" bgcolor="#9933CC"></td><td onmousedown="insertColorTag('9966CC');" onmouseover="javascript:previewColor('9966CC');" title="#9966CC" width="11px" height="11px" bgcolor="#9966CC"></td><td onmousedown="insertColorTag('9999CC');" onmouseover="javascript:previewColor('9999CC');" title="#9999CC" width="11px" height="11px" bgcolor="#9999CC"></td><td onmousedown="insertColorTag('99CCCC');" onmouseover="javascript:previewColor('99CCCC');" title="#99CCCC" width="11px" height="11px" bgcolor="#99CCCC"></td><td onmousedown="insertColorTag('99FFCC');" onmouseover="javascript:previewColor('99FFCC');" title="#99FFCC" width="11px" height="11px" bgcolor="#99FFCC"></td><td onmousedown="insertColorTag('CC00CC');" onmouseover="javascript:previewColor('CC00CC');" title="#CC00CC" width="11px" height="11px" bgcolor="#CC00CC"></td><td onmousedown="insertColorTag('CC33CC');" onmouseover="javascript:previewColor('CC33CC');" title="#CC33CC" width="11px" height="11px" bgcolor="#CC33CC"></td><td onmousedown="insertColorTag('CC66CC');" onmouseover="javascript:previewColor('CC66CC');" title="#CC66CC" width="11px" height="11px" bgcolor="#CC66CC"></td><td onmousedown="insertColorTag('CC99CC');" onmouseover="javascript:previewColor('CC99CC');" title="#CC99CC" width="11px" height="11px" bgcolor="#CC99CC"></td><td onmousedown="insertColorTag('CCCCCC');" onmouseover="javascript:previewColor('CCCCCC');" title="#CCCCCC" width="11px" height="11px" bgcolor="#CCCCCC"></td><td onmousedown="insertColorTag('CCFFCC');" onmouseover="javascript:previewColor('CCFFCC');" title="#CCFFCC" width="11px" height="11px" bgcolor="#CCFFCC"></td><td onmousedown="insertColorTag('FF00CC');" onmouseover="javascript:previewColor('FF00CC');" title="#FF00CC" width="11px" height="11px" bgcolor="#FF00CC"></td><td onmousedown="insertColorTag('FF33CC');" onmouseover="javascript:previewColor('FF33CC');" title="#FF33CC" width="11px" height="11px" bgcolor="#FF33CC"></td><td onmousedown="insertColorTag('FF66CC');" onmouseover="javascript:previewColor('FF66CC');" title="#FF66CC" width="11px" height="11px" bgcolor="#FF66CC"></td><td onmousedown="insertColorTag('FF99CC');" onmouseover="javascript:previewColor('FF99CC');" title="#FF99CC" width="11px" height="11px" bgcolor="#FF99CC"></td><td onmousedown="insertColorTag('FFCCCC');" onmouseover="javascript:previewColor('FFCCCC');" title="#FFCCCC" width="11px" height="11px" bgcolor="#FFCCCC"></td>
+				</tr>
+				<tr>
+					<td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('FF00FF');" onmouseover="javascript:previewColor('FF00FF');" title="#FF00FF" width="11px" height="11px" bgcolor="#FF00FF"></td><td onmousedown="insertColorTag('000000');" onmouseover="javascript:previewColor('000000');" title="#000000" width="11px" height="11px" bgcolor="#000000"></td><td onmousedown="insertColorTag('9900FF');" onmouseover="javascript:previewColor('9900FF');" title="#9900FF" width="11px" height="11px" bgcolor="#9900FF"></td><td onmousedown="insertColorTag('9933FF');" onmouseover="javascript:previewColor('9933FF');" title="#9933FF" width="11px" height="11px" bgcolor="#9933FF"></td><td onmousedown="insertColorTag('9966FF');" onmouseover="javascript:previewColor('9966FF');" title="#9966FF" width="11px" height="11px" bgcolor="#9966FF"></td><td onmousedown="insertColorTag('9999FF');" onmouseover="javascript:previewColor('9999FF');" title="#9999FF" width="11px" height="11px" bgcolor="#9999FF"></td><td onmousedown="insertColorTag('99CCFF');" onmouseover="javascript:previewColor('99CCFF');" title="#99CCFF" width="11px" height="11px" bgcolor="#99CCFF"></td><td onmousedown="insertColorTag('99FFFF');" onmouseover="javascript:previewColor('99FFFF');" title="#99FFFF" width="11px" height="11px" bgcolor="#99FFFF"></td><td onmousedown="insertColorTag('CC00FF');" onmouseover="javascript:previewColor('CC00FF');" title="#CC00FF" width="11px" height="11px" bgcolor="#CC00FF"></td><td onmousedown="insertColorTag('CC33FF');" onmouseover="javascript:previewColor('CC33FF');" title="#CC33FF" width="11px" height="11px" bgcolor="#CC33FF"></td><td onmousedown="insertColorTag('CC66FF');" onmouseover="javascript:previewColor('CC66FF');" title="#CC66FF" width="11px" height="11px" bgcolor="#CC66FF"></td><td onmousedown="insertColorTag('CC99FF');" onmouseover="javascript:previewColor('CC99FF');" title="#CC99FF" width="11px" height="11px" bgcolor="#CC99FF"></td><td onmousedown="insertColorTag('CCCCFF');" onmouseover="javascript:previewColor('CCCCFF');" title="#CCCCFF" width="11px" height="11px" bgcolor="#CCCCFF"></td><td onmousedown="insertColorTag('CCFFFF');" onmouseover="javascript:previewColor('CCFFFF');" title="#CCFFFF" width="11px" height="11px" bgcolor="#CCFFFF"></td><td onmousedown="insertColorTag('FF00FF');" onmouseover="javascript:previewColor('FF00FF');" title="#FF00FF" width="11px" height="11px" bgcolor="#FF00FF"></td><td onmousedown="insertColorTag('FF33FF');" onmouseover="javascript:previewColor('FF33FF');" title="#FF33FF" width="11px" height="11px" bgcolor="#FF33FF"></td><td onmousedown="insertColorTag('FF66FF');" onmouseover="javascript:previewColor('FF66FF');" title="#FF66FF" width="11px" height="11px" bgcolor="#FF66FF"></td><td onmousedown="insertColorTag('FF99FF');" onmouseover="javascript:previewColor('FF99FF');" title="#FF99FF" width="11px" height="11px" bgcolor="#FF99FF"></td><td onmousedown="insertColorTag('FFCCFF');" onmouseover="javascript:previewColor('FFCCFF');" title="#FFCCFF" width="11px" height="11px" bgcolor="#FFCCFF"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="palette_data/palette.js"></script>
+
+</body></html>

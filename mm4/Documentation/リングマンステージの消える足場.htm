@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja"><div id="tenten-safe-area-provider" style="all: initial;"></div><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%9E%E3%83%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%81%AE%E6%B6%88%E3%81%88%E3%82%8B%E8%B6%B3%E5%A0%B4_files/ruffle.js"></script><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リングマンステージの消える足場</title>
+</head>
+
+<body>
+<p><br></p>
+リングマンステージの消える足場の設定についての記述です。
+<hr>
+<pre>
+◇オブジェクトの設置について
+・EnemyID:08～0Bが虹色足場，EnemyID:0C～0Fがリング状足場の消去・再描画にそれぞれ利用されている
+・1つの部屋につき最大4つまで消える足場の設定が可能
+・どの設定を使用するかは設置するオブジェクトによって決める
+  (EnemyID:08,0Cが1つ目, 09,0Dが2つ目, 0A,0Eが3つ目, 0B,0Fが4つ目のデータを使用する)
+
+
+◇消える足場データ
+・$7A267-7A27A (14) = 部屋番号 : $7A27Bを基点とした1つ目の足場データの相対アドレス(2つ目は+8バイト, 3つ目は+16バイト,...)
+・$7A27B-7A342 (C8) 消える足場データ。8bytesで1組, 全部で25本分。
+
+・足場データのフォーマット
+byte0-1 -&gt; 描画開始のネームテーブルのアドレス(ビッグエンディアン)
+byte2   -&gt; 静止時のX座標(low) (オブジェクト設置時のX座標と同じ値でよい)
+byte3   -&gt; 足場の再描画のために使用する16x16チップ番号
+byte4   -&gt; 足場の消去・再描画方向(01 -&gt; 左から右, 02 -&gt; 右から左)
+byte5   -&gt; 16x16チップ単位で数えた足場消去開始位置
+byte6   -&gt; 16x16チップ単位で数えた足場の長さ(02～09の範囲)
+byte7   -&gt; 消去開始X座標(実際には下図のように左端,右端から8ドット離れた位置を指定)
+
+  <img src="%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%9E%E3%83%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%81%AE%E6%B6%88%E3%81%88%E3%82%8B%E8%B6%B3%E5%A0%B4_files/ring_erasex1.png"> <img src="%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%9E%E3%83%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%81%AE%E6%B6%88%E3%81%88%E3%82%8B%E8%B6%B3%E5%A0%B4_files/ring_erasex2.png">
+
+(*)byte0-1の計算方法
+  ・足場の消去描画方向が左から右のとき
+      byte0-1 = 0x2000 + [byte5のbit7-4の値] * 0x40 + ([byte5のbit3-0の値] - 1) * 2
+  ・右から左のとき
+      byte0-1 = 0x2000 + [byte5のbit7-4の値] * 0x40 + ([byte5のbit3-0の値] + 1) * 2
+  
+  もしくは, G-NESでネームテーブル表示機能を使えばマウスカーソルの位置のアドレスを表示してくれる
+  <img src="%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%9E%E3%83%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%81%AE%E6%B6%88%E3%81%88%E3%82%8B%E8%B6%B3%E5%A0%B4_files/nametable_addr1.png"> <img src="%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%9E%E3%83%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%81%AE%E6%B6%88%E3%81%88%E3%82%8B%E8%B6%B3%E5%A0%B4_files/nametable_addr2.png">
+  マウスカーソルを置く位置に注意。
+    ・左から右に消える場合, 消える足場の1個左の16x16チップの左上
+    ・右から左に消える場合, 消える足場の1個右の16x16チップの左上
+
+</pre>
+
+
+
+</body><div id="tenten-ja-window" style="all: initial; --left: 668px; --top: 306.8999938964844px;"></div></html>

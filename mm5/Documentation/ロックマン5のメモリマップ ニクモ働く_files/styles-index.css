@@ -1,0 +1,481 @@
+body {
+background-color:#bddcf0;
+	background-image: url(http://nikumo.seesaa.net/image/blue_bg.gif);
+	background-repeat: repeat-x;
+	background-attachment: fixed;margin:0px;
+padding:0px;
+text-align:center;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+#container{
+border-left:1px solid #E0FFFF;
+border-right:1px solid #E0FFFF;
+background-color:#FFFFFF;
+margin:0px auto 0px auto;
+width:801px;
+_width:821px;
+color:#666666;
+font-size:12px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+a{
+color:#5050e5;
+text-decoration:none;
+}
+h1 {
+margin:0px;
+padding: 40px 0 3px 0;
+padding: 50px 0 3px 0\9;	/* IE8 and below */ 
+font-weight:bolder;
+font-size:24px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+h1 a{
+color:#1a3399;
+text-decoration: none;
+font-weight:bolder;
+}
+
+h2 {
+height: 38px;
+font-size:14px;
+font-weight:bolder;
+padding-top: 10px;
+padding-top: 13px\9;	/* IE8 and below */
+padding-left: 50px;
+background:url(http://nikumo.seesaa.net/image/blue_h2.gif) no-repeat 0 0px #50b4e5;
+}
+
+h2 a{
+text-decoration: none;
+color:#ffffff;
+}
+
+#banner{
+background:url(http://nikumo.seesaa.net/image/blue_headerbg.jpg) no-repeat;
+margin:0px;
+padding-left:30px;
+text-align:left;
+height:150px;
+}
+
+.description {
+color:#666666;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+font-weight:bold;
+}
+
+.navi {
+text-align:center;
+margin-bottom:10px;
+margin-top:10px;
+}
+#content {
+margin:0px 0px 0px 5px;
+float:left;
+width:585px;
+}
+
+.blog {
+padding:0px;
+text-align:left;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+.blogbody {
+width:545px;
+margin-top: 20px;
+margin-left: 20px;
+font-weight:normal;
+margin-bottom:15px;
+}
+
+.date{
+background-color:#D1D5E7;
+border:solid 1px #7CACD4;
+clear:left;
+color:#FFF;
+margin:0px;
+padding:5px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+font-size:12px;
+}
+
+.title{
+margin-bottom:0px;
+font-weight:bold;
+}
+.title a{
+border:none;
+}
+
+.text{
+margin-top:0px;
+padding:20px 0px 5px 0px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+font-size: 13px;
+line-height:1.2em;
+}
+.posted{ 
+margin-bottom:5px;
+padding:15px 0px 8px 0px;
+border-bottom:solid 1px #aeaaa7;
+color:#aeaaa7;
+text-align: right;
+font-size:10px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+.posted a {
+color:#aeaaa7;
+	}
+
+#links-left {
+padding-top: 5px;
+padding-left: 20px;
+font-weight:normal;
+width:189px;
+float:left;
+text-align:left;
+}
+#links-left form{
+margin-bottom:0;
+display:inline;
+}
+#links {
+}
+
+#calendar {
+font-size:12px;
+border:0px solid #D3D3D0;
+border-left: none;
+width:189px;
+background-color:#FFF;
+}
+#calendar table {
+font-family:Verdana;
+border-spacing:3px;
+padding:10px;
+width:189px;
+background-color:#f0ffff;
+}
+#calendar th {
+color:#808080;
+background:#b3e6ff;
+font-family:Verdana;
+}
+
+#calendar td {
+border:solid 1px #EAEAEA;
+background:#ffffff;
+color:#A4A4A4;
+font-family:Verdana;
+}
+.calendarhead {
+background:url(http://nikumo.seesaa.net/image/blue_sidetitle.gif) #50b4e5;
+padding:6px 5px 4px 10px;
+font-weight:bold;
+color:#FFF;
+font-size:12px;
+font-family:Verdana;
+}
+.calendarhead a{
+color:#FFF;
+text-decoration:none;
+}
+.calendarhead .calendarday{
+color:#FFF;
+font-size:10px;
+}
+.calendarhead .calendarday a{
+color:#FFF;
+text-decoration:none;
+font-size:10px;
+}
+
+.calendarday {
+padding:3px 0;
+margin-bottom:10px;
+color:#A4A4A4;
+font-size:12px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+.calendarday a {
+color:#4682B4;
+text-decoration:none;
+}
+
+.sidetitle {
+_width: 189px;	/* IE6 */
+margin-top:15px;
+background:url(http://nikumo.seesaa.net/image/blue_sidetitle.gif) #50b4e5;
+padding:6px 5px 4px 15px;
+color:#FFF;
+font-weight:bold;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+.side {
+color:#A3A3A3;
+line-height:1.5em;
+padding: 10px;
+font-size:10px;
+background-color:#FFF;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+.side  a{
+font-size:12px;
+}
+
+.side-tag {
+color:#A3A3A3;
+padding: 10px;
+font-size:10px;
+border:0px solid #D3D3D0;
+background-color:#FFF;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+.side-tag a{
+font-size:12px;
+}
+.side input{
+}
+
+.syndicate {
+text-align:center;
+font-size:10px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+line-height:1.2em;
+}
+
+#comments {
+margin-bottom:30px;
+margin-top:25px;
+text-align:left;
+padding:0px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+#comments form {
+margin:0px;
+padding:0px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+#comments input {
+max-width:200px;
+}
+#comments textarea{
+width:300px;
+margin-bottom:5px;
+}
+.comments-head{ 
+font-weight:bold;
+margin:0px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+.comments-body {
+margin:0px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+.comments-post {
+padding:3px 0px 3px 0px;
+text-align:right;
+font-size:10px;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+#trackback {
+margin-bottom:30px;
+margin-top:25px;
+border:1px solid #D3D3D0;
+padding:5px;
+text-align:left;
+font-family:"‚l‚r ‚oƒSƒVƒbƒN", "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Osaka", "Verdana", sans-serif;
+}
+
+
+
+#footer{
+clear:left;
+height:65px;
+text-align: center;
+}
+
+.powered {
+padding:10px 5px 10px 5px;
+text-align:center;
+}
+
+.powered table {
+display:inline;
+}
+
+
+.copyright{
+text-align:center;
+}
+.diet-content{
+padding-left:10px;
+}
+#diet-foods{
+padding-left:10px;
+}
+.food-title{
+width:20%;
+clear:left;
+float:left;
+}
+.food-content{
+width:75%;
+padding-top:10px;
+}
+#diet-container{
+border:1px solid #999;
+padding:5px;
+margin-bottom:5px;
+}
+.diet-title{
+background-color:#333333;
+padding:2px 10px 2px 5px;
+margin-top:5px;
+}
+.diet-content{
+padding-left:10px;
+}
+#diet-foods{
+padding-left:10px;
+}
+.food-title{
+width:20%;
+clear:left;
+float:left;
+}
+.food-content{
+width:75%;
+padding-top:10px;
+}
+blockquote{
+border:1px solid #7CACD4;
+padding:5px;
+margin:10px;
+}
+.tag-word{
+margin:20px 0px 0px 0px;
+line-height:1em;
+}
+.tag{
+padding:10px;
+background-color:#FFF;
+}
+#tag_cloud{
+border:1px solid #CCC;
+padding:10px;
+text-align:left;
+position:relative;
+}
+#tag_cloud a {
+padding:2px;
+}
+.tag-title{
+font-size:16px;
+font-weight:bold;
+text-align:left;
+}
+.tag-body{
+margin:10px 0px;
+padding:10px 0px 0px 0px;
+position:relative;
+}
+.tag-service{
+text-align:left;
+font-weight:bold;
+border-bottom:1px solid #CCC;
+padding:0px 0px 5px 0px;
+clear:left;
+position:relative;
+}
+.tag-search{
+text-align:right;
+padding:5px 0px;
+margin-bottom:10px;
+font-weight:bold;
+position:relative;
+}
+.tag-article{
+padding:0px 10px 10px 10px;
+text-align:left;
+position:relative;
+}
+.tag-article-title{
+text-align:left;
+padding:0px 0px 5px 0px;
+font-weight:bold;
+position:relative;
+}
+.tag-article-posted{
+font-weight:normal;
+position:relative;
+}
+.tag-article-summary{
+padding:0px 10px;
+line-height:1em;
+position:relative;
+}
+.tag-more{
+text-align:right;
+margin:10px 0px;
+clear:left;
+position:relative;
+}
+.tag-photos{
+float:left;
+margin:10px;
+position:relative;
+width:140px;
+height:200px;
+}
+.tag-photos-title{
+line-height:1em;
+padding:5px 0px;
+text-align:left;
+position:relative;
+}
+.tag-audios{
+margin:5px;
+position:relative;
+}
+.tag-audios-title{
+text-align:left;
+font-weight:bold;
+padding:0px 0px 5px 0px;
+position:relative;
+}
+.tag-audios-posted{
+font-weight:normal;
+position:relative;
+}
+.tag-videos{
+float:left;
+margin:10px;
+position:relative;
+}
+.tag-videos-title{
+line-height:1em;
+padding:5px 0px;
+text-align:left;
+position:relative;
+}
+.tag-navi{
+clear:left;
+text-align:center;
+margin:10px 0px;
+position:relative;
+}
+
+
+#ad-60days-area h2.date{
+	background: none;
+	border: none;
+	margin: 0;
+	padding: 0;
+	}

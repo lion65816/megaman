@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head><script src="https://blog.seesaa.jp/js/insert-ad-legacy.min.js"></script>
+<link rel="canonical" href="http://nikumo.seesaa.net/article/246342301.html">
+<meta property="fb:app_id" content="216026118496977" />
+<meta property="og:title" content="ロックマン5のメモリマップ" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://nikumo.seesaa.net/article/246342301.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="DARSさんのメモリマップがロックマン2を弄るときに便利だったので、  ロックマン5のメモリマップを書いておきます。  とは言うものの、MEGAMAN5とメモリマップは変わらないと思われます。    MEGAMAN5のメモリマップは" />
+<meta property="og:site_name" content="ニクモ働く" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@Siriana_peer" />
+<!-- -->
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<META name="y_key" content="ae0cc9890b5e7c06">
+<meta name="google-site-verification" content="fhLh-4x7sr-_OIj7JM7rvxfpfMx8A5C-8X-HoXOF8xI" />
+<title>ロックマン5のメモリマップ: ニクモ働く</title>
+<meta name="description" content="ハロワの話題をメインにちょっと病んでる方向性で行きましょ　そんなブログで大丈夫か？　適当日記" />
+<meta name="keywords" content="C#,6502,ファミコンハック,プログラミング " />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<link rel="stylesheet" href="https://nikumo.up.seesaa.net/styles-index.css?t=1288641523" type="text/css" />
+<link rel="alternate" href="http://nikumo.seesaa.net/index.rdf" type="application/rss+xml" title="RSS" />
+
+<LINK REL="SHORTCUT ICON" HREF="https://nikumo.up.seesaa.net/image/favicon.ico">
+</head>
+<body><script type="text/javaScript">seesaa_site_id = 'nikumo'; seesaa_floating = false;</script>
+<a href="javascript:document.cookie='force_pc=0; max-age=15768000; path=/'; document.cookie='force_sp=1; max-age=15768000; path=/'; document.location='/?from_pc'" style="display: block; width: 100%; min-width: 1070px; text-decoration: none;"><div id="iphone-link" style="display:none; font-family: sans-serif; padding: 28px 0; width: 100%; color: #FFF; background: #333; min-height: 80px; line-height: 80px; box-sizing: border-box; font-size: 48px; font-weight: 700; text-decoration:none;">スマートフォン専用ページを表示</div></a>
+<script type="text/javascript"><!--
+if ((0 <= navigator.userAgent.indexOf('iPhone')) || (0 <= navigator.userAgent.indexOf('Android'))) { document.getElementById('iphone-link').style.display = 'block'; }
+//--></script>
+<!-- common header -->
+<script type="text/javascript" src="https://blog.seesaa.jp/contents/js/common_header.js" charset="Shift_JIS"></script>
+<script type="text/javascript">renderCmnHeader('#333333', '#eeeeee', '4.gif');</script>
+<!-- common header -->
+
+
+<div id="container">
+<script type="text/javascript" language="JavaScript" src="https://blog.seesaa.jp/contents/js/ad_plugin.js"></script>
+<div id="banner">
+<h1><a href="http://nikumo.seesaa.net/" accesskey="1">ニクモ働く</a></h1>
+
+<span class="description">ハロワの話題をメインにちょっと病んでる方向性で行きましょ　そんなブログで大丈夫か？　適当日記</span>
+
+
+
+</div>
+
+
+<div id="links-left">
+<div class="sidetitle">検索</div>
+<div class="side">
+<form method="get" action="http://nikumo.seesaa.net/pages/user/search/" id="form64283993">
+<table style="border-collapse:collapse;overflow:hidden;font-size:12px;text-align:left;width:98%;">
+<tr>
+<td>
+<input value="" name="keyword" type="text" size="20" style="width:90px;"/>&nbsp;<input value="検索" type="submit" class="input-submit"/>
+</td>
+</tr>
+</table>
+</form>
+</div>
+
+<div class="sidetitle">勝手にリンク</div>
+<div class="side">
+<a href="http://nemusg.com/" target="_blank">眠すぎ日記 （NMSGさん）</a><br />
+<a href="http://ameblo.jp/yayochi-blog/" target="_blank">やよち茶屋支店 （やよちさん）</a><br />
+<a href="http://www.geocities.jp/sasasdf/" target="_blank">I WANNA BE THE NATSUKA （なつかさん）</a><br />
+<a href="http://swingpop.exblog.jp/" target="_blank">花火の上の離れたところ （えるかかさん）</a><br />
+<a href="http://tumayouzi.blog80.fc2.com/" target="_blank">500 Internal Server Error （爪楊枝さん）</a><br />
+<a href="http://pocarito.blogspot.com/" target="_blank">ぽかりと （ぽかりさん）</a><br />
+<a href="http://ameblo.jp/blog-catechin/" target="_blank">カテキンのブログ （カテキンさん）</a><br />
+<a href="http://hungryharapeko.blogspot.com/" target="_blank">最悪板でやれ （はらぺこさん）</a><br />
+<a href="http://n-4zhashi.6.ql.bz/" target="_blank">t.s.d.++ （四ッ橋さん）</a><br />
+<a href="http://siryur.wordpress.com/" target="_blank">しりゅすぺ （しりゅさん）</a><br />
+<a href="http://king-soukutu.com/" target="_blank">王の巣窟 （キングさん）</a><br />
+<a href="http://mizuki3.seesaa.net/" target="_blank">みずぶろ （みづきさん）</a><br />
+</div>
+
+<div class="sidetitle">ハックとかFC改造とかリンク</div>
+<div class="side">
+<a href="http://www.futureworld601x-x.com/8yehldd6q711-sjhd32aaa/index.htm" target="_blank">改造ロックマンまとめサイト （七色ゆうさん）</a><br />
+<a href="http://borokobo.web.fc2.com/index.html" target="_blank">Neoぼろくず工房 （プレさ兵衛さん）</a><br />
+<a href="http://rm2haxx.dtiblog.com/" target="_blank">ぶっ壊れ宇宙 （DARSさん）</a><br />
+<a href="http://www.geocities.co.jp/Playtown-Bingo/2392/index.html" target="_blank">ゲイムのお部屋 （クワタさん）</a><br />
+<a href="http://www.yuko2ch.net/rockman/" target="_blank">GamesTech （FinalFighterさん）</a><br />
+<a href="http://www.geocities.jp/misty_earn/" target="_blank">水辺の倉庫 （Mistyさん）</a><br />
+<a href="http://hp.vector.co.jp/authors/VA042397/index.html" target="_blank">ブルジョアソフトウェア研究所 （Tekepenさん）</a><br />
+<a href="http://www32.atwiki.jp/kaizouiwao/" target="_blank">改造岩男@ まとめ （不明？ Wiki系）</a><br />
+<a href="http://awedxz.blog.fc2.com/" target="_blank">続・ナイスピブログ （ナイスピさん）</a><br />
+<a href="http://minatonoitiba.web.fc2.com/mainpage.html" target="_blank">GUNG-HO-GUNSより愛を込めて （SOPHIAさん）</a><br />
+</div>
+
+<div class="sidetitle">カテゴリ</div>
+<div class="side">
+<a href="http://nikumo.seesaa.net/category/8902208-1.html">日記</a>(25)<br />
+<a href="http://nikumo.seesaa.net/category/8902232-1.html">ノンジャンル</a>(3)<br />
+<a href="http://nikumo.seesaa.net/category/8904639-1.html">ポケモン</a>(1)<br />
+<a href="http://nikumo.seesaa.net/category/8967261-1.html">日本ハムファイターズ</a>(3)<br />
+<a href="http://nikumo.seesaa.net/category/8968518-1.html">プログラミング</a>(2)<br />
+<a href="http://nikumo.seesaa.net/category/8997103-1.html">ニュース</a>(1)<br />
+<a href="http://nikumo.seesaa.net/category/8997104-1.html">プロ野球</a>(2)<br />
+<a href="http://nikumo.seesaa.net/category/9073145-1.html">配信</a>(1)<br />
+<a href="http://nikumo.seesaa.net/category/12356398-1.html">ハック的な</a>(21)<br />
+</div>
+
+<div class="sidetitle">過去ログ</div>
+<div class="side">
+<a href="/archives/201408-1.html">2014年08月</a>(1)<br />
+<a href="/archives/201312-1.html">2013年12月</a>(1)<br />
+<a href="/archives/201308-1.html">2013年08月</a>(1)<br />
+<a href="/archives/201302-1.html">2013年02月</a>(1)<br />
+<a href="/archives/201301-1.html">2013年01月</a>(2)<br />
+<a href="/archives/201212-1.html">2012年12月</a>(3)<br />
+<a href="/archives/201211-1.html">2012年11月</a>(1)<br />
+<a href="/archives/201210-1.html">2012年10月</a>(2)<br />
+<a href="/archives/201209-1.html">2012年09月</a>(2)<br />
+<a href="/archives/201208-1.html">2012年08月</a>(3)<br />
+<a href="/archives/201201-1.html">2012年01月</a>(7)<br />
+<a href="/archives/201111-1.html">2011年11月</a>(1)<br />
+<a href="/archives/201101-1.html">2011年01月</a>(1)<br />
+<a href="/archives/201012-1.html">2010年12月</a>(4)<br />
+<a href="/archives/201011-1.html">2010年11月</a>(15)<br />
+<a href="/archives/201010-1.html">2010年10月</a>(13)<br />
+</div>
+
+<div class="sidetitle">最近の記事</div>
+<div class="side">
+(08/17)<a href="http://nikumo.seesaa.net/article/424339055.html">ブログ移転しました</a><br />
+(08/06)<a href="http://nikumo.seesaa.net/article/403271805.html">ロックマン4BCASお疲れ様でした</a><br />
+(12/14)<a href="http://nikumo.seesaa.net/article/382689441.html">ロックマン3Claw</a><br />
+(08/18)<a href="http://nikumo.seesaa.net/article/372361349.html">ロックマン3BC</a><br />
+(02/06)<a href="http://nikumo.seesaa.net/article/319034597.html">SFCについて</a><br />
+</div>
+
+<div class="sidetitle">最近のコメント</div>
+<div class="side">
+<a href="http://nikumo.seesaa.net/article/304281004.html#comment">12月1日初見ハックTA</a> by にくも (12/03)<br />
+<a href="http://nikumo.seesaa.net/article/304281004.html#comment">12月1日初見ハックTA</a> by SOPHIA (12/01)<br />
+<a href="http://nikumo.seesaa.net/article/294534412.html#comment">ロックマン5、ラッシュコイルを3,4風にするパッチ</a> by にくも (09/28)<br />
+<a href="http://nikumo.seesaa.net/article/294534412.html#comment">ロックマン5、ラッシュコイルを3,4風にするパッチ</a> by にくも (09/28)<br />
+<a href="http://nikumo.seesaa.net/article/293016353.html#comment">せっかくMMC5マッパーを作ったのだからやはり拡張音源を使わないと</a> by SOPHIA (09/21)<br />
+</div>
+
+<script type="text/javascript" language="javascript" src="https://blog.seesaa.jp/js/tag_cloud.js"></script>
+<div class="sidetitle">タグクラウド</div>
+<div class="side-tag">
+<div id="tag_cloud_65319326" style="word-break:break-all;">
+<a href="/tag/Silverlight" class="_tag" title="Silverlight/2" rel="nofollow">Silverlight</a> <a href="/tag/%83v%83%8D%96%EC%8B%85" class="_tag" title="プロ野球/6" rel="nofollow">プロ野球</a> <a href="/tag/%93%FA%96%7B%83V%83%8A%81%5B%83Y" class="_tag" title="日本シリーズ/5" rel="nofollow">日本シリーズ</a> <a href="/tag/%93%FA%96%7B%83n%83%80%83t%83%40%83C%83%5E%81%5B%83Y" class="_tag" title="日本ハムファイターズ/2" rel="nofollow">日本ハムファイターズ</a> <a href="/tag/%96%EC%8B%85" class="_tag" title="野球/2" rel="nofollow">野球</a> </div>
+<script type="text/javascript" language="javascript"><!--
+tag_cloud("tag_cloud_65319326");
+--></script>
+</div>
+
+<div class="sidetitle">ツイッター</div>
+
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 5,
+  interval: 6000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#333333',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#000000',
+      color: '#ffffff',
+      links: '#4aed05'
+    }
+  },
+  features: {
+    scrollbar: true,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('nikumo').start();
+</script>
+<br /><script src="http://f1.nakanohito.jp/lit/index.js" type="text/javascript" charset="utf-8"></script><br /><script type="text/javascript">try { var lb = new Vesicomyid.Bivalves("113703"); lb.init(); } catch(err) {} </script>
+<br>
+なんか勢いで登録してしまった<br>
+↓ブログランキングサイト<br>
+<a href="http://internet.blogmura.com/twitter/" target="_blank"><img src="http://internet.blogmura.com/twitter/img/twitter88_31.gif" width="88" height="31" border="0" alt="にほんブログ村 ネットブログ Twitterへ" /></a><br /><a href="http://internet.blogmura.com/twitter/" target="_blank">にほんブログ村</a>
+<br>
+
+<br><br>
+
+
+
+
+<div class="syndicate">
+<a href="/index.rdf">RDF Site Summary</a><br />
+<a href="/index20.rdf">RSS 2.0</a><br />
+</div>
+
+<div class="powered">
+
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><a href="https://blog.seesaa.jp/"><img src="https://blog.seesaa.jp/img/seesaablog.gif" width="138" height="22" border="0" alt="Powered by Seesaa" /></a></td>
+</tr> 
+<tr>
+<td><div style="background-color:#9C9C9C;text-align:center;font-size:10px;padding:3px;margin:0px;"><a href="https://blog.seesaa.jp" style="color:#FFF;">Seesaa</a><a href="https://blog.seesaa.jp" style="color:#FFF;">ブログ</a></div></td>
+</tr>
+</table>
+</div>
+
+
+
+</div>
+
+
+<div id="content">
+
+<!-- Content -->
+
+
+<div class="navi">
+<a href="http://nikumo.seesaa.net/article/245792515.html">&lt;&lt;</a> <a href="http://nikumo.seesaa.net/article/245792515.html">ロックマン5　投擲武器を作る</a> | 
+<a href="http://nikumo.seesaa.net/">TOP</a>
+ | <a href="http://nikumo.seesaa.net/article/246743713.html">ロックマン5の敵のドロップを治したい的な</a> <a href="http://nikumo.seesaa.net/article/246743713.html">&gt;&gt;</a>
+</div>
+
+
+
+
+
+
+<div class="blog">
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:Trackback="http://madskills.com/public/xml/rss/module/Trackback/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description
+    rdf:about="http://nikumo.seesaa.net/article/246342301.html"
+    trackback:ping=""
+    dc:title="ロックマン5のメモリマップ"
+    dc:identifier="http://nikumo.seesaa.net/article/246342301.html"
+    dc:description="DARSさんのメモリマップがロックマン2を弄るときに便利だったので、  ロックマン5のメモリマップを書いておきます。  とは言うものの、MEGAMAN5とメモリマップは変わらないと思われます。    MEGAMAN5のメモリマップは海外の某所にあるので、そこから引用して日本語訳的なものになりますが・・・  間違いもあるかも知れませんが、あれば便利なので一応書いておきます。    また、一部確認できなかったりよくわからない所は、そのままが入っていたりします。  0300番台以降.."
+    dc:creator="ニクモ"
+    dc:subject="ハック的な"
+    dc:date="2012-01-15T23:38:20+09:00"
+/>
+</rdf:RDF>
+-->
+<div class="blogbody">
+<h2 class="title"><a href="http://nikumo.seesaa.net/article/246342301.html" class="title">ロックマン5のメモリマップ</a></h2>
+
+<div class="text"><p><a href="http://rm2haxx.dtiblog.com/" target="_blank">DARS</a>さんの<a href="http://rm2haxx.dtiblog.com/blog-entry-3.html" target="_blank">メモリマップ</a>がロックマン2を弄るときに便利だったので、</p>  <p>ロックマン5のメモリマップを書いておきます。</p>  <p>とは言うものの、MEGAMAN5とメモリマップは変わらないと思われます。    <br />MEGAMAN5のメモリマップは<a href="http://datacrystal.romhacking.net/wiki/Mega_Man_V:RAM_map" target="_blank">海外の某所</a>にあるので、そこから引用して日本語訳的なものになりますが・・・</p>  <p>間違いもあるかも知れませんが、あれば便利なので一応書いておきます。    <br />また、一部確認できなかったりよくわからない所は、そのままが入っていたりします。</p>  <p>0300番台以降のオブジェクトごとの値は、先頭がロックマン、その次の0x01-0x07までは特殊武器、0x08-0x17までが敵キャラクター等として用意されてるようです。</p>  <p>ビットは一番右のビットがbit0とし、一番左のビットをbit7とします。</p><a name="more"></a>  <p>&#160;</p>  <p>ゼロページがほとんど訳せてないな・・・(´・ω・｀)</p>  <p>0120番台のメモリは未使用らしいです。</p>  <p>気が向いた時に随時更新</p>  <p>&#160;</p>  <p>0000-0013 おそらく一時メモリ    <br />    <br />0014 1コンが入力された瞬間のみ値が入る。     <br />0015 常に00     <br />0016 1コンのキー入力（右:01, 左:02, 下:04, 上:08, Start:10, Select:20, B:40, A:80）     <br />0017 常に00     <br />0018 Palette changed     <br />0019 Draw horizontal data     <br />001A Draw vertical data     <br />001B Palette cycle stopped     <br />001C Update tile     <br />001E New tile position     <br />0023 New tile number     <br />0026 現在のステージ     <br />0027 PRG bank for level     <br />0028 スクロールするときの向き     <br />0029 現在のスクロール番号（？）     <br />002A Maximum screen     <br />002B Current screen     <br />002C Mirroring     <br />002D 体力バーの参照する値     <br />002E 武器のバーの参照する値     <br />002F ボスのバーが有効かどうか     <br />0030 ロックマンの状態     <br />0031 ロックマンの向き     <br />0032 現在装備している特殊武器     <br />0033 武器を撃った時に構える時間     <br />0034 武器を撃った時に構えるというフラグ、また種類     <br />0035 スライディングの時間     <br />0036 Kill block type (F0 =&gt; Kill, 00 =&gt; Nothing,     <br />others =&gt; decrease&#160;&#160; life by 1)     <br />0037 Platform sprite index     <br />0038 チャージショットのカウンター     <br />0039 Platform direction     <br />003A Platform X speed low     <br />003B Platform X speed high     <br />003C Previous X pos low     <br />003D Previous X pos high     <br />003E Previous Y pos low     <br />003F Previous Y pos high     <br />0041 未使用（？）     <br />0042 Largest block type found     <br />0043 Nb. of destroyed blocks     <br />0044 Previous scroll X     <br />0045 Previous scroll Y     <br />0046 Vertical level     <br />0047 Block number to draw     <br />0048-004F Block types in each tested position     <br />0050 武器選択画面でのカーソルの位置     <br />0051 未使用（？）     <br />0054 Freeze counter     <br />0055 Horizontal autoscroll lock     <br />0056 Boss sprite index     <br />0057 Bump timer     <br />0058 Bump flag     <br />0059 Destroyed block disable     <br />005A Animation disable     <br />005B 発射した武器の種類     <br />005D Picked up M-tank     <br />0060 Display updated     <br />0069 Last screen visited     <br />006A ボスラッシュの時の現在のボス     <br />006B ボスラッシュのボス撃破フラグ     <br />006C 現在のステージレベルが入ってたり、値によってブルースステージなのかワイリーステージなのかのフラグになってたりするっぽい。     <br />006D ビートプレートの取得フラグ。     <br />006E ステージのクリアフラグ     <br />006F ブルース、ワイリーステージのクリアフラグ。&#160; <br />0074 Show elevator borders     <br />0075 Elevator position low     <br />0076 Elevator position high     <br />0078 Split parameters     <br />0080-008F Thread info     <br />0090 VBL flag     <br />0092 常に毎フレーム加算されるカウンター     <br />0093-0094 Execute address     <br />0095 Critical section flag     <br />0096 Split effect enabled     <br />0097-0098 Split effect execution routine     <br />0099 Next split effect number     <br />009A Current split effect number     <br />009B Next split position     <br />009C Current split position     <br />009D ロックマンが動かせる時とかに毎フレーム加算されるカウンター（92と似ているが、武器チェンジ画面とかでは加算されない）     <br />009E Current sprite drawn     <br />009F Next OAM table offset     <br />00A0 Freeze frame     <br />00A1 重力の強さ     <br />00A2 Current Y scroll     <br />00A4 Current X scroll     <br />00A5 Current name table     <br />00A6 Current sprite     <br />00A7 Saved X register when PRG change interrupted     <br />00A8 Saved Y register when PRG change interrupted     <br />00A9 Colour lock     <br />00AC Horizontal scroll direction     <br />00AD Next enemy in level     <br />00AE Previous enemy in level     <br />00AF 重力が反転しているかどうかのフラグ（フラグを立てるだけではロックマンの向きは変わらない）     <br />00B0 現在のロックマンのライフ     <br />00B1-00BC 現在の武器エネルギー量（取得フラグも兼ねる）     <br />00BD E缶の数（武器メニューで移動できるかどうかフラグを最上位ビットが兼ねているそうで80で0個81で1個）     <br />00BE M缶の数（同上）     <br />00BF 残機     <br />00C0 In sound code     <br />00C7 Song time increment     <br />00C8 Song time low     <br />00C9 Song speed high     <br />00CA Song spedd low     <br />00CB Global transpose     <br />00CC SF channels playing     <br />00CF Current track bit     <br />00D0-00D1 SF pointer     <br />00D2 SF transpose     <br />00D3 SF ontime     <br />00D4 SF timer     <br />00D5 SF on-timer     <br />00DA Sound queue write pointer     <br />00DB Sound queue read pointer     <br />00DC-00E3 Sound queue     <br />00E4-00E7 LSFR （<a href="http://ja.wikipedia.org/wiki/%E7%B7%9A%E5%BD%A2%E5%B8%B0%E9%82%84%E3%82%B7%E3%83%95%E3%83%88%E3%83%AC%E3%82%B8%E3%82%B9%E3%82%BF" target="_blank">LFSR</a>の間違い？ 乱数の種？）&#160; <br />00E8-00E9 NMI return address     <br />00EA-00EB Background CHR banks     <br />00EC-00EF Sprite CHR banks     <br />00F0 Screen disabled     <br />00F2 Last MMC3 command     <br />00F3 Last PRG bank 8000-9FFF     <br />00F4 Last PRG bank A000-BFFF     <br />00F5 New PRG bank 8000-9FFF     <br />00F6 New PRG bank A000-BFFF     <br />00F7 In PRG change     <br />00F8 Postponed PRG change     <br />00F9 Scroll X high     <br />00FA Scroll Y     <br />00FB Vertical screen offset     <br />00FC Scroll X     <br />00FD Current nametable     <br />00FE Display settings 1     <br />00FF Display settings 2     <br />0100-011F 設置アイテムの取得フラグ（E缶とか置き1UPとか大回復とか。これが立っていると出現しない。改造コードで全部埋めるとありとあらゆるオブジェクトが出現しなくなる。）     <br />0150-016F Debug stack     <br />0170-017F Main stack     <br />0190-01AF Palette animation stack     <br />01B0-01DF Game stack     <br />01E0-01FF System stack     <br />0200-02FF スプライトDMA（参照：<a href="http://gikofami.fc2web.com/" target="_blank">ｷﾞｺ猫でもわかるファミコンプログラミング</a> 第9章）     <br />0300-0317 オブジェクトID     <br />0318-032F X 座標小数     <br />0330-0347 X 座標     <br />0348-035F 部屋番号     <br />0360-0377 Y 座標少数     <br />0378-038F Y 座標     <br />0390-03A7 画面上部にジャンプで消えた（スターマンステージで大ジャンプで画面外にまで出た時とか）時に値が変化する     <br />03A8-03BF X 速度少数     <br />03C0-03D7 X 速度     <br />03D8-03EF Y 速度少数     <br />03F0-0407 Y 速度     <br />0408-041F オブジェクトの属性 (bit7:ロックマンとの当たり判定はあるか,     <br />bit6:武器との当たり判定はあるか,bit5-0:当たり判定のサイズ)     <br />    <br />0420-0437 向き     <br />0438-044F Sprite number（そのステージの何番目の敵かの番号が入る（？））     <br />0450-0467 体力（ただし、ロックマン自身の体力はここには入らない。）     <br />0468-047F 変数 A     <br />0480-0497 変数 B     <br />0498-04AF 変数 C     <br />04B0-04C7 変数 D     <br />04C8-04DF 変数 E     <br />04E0-04F7 変数 F     <br />04F8-050F 変数 G     <br />0510-0527 変数 H     <br />0528-053F ディスプレイフラグ (bit6:上下反転する, bit5:左右反転をする,     <br />bit4:背景の後ろに表示する, bit3:画面外に出た時にオブジェクトを破壊しない,     <br />bit2:表示しない ,     <br />bit1:ブロックになる（乗れるが、下や横から通り抜けれない。ブーンブロック等）     <br />bit0:足場になる（乗れるし、下や横から通り抜けられる。ダイダインとか。作品違うけどカミナリゴローの雲とかをイメージしてもらえると良いかと） )     <br />    <br />0540-0557 アニメーションフレーム     <br />0558-056F アニメーションの種類     <br />0570-0587 アニメーションタイマー     <br />0588-059F Enemy handler (low)     <br />05A0-05B7 Enemy handler (high) このふたつの値は、キャラクタの挙動のアドレスを指す。 キャラクタの関数ポインタみたいなイメージ。     <br />05B8-05CF Flash counter 敵やボスの点滅のアドレス。無敵時間も兼ねる。&#160; <br />05D0 Background animation     <br />05D1 Background frame     <br />05D2 Background timer     <br />05E0-05EF Current column     <br />05F0-05F3 パレットアニメーション     <br />05F4-05F7 Palette frame     <br />05F8-05FB Palette timer     <br />0600-061F 現在のパレット     <br />0620-063F Original palette     <br />0640-067F Attribute table     <br />0680-06BF 壊せるブロックのどのブロックを壊したかのフラグ     <br />06C0-06FF Destroyed blocks     <br />0700-077F Channel variables     <br />0780-07FF Drawing buffer</p><div id="article-ad" style="margin-top:20px; text-align:center;clear:both;"><script>
+var xhr = new XMLHttpRequest();
+var bmlist_url = '//blog.seesaa.jp/contents/blist.txt'
+xhr.open("GET", 'https:' + bmlist_url, false); 
+xhr.send();
+var blacklist = xhr.responseText;
+var url = location.host + location.pathname;
+if (blacklist.match(url)) {
+    console.log("MATCH");
+    document.write('');
+
+    var adstir_vars = {
+        ver    : "4.0",
+        app_id : "MEDIA-162b72a7",
+        ad_spot: 32,
+        center : false
+    };
+    document.write('<scr' + 'ipt src="//js.ad-stir.com/js/adstir.js"></scr' + 'ipt>');
+} else {
+    console.log("NOT MATCH");
+    document.write('');
+
+    var adstir_vars = {
+        ver    : "4.0",
+        app_id : "MEDIA-162b72a7",
+        ad_spot: 30,
+        center : false
+    };
+    document.write('<scr' + 'ipt src="//js.ad-stir.com/js/adstir.js"></scr' + 'ipt>');
+}
+</script>
+<script type='text/javascript' src='//static.criteo.net/js/ld/publishertag.js'></script>
+<div id='crt-1426285' style='width:300px; height:250px;'></div>
+<script type='text/javascript'>
+   Criteo.DisplayAcceptableAdIfAdblocked(
+       {'zoneid' : 1426285,
+        'containerid' : 'crt-1426285'
+    });
+</script>
+<br><BR>
+<div id="gmo_rw_11692" data-gmoad="rw"></div>
+
+
+<!--  ad tags Size: 300x250 ZoneId:1529366-->
+<script type="text/javascript" src="https://js.ad-spire.net/t/529/366/a1529366.js"></script></div>
+
+<p>
+<a href="http://www.blogmura.com/" target="_blank"><img src="http://www.blogmura.com/img/www88_31.gif" border="0" alt="ブログランキング・にほんブログ村へ" width="88" height="31" /></a><br />↑ブログランキングに登録してます<br />記事を読んでいただいたついでにクリックをしていただけるとありがたいです。<br />よろしくお願いします
+</p>
+
+<script type="text/javascript" language="javascript" charset="utf-8"><!--
+seesaa_bookmark_services = "hatena,yahoo,livedoor,twitter,facebook,googleplusone,mixicheck,hthSP,twhSP,fbhSP,lihSP";
+seesaa_article_page_url = "http://nikumo.seesaa.net/article/246342301.html";
+seesaa_article_subject = "ロックマン5のメモリマップ";
+seesaa_blog_url = "https://blog.seesaa.jp";
+//--></script>
+<script type="text/javascript" language="JavaScript" charset="utf-8" src="https://blog.seesaa.jp/js/bookmark.js"></script>
+
+</div>
+<p>
+スポンサード　リンク<br>
+<!-- admax -->
+<script type="text/javascript" src="http://adm.shinobi.jp/s/047560afbce144c1954f7f9defe385ad"></script>
+<!-- admax -->
+
+</p>
+<div class="posted">posted by ニクモ at 23:38
+
+
+
+| <a href="http://nikumo.seesaa.net/article/246342301.html#comment">Comment(0)</a>
+
+
+| <a href="http://nikumo.seesaa.net/category/12356398-1.html">ハック的な</a>
+| <a href="https://blog.seesaa.jp/cms/fan/regist/input?fan_blog_name=nikumo" title="このブログの読者になる"><img src="https://blog.seesaa.jp/img/fan_read.gif" alt="このブログの読者になる" border="0" /></a>
+| <a href="https://blog.seesaa.jp/cms/home/switch?goto=/cms/fan/blog_reader/list%3Fblog_id=2720798" title="更新情報をチェックする"><img src="https://blog.seesaa.jp/img/fan_received.gif" alt="更新情報をチェックする" border="0" /></a>
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="comments">
+
+<a name="comment"></a>
+
+<div class="comments-head">この記事へのコメント</div>
+
+
+
+<div class="comments-head">コメントを書く</div>
+<form action="http://nikumo.seesaa.net/pages/user/comments2/regist/input" method="post">
+<div class="comments-body">
+お名前: <br />
+<input type="text" name="article_child__writer" size="50" value="" /><br />
+メールアドレス: <br />
+<input type="text" name="article_child__email" size="50" value="" /><br />
+ホームページアドレス: <br />
+<input type="text" name="article_child__homepage" size="50" value="" /><br />
+コメント: <br />
+<textarea name="article_child__body" rows="10" cols="45"></textarea><br />
+<input type="hidden" name="article_child__article_id" value="246342301" />
+<input type="hidden" name="article_id" value="246342301" />
+
+認証コード: [必須入力]<br />
+<img src="https://nikumo.up.seesaa.net/image/seesaa_captcha_comment.gif?1667341583" /><br />
+<input type="text" name="captcha_comment" size="50" value="" /><br />
+※画像の中の文字を半角で入力してください。<br />
+
+
+
+
+<input name="need_confirm" type="submit" class="input-submit"  value="確認する" /><input name="posted" type="submit" class="input-submit"  value="書き込む" />
+</div>
+</form>
+
+</div>
+
+
+
+
+
+
+<!-- /Content -->
+
+
+
+
+
+</div>
+
+
+
+<div id="footer">
+
+
+</div>
+
+</div>
+
+<!-- common footer -->
+<div id="ad-90days-movie-area" class="Ad90daysMovieArea" align="center">
+  <script type="text/javascript" src="https://pubmatic.bbvms.com/a/seesaa_outstream_atf_pc_jp_not_updated_page_2.js"></script></div>
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open("GET", 'https://blog.seesaa.jp/contents/blist.txt', false);
+xhr.send();
+var blacklist = xhr.responseText;
+var url = location.host + (location.pathname == '/' ? '/index.html' : location.pathname);
+if (blacklist.match(url)) {
+    document.write('<sc'+'ript text/javascript" src="https://js.ad-spire.net/t/516/659/a1516659.js" charset="UTF-8"></scr'+'ipt>');
+} else {
+    document.write('<sc'+'ript text/javascript" src="https://js.ad-spire.net/t/518/756/a1518756.js" charset="UTF-8"></scr'+'ipt>');
+}
+</script>
+<script>
+  if (typeof(window['ad842Tracking']) === 'undefined') {
+    let ad842Tracking = function() {
+      this.outputFlag = false;
+      this.cookieName = 'ad_842_frequency';
+      this.site = document.location.host;
+    }
+    ad842Tracking.prototype = {
+      getCookieVaule: function(name) {
+        let value = null;
+        const allCookies = document.cookie;
+        const cookiePrefix = this.cookieName + '=';
+        const position = allCookies.indexOf(cookiePrefix);
+        if (position !== -1) {
+          const start = position + cookiePrefix.length;
+          let end = allCookies.indexOf(';', start);
+          if (end == -1) {
+            end = allCookies.length;
+          }
+          value = decodeURIComponent(allCookies.substring(start, end));
+        }
+        return value;
+      },
+      initialize: function() {
+        if (this.getCookieVaule() !== 'true') {
+          const maxAge = 3600;
+          document.cookie = this.cookieName + '=' + encodeURIComponent('true') + '; path=/; max-age=' + maxAge;
+          this.outputFlag = true;
+        }
+      }
+    };
+
+    window['ad842Tracking'] = new ad842Tracking();
+  }
+  ad842Tracking.initialize();
+  if (ad842Tracking.outputFlag) {
+    document.addEventListener("DOMContentLoaded", function(event) {
+      const adSrc = '<script type="text/javascript" src="https://js.ad-spire.net/t/528/506/a1528506.js"></' + 'script>';
+      const adWidthPx = 728;
+      const adHeightPx = 90;
+      const adDivHeightPx = 130;
+      const showAdDivLayer = false;
+      const reloadSec = 15;
+      const hideSec = 20;
+
+      const adDiv = document.getElementById('ad-842-div-id');
+      const scriptDiv = document.getElementById('ad-842-script-div-id');
+
+      adDiv.style.height = adDivHeightPx + 'px';
+      adDiv.style.display = 'flex';
+      if (!showAdDivLayer) {
+        adDiv.style.backgroundColor = 'transparent';
+      }
+      scriptDiv.style.width = adWidthPx + 'px';
+      scriptDiv.style.height = adHeightPx + 'px';
+
+      const loadAd = function () {
+        while (scriptDiv.firstChild) {
+          scriptDiv.removeChild(scriptDiv.firstChild);
+        }
+
+        const i = document.createElement('iframe');
+        i.style.border = 0;
+        i.style.width = adWidthPx + 'px';
+        i.style.height = adHeightPx + 'px';
+        scriptDiv.appendChild(i);
+
+        const d = i.contentWindow.document;
+        d.open();
+        d.write('<!DOCTYPE html><html style="overflow: hidden;"><head>' + adSrc + '</head><body style="margin: 0;"><' + '/body></html>');
+        d.close();
+      }
+
+      loadAd();
+      window.setTimeout(loadAd, reloadSec * 1000);
+      window.setTimeout(function() {adDiv.style.display = 'none'}, hideSec * 1000);
+    });
+  }
+</script>
+<div
+  id="ad-842-div-id"
+  style="
+    width: 100%;
+    height: 130px;
+    padding: 0px;
+    margin: 0px;
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(40, 40, 40, 0.6);
+    text-align: center;
+    ">
+  <div
+    id="ad-842-script-div-id"
+    style="
+      text-align: center;
+      ">
+  </div>
+</div><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+if(('ontouchstart' in document) && ('orientation' in window)) {
+document.write('<sc'+'ript text/javascript" src="https://js.ad-spire.net/t/492/168/a1492168.js"></scr'+'ipt>');
+} else {
+;
+}
+</script>
+
+<div style="display:none;">
+
+
+</div>
+<script type="text/javascript">
+(function(w,d,s){
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+j.async=true;j.src='https://dmp.im-apps.net/js/7262/0001/itm.js';
+f.parentNode.insertBefore(j, f);
+})(window,document,'script');
+</script>
+<script type="text/javascript" src="https://t.seesaa.net/analytics-seesaa-net.js?v=20150901&tid=UA-53911882-1&page_id=nikumo%2Farticle%2F246342301&page_info=::15::0&page_words="></script><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QF0CSERFXH"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-QF0CSERFXH', {
+    'custom_map': {'dimension1': 'PageId', 'dimension2': 'PageInfo'}
+});
+gtag('event', 'PageId_dimension', {'PageId': 'nikumo/article/246342301'});
+gtag('event', 'PageInfo_dimension', {'PageInfo': '::15::0'});
+</script>
+</body>
+</html>

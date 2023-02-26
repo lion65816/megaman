@@ -1,0 +1,26 @@
+Rockman 2 Energy Speed Data by Yave Yu.
+This document will help you to change energy charging speed.
+
+Rockman/Mega Man:
+$3831B is HP charging speed.
+$3835A is Weapon charging speed.
+$352B2 is E-Tank charging speed.
+
+Boss:
+$2C142: Early 8 Bosses' energy charging speed.
+$2E12B: Later Wily Bosses' energy charging speed.
+
+Miscellaneous:
+These are not energy but uses same speed system.
+$37C51 is equip text printing speed. ($37D4A for Mega Man 2).
+$35994 is path appearing speed in Wily Castle Map.
+
+Value:
+In original Rockman/Mega Man 2, $3831B, $3835A and $37C51 are uses 07, other are 03.
+00 is fastest speed. (e.g: AB)
+01 is faster speed. (e.g: NC, GZ, ONN, BM)
+02 is faster speed but not very smoothly. (e.g: DEM, Claw)
+03 is normal speed.
+04 is fast speed but unsmoothly. (e.g: GX)
+07 is slow speed.
+Other are strange unsmooth speed.

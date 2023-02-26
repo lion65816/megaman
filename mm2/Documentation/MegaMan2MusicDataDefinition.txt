@@ -1,0 +1,255 @@
+The Sound Engine for Rockman 2 
+2016 Himajin Jichiku
+(Version 1.1 edited for translation clarity by NARFNra July 23, 2018 )
+
+This document refers to the following URL:
+http://www.geocities.co.jp/Playtown-Bingo/2392/rock2m/
+
+[Music Definition]
+$30A50 ...  Addresses of the beginning of the music and SFXs (Stored as little-endian 2 byte pointers).
+    ex.)
+        $30A50: D6 8A ... Track 00 begins at $8AD6($30AD6).
+        $30A52: 1D 8E ... Track 01 begins at $8E1D($38E1D).
+
+0F marks the beginning of a song, it is followed by 5 addresses corresponding to each channel track.
+0F (SQ1) (SQ2) (TRI) (NOI) (MOD)
+
+(MOD) shows where Modulation Difinition Table begins.
+
+[Notes]
+A note consists of a single byte found through (Y0 + XX).
+    Y0 means the length of the note.  It must be 40, 60, 80, A0, C0, or E0.
+        ex.) 60 is twice as long as 40.  80 is twice as long as 60, and is 4 times as long as 40. For musicians, you can think of EO as a whole note, C0 as a half note, etc
+    XX means the chromatic tone of the note.
+    It must be 01 through 1F.  00 makes the note rest. (so 40, 60, 80, A0, C0, E0 are always rests of the specified length)
+    The actual pitch of any particular note is XX plus a base key set by operation code 05.
+        So for instance, if you've set 05 15, the base note is A-2, which would mean notes would be 
+            81 - A-2
+            82 - A#-2
+            83 - B-2
+            84 - C-3
+            ...
+            8E - A#-3
+            8F - B-3
+            90 - C-4
+            And so forth.
+        Thus, you should find the lowest note you'll need for a section and start from there to save space from having to change starting note all the time.
+    
+    In NOI, XX shoud be 01 through 0F.  It means the tone of the note.
+
+[Operation Codes]
+Music is made of notes and operation codes.
+00 to 3F are operation codes.
+    00 XX ... Sets a tempo.  As XX increases, track speed slows.
+    01 XX ... Sets a pitch envelope.  XX means the amount of change per frame.
+        A plus value(00 to 7F) makes the note lower, a minus value(FF to 80) makes higher.
+    02 XX ... Sets a duty cycle (timbre) of the track.
+        In SQ1 and SQ2, XX shoud be 00, 40, 80, or C0. (12.5%, 25%, 50%, and 75% pulse widths)
+        In NOI, XX shoud be 00 or 80. (the two types of Noise the NES can produce)
+        In TRI, this does nothing, so it should be omitted.
+    03 XX ... Sets a volume. Here referred to as max volume.
+        In SQ1, SQ2, and NOI, set this using 31 - 3F (3F being max, 31 being minimum but not silent)
+          This writes bit5-0 of XX on the bit5-0 of APU register $4000, $4004, $400C.
+        In TRI, set 00-7F to set note length (larger value means to play longer).
+          Setting 80-FF, the note will never stop playing.
+          This writes whole XX on APU register $4008.
+    04 NN XX YY ... Loop operation.  This means to jump to $YYXX NN times.  If NN is 00, this always jumps.
+    05 XX ... Sets a base note on the chromatic scale. 
+        Setting at 05 0A will make X1 notes the lowest starting notes that can actually play on the NES - A-1 in trackers like Deflemask.
+        Each increase goes up by one half step, e.g.
+            05 0B starts with A#-1, 05 0C starts with B-1, 05 0D starts with C-2, etc...
+        The actual note that XX refers to is written at the below URL. (I have added an additional copy to the end of this file.)
+        http://www.geocities.co.jp/Playtown-Bingo/2392/rock2m/r2musicfreq.htm
+    06 ... A following note becomes dotted. (Its length is multiplied by 1.5x)
+    07 XX Y0 ... Sets a volume envelope.
+        Bit7 of XX is the direction of the change.
+          0 is increase, from 0 to max volume.
+          1 is decrease, from max volume to 0.
+        Y0 is the amount of the change per bit6-0 of XX frame(s).
+            Examples:
+                07 81 10 - Bit7 is 1, so it's in the 80-FF range and the volume goes down from the max
+                            Bits 6-0 are 01, so the change in Y happens every frame
+                            Y0 is 1, so the volume changes by 1 every frame
+                            So this is an instrument that starts at the full volume and decays 1 every frame
+                07 84 20 - This note starts at full, and decays by 2 every 4 frames
+                07 02 40 - This note starts at 0 and goes up by 4 every 2 frames
+            etc
+    08 XX ... Selects a Modulation Definition (from the table at the end of the song).  It must be 00 through 3F.
+    09 ... End of the track. Only used for songs of finite length, obviously, but useful in testing to stop the game from crashing.
+    2X ... 20-27 means tie.  Following X+1 notes are tied.
+        ex.) "22 42 41 40" will play a note three times as long as normal 42.
+        technique) "21 68 08 01 68" will change Modulation Difinition from the middle of the note.
+    30 ... A following note will play a little shorter.   This is useful for tuplet notes.
+
+[Modulation Definition Table]
+This defines WW XX YY ZZ.
+    WW XX ... This is pitch bend, useful for vibratos.
+        Pitch is changed bit7-5 of XX per bit6-0 of WW frame(s).
+        If pitch is changed bit4-0 of XX time(s), the direction of change will be inverted.
+    YY ZZ ... This is volume modulation.  
+        The volume will be changed from 0 to max volume, ZZ per bit6-0 of YY frame(s).
+        bit7 of YY is the first direction of the volume mod.
+          0 is increase, then decrease.
+          1 is decrease, then increase.
+
+    To disable all Modulation, write 00 00 80 00.
+
+ex.) $8E15: 00 00 80 00 02 62 80 00
+Two Modulations are defined.
+    #0: 00 00 80 00 ... Both pitch and volume modulations are disabled.
+    #1: 02 62 80 00 ... Pitch modulation is enabled.
+        Freq. = 2, Amount = 3, Repeat = 2
+Usage of this Modulations:
+    08 00 41 ... Play 41 with Modulation #0, normal 41.
+    08 01 41 ... Play 41 with Modulation #1, pitch modulated 41.
+
+[SFXs Definition]
+X0 0Y says that the SFX begins.
+    X0 is the strength of the SFX.  The larger X is, the less the SFX is likely to be overwritten.
+    0Y is what track the SFX uses(+01: SQ1, +02: SQ2, +04: TRI, +08: NOI).
+
+[The Structure of SFX]
+SFX have a sequentially data made of operation codes and register value.
+
+Register value, XX YY, is (8000 + (0 through 7FF)).
+If XX is 8F, it will do nothing, useful for change operations.
+
+Available operation codes are below:
+    00 XX ... Waits XX frame(s) for play next data.  XX shoud be over 02.
+    01 XX ... Sets a pitch envelope.  This is same as music's.
+    02 XX ... Sets a tone.  This is same as music's.
+    03 XX ... Sets a volume.  This is same as music's.
+    04 NN XX YY ... Loop operation. This is same as music's.
+    05 WW XX YY ZZ ... Following data is applied a Modulation.
+    06 ... End of the SFX.
+
+ex.) $BB22($33B22): 
+50 0A 02 00 03 3F 83 8A 00 06 03 3F 80 0A 80 35 00 09 02 80 01 FF 80 05
+    50 0A ... SFX begins.  Strength = 5, Tracks = 08+02 = SQ2, NOI
+    02 00 03 3F 83 8A ... SQ2 data.  Register value works as a separator.
+    00 06 03 3F 80 0A ... NOI data.  The last track should include 00 XX.
+
+    80 35 ... The next SQ2 data.
+    00 09 02 80 01 FF 80 05 ... The next NOI data.
+
+The order of track data is SQ1->SQ2->TRI->NOI.
+
+
+===05 BASE NOTE INDICATOR TABLE===
+N/A = no note, too low to make sound
+
+key oct note   address    data
+00  N/A       $8985 : dw 0000
+01  N/A       $8987 : dw 0000
+02  N/A       $8989 : dw 0000
+03  N/A       $898b : dw 0000
+04  N/A       $898d : dw 0000
+05  N/A       $898f : dw 0000
+06  N/A       $8991 : dw 0000
+07  N/A       $8993 : dw 0000
+08  N/A       $8995 : dw 0000
+            
+09  o1 a       $8997 : dw 07f2
+0a  o1 a       $8999 : dw 07d6
+0b  o1 b       $899b : dw 0714
+            
+0c  o2 c       $899d : dw 06ae
+0d  o2 c+      $899f : dw 064e
+0e  o2 d       $89a1 : dw 05f3
+0f  o2 d+      $89a3 : dw 0594
+10  o2 e       $89a5 : dw 054d
+11  o2 f       $89a7 : dw 0501
+12  o2 f+      $89a9 : dw 04bb
+13  o2 g       $89ab : dw 0475
+14  o2 g+      $89ad : dw 0436
+15  o2 a       $89af : dw 03f9
+16  o2 a+      $89b1 : dw 03bf
+17  o2 b       $89b3 : dw 038a
+            
+18  o3 c       $89b5 : dw 0357
+19  o3 c+      $89b7 : dw 0327
+1a  o3 d       $89b9 : dw 02fa
+1b  o3 d+      $89bb : dw 02cf
+1c  o3 e       $89bd : dw 02a7
+1d  o3 f       $89bf : dw 0281
+1e  o3 f+      $89c1 : dw 025d
+1f  o3 g       $89c3 : dw 023b
+20  o3 g+      $89c5 : dw 021a
+21  o3 a       $89c7 : dw 01fc
+22  o3 a+      $89c9 : dw 01e0
+23  o3 b       $89cb : dw 01c5
+            
+24  o4 c       $89cd : dw 01ab
+25  o4 c+      $89cf : dw 0193
+26  o4 d       $89d1 : dw 017d
+27  o4 d+      $89d3 : dw 0167
+28  o4 e       $89d5 : dw 0153
+29  o4 f       $89d7 : dw 0140
+2a  o4 f+      $89d9 : dw 012e
+2b  o4 g       $89db : dw 011d
+2c  o4 g+      $89dd : dw 010d
+2d  o4 a       $89df : dw 00fe
+2e  o4 a+      $89e1 : dw 00f0
+2f  o4 b       $89e3 : dw 00e2
+            
+30  o5 c       $89e5 : dw 00d5
+31  o5 c+      $89e7 : dw 00c9
+32  o5 d       $89e9 : dw 00be
+33  o5 d+      $89eb : dw 00b3
+34  o5 e       $89ed : dw 00a9
+35  o5 f       $89ef : dw 00a0
+36  o5 f+      $89f1 : dw 0097
+37  o5 g       $89f3 : dw 008e
+38  o5 g+      $89f5 : dw 0086
+39  o5 a       $89f7 : dw 007f
+3a  o5 a+      $89f9 : dw 0078
+3b  o5 b       $89fb : dw 0071
+            
+3c  o6 c       $89fd : dw 006a
+3d  o6 c+      $89ff : dw 0064
+3e  o6 d       $8a01 : dw 005f
+3f  o6 d+      $8a03 : dw 0059
+40  o6 e       $8a05 : dw 0054
+41  o6 f       $8a07 : dw 0050
+42  o6 f+      $8a09 : dw 004b
+43  o6 g       $8a0b : dw 0047
+44  o6 g+      $8a0d : dw 0043
+45  o6 a       $8a0f : dw 003f
+46  o6 a+      $8a11 : dw 003c
+47  o6 b       $8a13 : dw 0038
+            
+48  o7 c       $8a15 : dw 0035
+49  o7 c+      $8a17 : dw 0032
+4a  o7 d       $8a19 : dw 002f
+4b  o7 d+      $8a1b : dw 002c
+4c  o7 e       $8a1d : dw 002a
+4d  o7 f       $8a1f : dw 0028
+4e  o7 f+      $8a21 : dw 0025
+4f  o7 g       $8a23 : dw 0023
+50  o7 g+      $8a25 : dw 0021
+51  o7 a       $8a27 : dw 001f
+52  o7 a       $8a29 : dw 001e
+53  o7 b       $8a2b : dw 001c
+            
+54  o8 c       $8a2d : dw 001a
+55  o8 c       $8a2f : dw 0019
+56  o8 d       $8a31 : dw 0017
+57  o8 d+      $8a33 : dw 0016
+58  o8 d+      $8a35 : dw 0015
+59  o8 e       $8a37 : dw 0014
+5a  o8 f+      $8a39 : dw 0012
+5b  o8 g       $8a3b : dw 0011
+5c  o8 g+      $8a3d : dw 0010
+5d  o8 a       $8a3f : dw 000f
+5e  o8 a       $8a41 : dw 000f
+5f  o8 a+      $8a43 : dw 000e
+            
+60  o1 a       $8a45 : dw ffff
+61  o1 a       $8a47 : dw ffff
+62  o1 a       $8a49 : dw ffff
+63  o1 a       $8a4b : dw ffff
+64  o1 a       $8a4d : dw ffff
+
+
+
+

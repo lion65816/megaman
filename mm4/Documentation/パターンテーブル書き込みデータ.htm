@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja"><div id="tenten-safe-area-provider" style="all: initial;"></div><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/ruffle.js"></script><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パターンテーブル書き込みデータ</title>
+</head>
+
+<body>
+<p><br></p>
+<hr>
+<pre>
+◇ステージ開始・中間復帰時のパターンテーブル書き込みデータ
+・$51810-5187F (70) = データ番号 : パターンテーブル書き込みデータのアドレス(low)
+・$51880-518EF (70) = データ番号 : パターンテーブル書き込みデータのアドレス(high)
+
+最初の16個(データ番号00～0F)はそれぞれのステージ開始時のデータへのアドレス。
+その他のデータは、中間地点データで指定する。
+
+・ROMファイル内でのデータのアドレス = パターンテーブル書き込みデータのアドレス - $A000 + $50010
+  例えば、パターンテーブル書き込みデータのアドレス = $B8E0 ならば、
+  ROMファイル内でのデータのアドレス = $B8E0 - $A000 + $50010 = $518F0
+
+・データのフォーマット
+byte00-07 -&gt; スプライトのパレット (ただし、最初にFFを指定することで省略できる)
+byte08-   -&gt; パターンテーブル書き込みデータ
+  4bytesで1組のデータ。(byte0にFFが来るまで繰り返す)
+    byte0 -&gt; パターンを読み込むために$8000-9FFFにマップするバンク($A000-BFFFにはこの値+1のバンクがマップされる)(ROMファイル内のアドレス(NESヘッダ抜き) / $2000)
+    byte1 -&gt; パターンテーブルに書き込む長さ(列(パターン16個, 256bytes)単位)
+    byte2 -&gt; パターン読み込み開始位置(high)
+    byte3 -&gt; パターンテーブル書き込み開始位置(high)
+
+byte0の値 * $2000 + (byte2の値 - $80)*$100 + $10でROMファイル内でのパターン読み込み開始アドレス
+
+BANK[byte0の値]の先頭から見て[byte2の値 - $80]列目から[byte1の値]列分だけパターンテーブルの[byte3の値]列目から書き込み
+と覚えておけばOKかな？
+
+例えば、
+0F 0F 30 15 0F 0F 20 16 10 10 80 00 00 0A 80 10 04 01 93 19 1C 01 84 1A 04 01 A8 1E 08 01 9F 1F FF
+というデータは、
+
+0F 0F 30 15 0F 0F 20 16 -&gt; スプライトのパレット
+
+10 10 80 00 -&gt; パターンテーブル書き込みデータ
+  BANK10($20010～)の0(=$80-$80)列目から$10(=16)列分だけパターンテーブルの0列目から書き込み
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern1.png">
+
+00 0A 80 10 -&gt; パターンテーブル書き込みデータ
+  BANK00($00010～)の0(=$80-$80)列目から$0A(=10)列分だけパターンテーブルの$10(=16)列目から書き込み
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern2.png">
+
+04 01 93 19 -&gt; パターンテーブル書き込みデータ
+  BANK04($08010～)の$13(=$93-$80=19)列目から$01列分だけパターンテーブルの$19(=25)列目から書き込み
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern3.png">
+
+1C 01 84 1A -&gt; パターンテーブル書き込みデータ
+  BANK1C($38010～)の$04($84-$80=4)列目から$01列分だけパターンテーブルの$1A(=26)列目から書き込み
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern4.png">
+
+04 01 A8 1E -&gt; パターンテーブル書き込みデータ
+  BANK04($08010～)の先頭から見て$28(=$A8-$80=40)列目から$01列分だけパターンテーブルの$1E(=30)列目から書き込み
+  (05 01 88 1Eでも同じ)
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern5.png">
+
+08 01 9F 1F -&gt; パターンテーブル書き込みデータ
+  BANK08($10010～)の$1F($9F-$80=31)列目から$01列分だけパターンテーブルの$1F(=31)列目から書き込み
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern6.png">
+
+FF -&gt; データ終端を表す
+
+となり、結果パターンテーブルは以下のようになる。
+<img src="%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%83%87%E3%83%BC%E3%82%BF_files/pattern_table.png">
+
+
+・中間復帰時のデータは、ステージ開始時のデータと異なる部分のみを書き換えるデータを用意すればよい。
+・$51DD6-5200Fが未使用領域となっているのでここにデータの追加が可能。
+
+
+◇スクロール毎のパターンテーブル書き込みデータ
+・$53810-5385F (50) = データ番号 : パターンテーブル書き込みデータのアドレス(low)
+・$53870-538BF (50) = データ番号 : パターンテーブル書き込みデータのアドレス(high)
+
+・ROMファイル内でのデータのアドレス = パターンテーブル書き込みデータのアドレス - $A000 + $52010
+  例えば、パターンテーブル書き込みデータのアドレス = $B8B0 ならば、
+  ROMファイル内でのデータのアドレス = $B8B0 - $A000 + $52010 = $538C0
+
+・データのフォーマット
+  基本的にステージ開始・中間復帰時のデータと同じ。ただし、パターンテーブル書き込みデータのbyte1は
+  列(パターン16個)単位ではなくパターン1個単位となっている。
+</pre>
+
+
+
+</body><div id="tenten-ja-window" style="all: initial; --left: 348px; --top: 3370px;"></div></html>

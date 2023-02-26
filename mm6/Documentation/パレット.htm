@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja"><div id="tenten-safe-area-provider" style="all: initial;"></div><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="%E3%83%91%E3%83%AC%E3%83%83%E3%83%88_files/ruffle.js"></script><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パレット</title>
+</head>
+<body>
+<p><br></p>
+<font size="1">Last Update 08/09/09</font>
+<hr>
+<pre>◇パレットデータへのアドレス
+$6A0の値が0(通常時？)のとき、
+・6F010-6F10F (100) = データ番号 : データへのアドレス(low)
+・6F110-6F20F (100) = データ番号 : データへのアドレス(high)
+ROM内での実アドレス = データへのアドレス - $8000 + $6E010
+
+$6A0の値が1(クリアステージをプレイ時？)のとき、
+・51010-5110F (100) = データ番号 : データへのアドレス(low)
+・51110-5120F (100) = データ番号 : データへのアドレス(high)
+ROM内での実アドレス = データへのアドレス - $8000 + $50010
+
+
+◇データの読み方
+byte0 パレット変更開始位置 (BG=$00～0F, スプライト=$10～1F)
+byte1- パレットの値
+  bit7   -&gt; 1ならデータ終端
+  bit6   -&gt; 1なら0F(黒)を挿入
+  bit5-0 -&gt; パレットの値
+
+・例1 (00 67 38 02 57 27 02 60 32 A2)
+00                  ; インデックス0から
+67 38 02            ; 0F 27 38 02 (67 = 40 + 27 -&gt; 0F 27)
+57 27 02            ; 0F 17 27 02 (57 = 40 + 17 -&gt; 0F 17)
+60 32 A2            ; 0F 20 32 22 データ終端 (A2 = 22 + 80 -&gt; 22 データ終端)
+
+・例2 (00 60 21 11 61 19 09 50 16 06 60 27 97)
+00                  ; インデックス0から
+60 21 11            ; 0F 20 21 11 (60 = 40 + 20 -&gt; 0F 20)
+61 19 09            ; 0F 21 19 09 (61 = 40 + 21 -&gt; 0F 21)
+50 16 06            ; 0F 10 16 06 (50 = 40 + 10 -&gt; 0F 10)
+60 27 97            ; 0F 20 27 17 データ終端 (97 = 17 + 80 -&gt; 17 データ終端)
+
+・例3 (19 60 29 4F 25 95)
+19                  ; インデックス$19から
+60 29 4F 25 95      ; 0F 20 29 0F 0F 25 15 データ終端
+
+
+・ステージ毎のパレットデータ番号
+$7DFA5-7DFB4 (10) = ステージ番号 : データ番号
+</pre>
+
+
+
+</body><div id="tenten-ja-window" style="all: initial; --left: 356px; --top: 268.5px; --max-height: 465.5px;"></div></html>

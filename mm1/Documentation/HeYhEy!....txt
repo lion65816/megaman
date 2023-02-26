@@ -1,0 +1,24 @@
+Googie's Mega Man title screen chart. *Waves arms like Kermit the Frog, YAAAAAYYYYYY!1one*
+
+Q: What's this Googie? 
+
+A: This is a little something I whipped up when hacking the title screen to Mega Man, with this chart you'll be able to hack your title screen very easily. Since there's no Mega Man title screen editor, this is the next big thing (well, mebbie not big) but it's effective, so nyah! <(~.~)>  
+
+Q: How do I use this? I WANNA KNOW!1 ;)
+
+A: Apply the IpS patch to your Mega Man ROM, (US version) btw, I didn't test this on a level hack. :o 
+Study the hex numbahs (starts from 00 ends in 7D) in your favorite tile editor (I used Tile Layer Pro for this) and study the PNG file that came with this patch. And you'll be good to go, it's that simple. 
+
+Q: Why did you do this? @_@
+
+A: Cause I wanna, and I felt like it, plus it'll help out the new bloods in the scene who wants to hack MM1. :p 
+
+Q: I wanna change the colors in the title screen, but I dunno where to go...HALP!  <('T_T')>
+
+A: Open up either your favorite hex editor (I used Nes Pallette Editor 1.0.1, get it at www.romhacking.net) and go to offset...
+"00010CE0" the palettes to the title screen are "0F 21 20 0B - 0F 15 20 0B" and you see the same thing at offset "00010D00" that's the second palette from the "flash" effect Rockman has when you press start like in the Japanese version. (Thanks Dragonsbrethren for reminding me, you rock!) Edit the colors to your desire, save it and test it on your favorite emulator, and that's all there is to it! 
+
+Take care and happy hacking! 
+~ Googie 
+e-mail is AlabasterGothe(SPAMWHORES)@gmail.com Remove the obvious to contact me... 
+*Plays ending Looney Toons music* 

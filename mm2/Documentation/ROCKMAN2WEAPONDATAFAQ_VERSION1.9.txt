@@ -1,0 +1,429 @@
+ROCKMAN (MEGA MAN) 2 WEAPON DATA LOCATIONS
+WRITTEN BY: DragonMage98
+
+VERSION HISTORY:
+(1.9) 2022-09-26
+* Possibly found the ROM map location of Flash Man and the final boss absorbing damage from
+  Time Stopper!
+* Updated some commentary
+* Updated To-Do List
+* Removed 2nd Update section as I didn't bother putting anything in it. So no use keeping
+  it there
+
+(1.8) 2022-09-25
+* Found ROM map location of Wily Machine 2 blocking certain weapons during it's phases!
+* Additional commentary
+
+(1.7) 2022-04-26
+* Added another Update section
+* Updated some commentary
+* Updated To-Do List
+
+(1.6) 2021-11-10
+* Added some notes for Time Stopper Damage
+
+(1.5) 2021-10-24
+* Found weapon damage for Time Stopper!
+
+(1.4) 2021-05-23
+* Added an Update section
+* Adressing more bugs
+
+(1.3) 2021-05-22
+* Added additional info and commentary
+* Added a new section for Weapon Mechanics
+* Added a Special Thanks section (should've done that in the first place)
+* Fixed some typos and made some corrections
+* Addressed some bugs regarding some of the game's code
+
+(1.2) 2016-11-03
+* Fixed a typo
+
+(1.1) 2016-09-22
+* Started writing this guide, including the Weapon Damage & Weapon Energy locations
+
+(1.0) 2016-09-13
+* The weapon palette section was going to be separate, but I'd thought of including it in here
+  since this document involved weapons
+
+Intro:
+Hello everyone, I'm DragonMage98. Today, I'm going to teach you on how to edit the
+weapon data locations (such as damage, colour palettes, etc.) in ROCKMAN 2. Before we get started, there are a few
+things you'll need:
+* FCEUX (An NES Emulator with debugging features)
+* RockMan 2 Rom (must be Japanese)
+* HexEdit 4.0 (a Hex editor)
+Once you have these, we'll begin on where to edit the data locations.
+
+Update:
+Man, it's been awhile since I touched this, eh? Anyway, I wanted to include some more stuff into this document
+for those who are still interesting in doing a ROM hack of Mega Man/Rockman 2. This latest version includes a lot
+more information regarding the various weapons. I was already proud of my findings when I first shared this
+document publicly. I've also addressed some interesting bugs that I discovered along the way. Hopefully this new
+info can be just as useful!
+
+To-Do List:
+* Find ROM map location of Atomic Fire charge level 2 damage multiplier (see Weapon Damage's NOTES for more
+  details)
+* Find ROM map location of Boobeam Trap blocking certain weapons other than Clash Bomber
+
+Weapon Damage:
+(2C049 to 2C056, 2C099 to 2C09A, and 2E933 to 2E9A2)
+NOTES:
+DO NOT ADD OR REMOVE BYTES! Doing so will cause your game to freeze upon loading the ROM.
+Otherwise, just change the bytes.
+
+Each weapon consists of 14 bytes for each weapon against a boss. Take for example,
+Air Shooter against Quick Man (2 E953) will deal 2 damage (02.)
+The 14 bytes from left to right mean this:
+1st byte to 8th byte (Heat Man, Air Man, Wood Man, Bubble Man, Quick Man, Flash Man, Metal Man, and Clash Man)
+9th byte to 14th byte (Dr. Wily Bosses in stage order from Mecha Dragon to the final boss)
+
+2C03B to 2C048: Related to Time Stopper Damage? (See Weapon Mechanics section for commentary)
+2C049 to 2C056: Time Stopper Damage
+2C099 to 2C09A: Flash Man & Final Boss Absorbing Time Stopper? (See NOTES for more details)
+2E933 to 2E940: Mega Buster/Atomic Fire Charge Level 1 Damage
+2E941 to 2E94E: Atomic Fire Charge Level 3 Damage
+2E94F to 2E95C: Air Shooter Damage
+2E95D to 2E96A: Leaf Shield Damage
+2E96B to 2E978: Bubble Lead Damage
+2E979 to 2E986: Quick Boomerang Damage
+2E987 to 2E994: Clash Bomber Damage
+2E995 to 2E9A2: Metal Blade Damage
+
+Damage In Hex Values:
+00 = No damage dealt; bounces off when hit
+01 to 79 = Deals damage from 1 to 121
+7A to 7F = Unknown?
+80 to FF = Fully restores health (Actually sets health to 28)
+
+NOTES:
+* For Atomic Fire Charge Level 2 Damage, it uses the same bytes from 2 E933 to 2 E940 except mulitplied by 3
+  (multiplier location in ROM map unknown)
+* Since bosses' health are no higher than 28, any hex values from 1D to 79 are uneccesary to use.
+* FF is only used whenever a boss could absorb damage from a certain weapon. The hex values 80 to FF
+  all do the exact same thing, so it was probably used for the sake of convenience and easier to understand.
+* When there are two or more bosses weak to Time Stopper, the boss with the highest damage will apply to
+  all bosses, rather than just one. For example, if 2C04D (Time Stopper vs. Quick Man) is 02 and 2C04A
+  (Time Stopper vs. Air Man) is 01, all bosses that can be damaged by Time Stopper will be dealt 2 damage per
+  2 weapon energy. (Possibly a bug? Although, this seems to suggest that Time Stopper was intended to be
+  used only on one boss. Or if it did deal damage on multiple bosses, it always dealt the exact same amount
+  of damage)
+* Flash Man and the final boss are the only bosses that actually get healed from Time Stopper. Instead of
+  2C04E (Flash Man) and 2C056 (final boss) using FF (see "Damage In Hex Values" above for more details),
+  they both use 00 oddly enough. For some inexplicable reason, Flash Man and the final boss being healed
+  from Time Stopper share the exact same byte together in 2C09A. It's default value is 06, but changing the
+  value to anything else doesn't cause Time Stopper to heal Flash Man and the final boss. This seems to
+  suggest that setting 2C09A to 06 will override any value in 2C04E and 2C056. I'd still be cautious changing
+  the value in 2C09A to anything other than 06, as further testing needs to be done.
+
+Wily Machine 2 Blocking Damage from certain Weapons:
+(2DA2D to 2DA2E, 2DA31 to 2DA32, and 2DA39 to 2DA3A)
+
+The Wily Machine boss in this games will block damage from certain weapons depending on which phase it's in.
+In phase 1, Wily Machine 2 will block all damage from Air Shooter and Quick Boomerang. However, in phase 2,
+you'll be able to damage the Wily Machine with Air Shooter and Quick Boomerang, but it will now block all damage
+from Atomic Fire. How this works is that it'll check for the weapon's ID. For example, Hex Value 00 is the Mega
+Buster's Weapon ID. Hex Value 02 is Air Shooter's Weapon ID. If Weapon 1's ID is 02 (2DA2E), block all damage
+from Air Shooter (2E95B).
+
+Wily Machine 2 Phase 1:
+2DA2D: Block Damage From Weapon 1
+2DA2E: Weapon 1's ID (Default is 02)
+2DA31: Block Damage From Weapon 2
+2DA32: Weapon 2's ID (Default is 05)
+
+Wily Machine 2 Phase 2:
+2DA39: Block Damage From Weapon 3
+2DA3A: Weapon 3's ID (Default is 01)
+
+Weapon ID In Hex Values:
+00 = Mega Buster
+01 = Atomic Fire
+02 = Air Shooter
+03 = Leaf Shield
+04 = Bubble Lead
+05 = Quick Boomerang
+06 = Time Stopper
+07 = Metal Blade
+08 = Clash Bomber
+
+Weapon Colour Palettes:
+(3D30F to 3D33E)
+Each colour palette starts with 2 "OF" bytes. The first one (displayed as 00 in FCEUX) should
+be left alone because of transparency, whereas the second represents Rock Man's outline.
+The following bytes are Rock Man's colour palettes for the selected weapon (for example, 30 10
+represents the colour palette for Air Shooter.)
+
+Keep in mind that this only affects the colour palettes in a level instead of having both
+the weapon get screen and in a level affected, oddly enough.
+
+* Rock Man's Standard Palette (Mega Man)
+3D310: Outline (0F)
+3D311: Arms/Legs (2C)
+3D312: Head/Hands/Feet (11)
+
+* Atomic Fire (Heat Man's Weapon)
+NOTES:
+There are two locations for Atomic Fire's weapon palette: one while charging and the other for uncharged.
+
+Uncharged:
+3D314: Outline (0F)
+3D315: Arms/Legs (28)
+3D316: Head/Hands/Feet (15)
+
+Charging:
+(3DE46 to 3DE4D)
+3DE46 to 3DE47: Palette for in between flashes of Atomic Fire's charge state. (0F = Outline, 15 = Head/Hands/Feet)
+3DE48 to 3DE49: Palette for Atomic Fire's first charge level (31 = Outline, 15 = Head/Hands/Feet)
+3DE4A to 3DE4B: Palette for Atomic Fire's second charge level (35 = Outline, 2C = Head/Hands/Feet)
+3DE4C to 3DE4D: Palette for Atomic Fire's third charge level (30 = Outline, 30 = Head/Hands/Feet)
+
+* Air Shooter (Air Man's Weapon)
+3D318: Outline (0F)
+3D319: Arms/Legs (30)
+3D31A: Head/Hands/Feet (11)
+
+* Leaf Shield (Wood Man's Weapon)
+3D31C: Outline (0F)
+3D31D: Arms/Legs (30)
+3D31E: Head/Hands/Feet (19)
+
+* Bubble Lead (Bubble Man's Weapon)
+3D320: Outline (0F)
+3D321: Arms/Legs (30)
+3D322: Head/Hands/Feet (00)
+
+* Quick Boomerang (Quick Man's Weapon)
+3D324: Outline (0F)
+3D325: Arms/Legs (34)
+3D326: Head/Hands/Feet (25)
+
+* Time Stopper (Flash Man's Weapon)
+3D328: Outline (0F)
+3D329: Arms/Legs (34)
+3D32A: Head/Hands/Feet (14)
+
+* Metal Blade (Metal Man's Weapon)
+3D32C: Outline (0F)
+3D32D: Arms/Legs (37)
+3D32E: Head/Hands/Feet (18)
+
+* Clash Bomber (Clash Man's Weapon)
+3D330: Outline (0F)
+3D331: Arms/Legs (30)
+3D332: Head/Hands/Feet (26)
+
+* Item 1
+3D334: Outline (0F)
+3D335: Arms/Legs (30)
+3D336: Head/Hands/Feet (16)
+
+* Item 2
+3D338: Outline (0F)
+3D339: Arms/Legs (30)
+3D33A: Head/Hands/Feet (16)
+
+* Item 3
+3D33C: Outline (0F)
+3D33D: Arms/Legs (30)
+3D33E: Head/Hands/Feet (16)
+
+Weapon Energy:
+NOTE:
+Each weapon consumes energy in different ways. For example, Clash Bomber depleats 4
+Energy bars when shooting a Clash Bomber (E9,) whereas Quick Boomerang and Metal Blade
+depleat Energy based on how many times they have been fired (C9.) As for Atomic Fire,
+neither C9 nor E9 are used, since it's based on the charge level. Items 2 and 3 use
+a different value, which is A9. A9 consumes weapon energy as the platform starts moving,
+but will stop depleating weapon energy if they either go off screen or colide into a wall.
+
+3D49A: Duration until Time Stopper starts to consume energy (0F)
+NOTES:
+* The lower the value, the sooner it will start decreasing energy.
+* The higher the value, it will decrease energy later on.
+
+3DAEA: How Energy is comsumed for Air Shooter (E9)
+3DAEB: Air Shooter Energy Consumption (02)
+
+3DB39: How Energy is consumed for Bubble Lead (C9)
+3DB3A: Bubble Lead shots before 1 Energy Consumption (02)
+
+3DB74: How Energy is consumed for Quick Boomerang (C9)
+3DB75: Quick Boomerang shots before 1 Energy Consumption (08)
+
+3DB95: How Energy is consumed for Clash Bomber (E9)
+3DB96: Clash Bomber Energy Consumption (04)
+
+3DBCE: How Energy is consumed for Metal Blade (C9)
+3DBCF: Metal Blades thrown before 1 Energy Consumption (04)
+
+3DC81: How Energy is consumed for Item 1 (E9)
+3DC82: Item 1 Energy Consumption (02)
+
+3DE52: Atomic Fire Charge Level 1 Energy Comsumption (01)
+3DE53: Atomic Fire Charge Level 2 Energy Consumption (06)
+3DE54: Atomic Fire Charge Level 3 Energy Consumption (0A)
+
+3DF6E: How Energy is consumed for Leaf Shield (E9)
+3DF6F: Leaf Shield Energy Consumption (03)
+
+3E22C: How Energy is consumed for Item 2 (A9)
+3E22D: Duration until Item 2 Energy is consumed (13)
+
+3E348: How Energy is consumed for Item 3 (A9)
+3E349: Duration until Item 3 Energy is consumed (1F)
+
+NOTE REGARDING A9:
+The A9 value seems to only work correctly with Items 2 and 3. However, if it's applied to
+one of the weapons, it will cause the currently equipped weapon's energy to set at whatever
+value it's energy consumption is when fired. For example, if you go change E9 to A9 in 3DAEA
+(how energy is consumed for Air Shooter) it will set the current weapon energy to 2. It's
+worth noting that if you fire again it's weapon energy is actually infinite, interesting
+enough.
+
+NOTE REGARDING C9:
+There is an infamous bug where you can have infinite weapon energy for Bubble Lead, Quick
+Boomerang and Metal Blade by abusing a loophole in the game's code. This small section will
+explain what the bug is, for those who aren't familiar with it.
+As mentioned earlier, C9 will consume 1 weapon energy after a certain number of times a weapon
+is fired. For example, 4 Metal Blades need to be thrown before 1 weapon energy is consumed.
+However, if you throw 3 or less Metal Blades, go to the weapon select screen, then exit, the
+counter will reset back to 0. This bug can be abused to the point where you can have an infinite
+amount of weapon energy if C9 is present in said weapon's routine. My guess was that it's
+due to a programming oversight. Probably to avoid the counter carrying over to the other weapons
+that had the C9 value as it's weapon consumption type.
+
+Weapon Mechanics:
+This is a more advanced section for those interested in how the various mechanics work for each
+weapon. It's basically a bunch of miscellaneous stuff that doesn't fit in the above. It's not 100%
+complete, but commentary will be provided when necessary
+* Mega Buster
+3DA79 to 3DAA9: Routine for Mega Buster
+3D4A4: Velocity of shots (04)
+NOTE:
+Hex values 0C to FF won't be able to hit anything
+
+3DA80: Maximum number of shots on screen (04)
+NOTES:
+* Hex values 00 to 01, and 10 to FF won't work.
+* While the default value is 04, it's actually 3 shots in game. For example, 02 = 1 shot,
+  03 = 2 shots, 05 = 4 shots, etc.
+
+* Atomic Fire
+3DAB3: Maximum number of shots on screen (02)
+NOTES:
+* If the value is 00, it will set your health to 0, but you won't die until you're hit. No weapon
+  energy will be consumed either. You'll still be able to obtain life energy like you normally would.
+  (This is a really bizarre bug. Luckily you'll never encounter this bug in normal gameplay.)
+* If the value is 01, a shot from Atomic Fire will appear in the same spot it's fired. No weapon
+  energy will be consumed either. (This is another bug. It's kinda cool to see the charge shot grow,
+  but it unfortunately doesn't damage any enemies.)
+* If the value is 03 or greater, you'll keep firing shots until weapon energy runs out. However,
+  only one shot can be on screen at once. You'll still be able to charge normally, interesting enough.
+  (Yet, another bug.)
+3DD5E: Charging duration from first to second level (7D)
+3DD64: Total charging duration from first to third level (BB)
+NOTE:
+If the hex value in 3DD64 is lower than 3DD5E, the second charge level will be skipped. (Unknown
+if this is a bug)
+
+* Air Shooter
+3DAC0 to 3DAF2: Routine for Air Shooter
+3DAD3: Number of Air Shooters to appear when fired (04)
+NOTES:
+* If the value is 00, you'll instantly die and be sent to the next checkpoint in the level. If
+  you fire again, you'll die again. However, you'll be softlocked and can still fire Air Shooter.
+  (Another bizzare bug.)
+* If the value is 05 or greater, no extra Air Shooters will appear. (Might be a bug)
+
+* Bubble Lead
+3DB1E: Maximum number of Bubble Lead on screen (03)
+NOTES:
+* If the hex value is 00, no Bubble Lead will appear, but it will kind of mess up the music a bit
+  if you shoot. (This is an undocumented bug. You'll never experience this bug in normal gameplay.)
+* Higher values will let you fire more Bubble Lead correctly. but may cause the game to lag.
+* If the value is too high, you can actually end up killing yourself. The effects are somewhat
+  similar to the Air Shooter bug. (Another bizzare bug.)
+
+* Quick Boomerang
+3DB48 to 3DB86: Routine for Quick Boomerang
+3DB51: Velocity of Quick Boomerang (0B)
+3DB59: Maximum number of Quick Boomerangs on screen (05)
+NOTES:
+* If the hex value is 00, no Quick Boomerangs will appear, but it will kind of mess up the music a bit
+  if you shoot. (This is an undocumented bug. You'll never experience this bug in normal gameplay.)
+* If the value is too high, you'll be able to spawn a glitched Neo Metall that fires and flys up into
+  the air. (Another strange bug. I honestly don't know how to describe this one.)
+
+* Time Stopper
+2C03B to 2C048: Releated to Time Stopper Damage?
+NOTE:
+Apparently these bytes are also read at the same time as the ones from 2C049 to 2C056. For example,
+if using Time Stopper against Quick Man, it will read both 2C03F and 2C04D from the ROM map. If using
+Time Stopper against Heat Man, it will read both 2C03B and 2C049 from the ROM map. All the values from
+2C03B to 2C048 are set to 0F, except for 2C03F, which is 1E. I can't seem to figure out what the purpose
+of these bytes are. They're definitely used in game, but their purpose isn't 100% clear. Edit this
+section at your own risk.
+
+3DC3E to 3DC59: Routine for Time Stopper
+3E165 to 3E19C: Routine for Time Stopper mechanics
+
+* Metal Blade
+3DBB3: Maximum number of Metal Blades on screen (04)
+NOTES:
+* If the hex value is 00, no Metal Blades will appear, but it will kind of mess up the music a bit
+  if you throw. (This is an undocumented bug. You'll never experience this bug in normal gameplay.)
+* Higher values will let you throw more Metal Blades correctly. but may cause the game to lag.
+* If the value is too high, it will cause a Matasaburo to spawn in the position you threw a Metal
+  Blade. However, it cannot be defeated. (Yet another bizarre bug. You'll never encounter this in
+  normal gameplay.)
+3DC5A to 3DC64: Routine for Metal Blade
+
+* Clash Bomber
+3DB9C: Maximum number of Clash Bomber on screen (02)
+NOTE:
+If the value is 03 or greater, you'll be able to respawn Clash Bomber if you fire again. However, only
+one Clash Bomber can be present on screen at a time. (Might be a bug?)
+3E099: Fuse time until Clash Bomber detonates on a surface (7E)
+
+NOTE:
+If Clash Bomber hits an enemy, it will instantly detonate, but it won't cause an explosion (Unknown if
+this is a bug)
+
+* Item 1
+3DC6C: Maximum number of Item 1 on screen (04)
+NOTE:
+If the value is 05 or greater, the extra platforms will appear correctly, but you won't be able to stand
+on them. You'll only be able to stand on the last three platforms. For example, if the value is 06 you
+won't be able to stand on the first two, but you'll be able two on the last 3 platforms. (This is an
+undocumented bug as far as I know. You'll never be able to have more than three Item 1 platforms on
+screen in normal gameplay anyway.)
+
+* Item 2
+3DC96: Maximum number of Item 2 on screen (02)
+NOTE:
+If the value is 03 or higher, you'll be able to respawn Item 2 if you fire again, but it will instantly
+start moving. However, only one Item 2 can be on screen at a time.
+
+* Item 3
+3DCB6: Maximum number of Item 3 on screen (02)
+NOTE:
+If the value is 03 or higher, you'll be able to respawn Item 3 if you fire again. However, only one
+Item 3 can be on screen at a time.
+
+SPECIAL THANKS:
+* omega_rugal for inspiring me to find the weapon damge locations. Sorry I forgot to credit you when
+  I first wrote this document, but now I have. Thanks a ton! (Original thread post can be found here:
+  https://www.romhacking.net/forum/index.php?topic=18591.40)
+* Overseer190 for contributing some info to Mega Man 2's Data Crystal ROM map page
+* duckfist for making the Mega Man 2 Randomizer. It's source code provides a ton of other information
+  regarding Mega Man 2's code as well if you're interested in checking it out (Link to it's GitHub
+  page: https://github.com/duckfist/MM2Random)
+* StalkerMaestro for additional help
+* All the various members within the ROM hacking community that contributed to Mega Man 2's Data Crystal
+  ROM map page
+
+CONTACT:
+Anything missing or incorrect? Contact me at: orionh98@gmail.com
+Make sure the Subject is "Missing/Wrong Info On Your Guide" (no quotations!)

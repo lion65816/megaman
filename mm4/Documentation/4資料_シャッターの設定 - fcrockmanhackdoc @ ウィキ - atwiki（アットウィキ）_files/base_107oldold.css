@@ -1,0 +1,266 @@
+@charset "utf-8";
+
+
+pre, dl, ol, p, blockquote { line-height:130%; }
+
+
+body,td {
+font-family:arial,helvetica,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"メイリオ",Meiryo,"MS Pゴシック",clean,sans-serif;
+	color: black;
+	margin-left:0;
+	margin-right:0;
+	font-size: 12px;
+	padding:0;
+}
+
+a:link
+{
+	color: #606060 ;/*#215dc6;*/
+	text-decoration: none;
+}
+
+a:active
+{
+	background: #DDDDDD;
+	color: #215dc6;
+	text-decoration: none;
+}
+
+a:visited
+{
+	color: #a63d21;
+	text-decoration: none;
+}
+
+a:hover
+{
+	background: #CCDDEE;
+	color: #215dc6;
+	text-decoration: underline;
+}
+
+h2,h3, h4, h5, h6
+{
+	padding: .3em;
+}
+
+#header{
+	text-align:left;
+	margin: 0px;
+	padding: 0;
+	padding-top: 1px;
+}
+
+#header h1 {
+    margin: 32px 0 13px 5px;
+}
+
+#header h2{
+	background:none;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 1em;
+	margin-left: 1em;
+}
+
+pre,blockquote {
+	border-top: 	 #DDDDEE 1px solid;
+	border-bottom: #888899 1px solid;
+	border-left:	 #DDDDEE 1px solid;
+	border-right:  #888899 1px solid;
+	padding: .5em;
+	margin-left: 1em;
+	margin-right: 2em;
+	background-color: #F0F0F0;
+	color: black;
+}
+pre{
+	white-space: pre;
+	border:1px dotted #889;
+}
+
+img {
+	border: none;
+	vertical-align: middle;
+}
+
+ul {
+	margin-top: .2em;
+	margin-bottom: .2em;
+	padding-left:.2em;
+	margin-left: 2em;
+	line-height:130%;
+}
+em {
+	font-style:italic;
+}
+
+strong {
+	font-weight:bold;
+}
+
+address {
+	font-style:normal;
+	font-size:8px;
+}
+
+/*-- 存在しないページへのリンク --*/
+a.noexistpage{
+	background-color: #FFFACC;
+}
+
+
+
+
+
+div.p_left{
+	text-align:left;
+}
+div.p_center{
+	text-align:center;
+}
+div.p_right{
+	text-align:right;
+}
+
+
+/*意味段落*/
+div.subsection{
+	margin: 1.4em 0px;
+}
+
+
+
+/*その他の警告*/
+p.warning,
+span.warning{
+	color: #FF99BE;
+}
+
+/*css有効時に隠したいテキスト*/
+.hidden{
+	display: none;
+}
+
+
+
+/*
+ * 差分表示
+ */
+span.diff_add{
+	color: red;
+}
+
+span.diff_del{
+	color: blue;
+}
+
+
+span.search{
+	color: black;
+	background-color: yellow;
+}
+
+div#editmenu{
+	text-align:right;
+	line-height:130%;
+}
+
+
+div#footer{
+	background-color:#eee;
+	text-align:center;
+}
+div.referer_attach{
+	text-align:right;
+}
+div.referer_page{
+	text-align:right;
+}
+div#main{
+	border:dotted 3px #ccc;
+	margin:0;
+	padding:5px;
+}
+span.word1{ color: black; background-color: #ffff66; }
+span.word2{ color: black; background-color: #a0ffff; }
+span.word3{ color: black; background-color: #99ff99; }
+span.word4{ color: black; background-color: #ff9999; }
+span.word5{ color: black; background-color: #ff66ff; }
+span.word6{ color: white; background-color: #880000; }
+span.word7{ color: white; background-color: #00aa00; }
+span.word8{ color: white; background-color: #886800; }
+span.word9{ color: white; background-color: #004699; }
+span.word10{ color: white; background-color: #990099; }
+
+#container {
+    min-width: 1200px;
+}
+
+#contents {
+    border: 3px dotted #cccccc;
+    margin: 0;
+    padding: 5px;
+    overflow: hidden;
+    min-width: 799px;
+}
+
+#menubar, #menubar2 {
+    margin: 5px;
+    width: 180px;
+    overflow: hidden;
+    float: left;
+}
+
+#menubar2 {
+    margin-left: 10px;
+    float: right;
+}
+
+#menubar table,
+#menubar th,
+#menubar td,
+#contents table,
+#contents th,
+#contents td{
+	border-collapse:collapse;
+	border:1px solid #999;
+}
+
+#menubar th,
+#menubar td,
+#contents th,
+#contents td{
+	padding:3px;
+}
+
+#menubar table,
+#contents table{
+	margin-left:1px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#menubar{
+	width:180px;
+	overflow:hidden;
+}
+
+/*ads*/
+
+.gafc_on{
+	background-color:#ECECEC;
+}
+a.gafc_domain{
+	color:green;
+}
+
+
+
+
+/* Hides from IE-mac \*/
+ * html #source___Frame{ width:97% !important;}
+ /* End hide from IE-mac */
+

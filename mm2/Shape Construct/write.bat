@@ -1,0 +1,1 @@
+Rock2ShapeConstruct rockman2.nes -w

@@ -1,0 +1,26 @@
+Mega man 1 Title screen noise code - by Insectduel
+
+It took me a couple of minutes to figure the code out since I know most of the sound codes by memory. Instead of releasing an IPS Patch (Which it would be a waste, and I won't give it to lazy people who won't use hex editors) I'll write them instead.
+
+As you know, Rockman 1 or the US version or other versions of Megaman 1 that is used with the anniversary collection is the only one that made a noise when you press the start button. The original Megaman 1 for the NES in both United States and European versions either removed it or overwritten the code as I looked at all 3 Megaman 1 ROMs.
+
+Here's what you do.
+
+Go get your favorite hex editor and open the US version of Megaman 1. Then go to offset x1FA27 and change the values 00 and FF. This will jump to $FF00. However you can change it into another address but the code MUST be in the same bank where the title screen is.
+
+Then go to offset x1FF10 and enter the following, A9 1C 20 77 C4 4C 4F C7. Then use any emulator and play Megaman 1 and Press Start. You will now have the Title screen noise code that is from the Japanese Rockman 1.
+
+OR if you rather prefer the easy way.
+
+x1FA27 00 FF
+x1FF10 A9 1C 20 77 C4 4C 4F C7
+
+Small Comments
+
+The code I used was originally JSR 20 XX XX then RTS. But it uses extra JSR and RTS while it jump back to the stack O_o, I guess I forgot about the JMP code which it makes a lot more sense. ^_^  I rushed things a bit.
+
+Now for the European version of Megaman 1. The code is the same but instead, it is at x1FA2D. Just put in the address where it should point ONLY in the same bank where the title screen is.
+
+Give NO credit if used. After all, the code already exists in Rockman 1 but never in Megaman 1.
+
+END

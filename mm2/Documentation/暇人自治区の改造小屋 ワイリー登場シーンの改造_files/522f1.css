@@ -1,0 +1,718 @@
+@charset "utf-8";
+
+/* Reset
+------------------------------------------------- */
+
+html,body,div,
+dl,dt,dd,ul,ol,li,
+h1,h2,h3,h4,h5,h6,
+pre,form,fieldset,input,textarea,
+blockquote,th,td,p {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Default
+------------------------------------------------- */
+
+body {
+  background-color: #edede7;
+  color: #6c6950;
+  text-align: center;
+  font-family: Verdana, Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", sans-serif;
+  line-height: 1.4;
+  font-size: small !important; /* IE7 */
+  font-size: 82%;   /* IE6 */
+}
+/* Modern browser */
+html>/**/body {
+  font-size: 13px;
+}
+
+/* Hyper text
+------------------------------------------------- */
+
+a { 
+  text-decoration: none;
+  /*\*/
+  overflow: hidden;  /* for Fx */
+  /**/
+}
+
+a:link  {
+  color: #afcf00;
+  text-decoration:none;
+}
+a:visited {
+  color: #afcf00;
+  text-decoration:none;
+}
+
+a:focus,
+a:hover {
+  color: #ffaa00;
+}
+
+a:active {
+  color: #ffaa00;
+}
+
+
+/* Image
+------------------------------------------------- */
+
+img,
+a img {
+  border: none;
+}
+  
+/* Base elements
+------------------------------------------------- */
+
+h1 { font-size: 180%; }
+  
+h2 { font-size: 130%; }
+  
+h3 { font-size: 115%; }
+  
+h4,h5,h6 { font-size: 100%; }
+  
+ul, ol, li, dl, dt, dd { list-style: none; }
+
+table {
+  font-size: small !important;  /* for Modern browser */
+  font-size: 82%;  /* for IE6 */
+}
+
+
+
+/* Layout
+------------------------------------------------------------ */
+
+#container {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_container_bg.jpg") repeat-y;
+}
+
+#header {
+  height: 140px;
+  overflow: hidden;
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_header_bg.jpg") no-repeat;
+}
+
+
+#main {
+  float: right;
+  width: 552px;
+  padding:0 12px 0 0;
+}
+
+#sidemenu {
+  float: left;
+  width: 210px;
+  padding: 15px 0 0 12px;
+}
+
+#footer {
+  text-align: right;
+  clear: both;
+  padding: 25px 35px 30px 0;
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_footer_bg.jpg") no-repeat bottom;
+}
+
+
+
+/* Header
+------------------------------------------------------------ */
+
+#header h1 {
+  color: #ffffff;
+  text-align: left;
+  padding: 50px 0 5px 280px;
+}
+  
+#header p {
+  text-align: left;
+  color: #b9b7aa;
+  padding: 0 0 5px 280px;
+}
+
+#header h1 a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+#now_time {
+	text-align: left;
+	float: left;
+	display:inline;
+	width: 210px;
+	margin:50px 0 0 30px;
+	font-family: 'Gentium Book Basic', serif;
+	letter-spacing: 1px;
+}
+
+#now_time #nowDay {
+	font-size: 16px;
+	color: #9a9a9c;
+}
+
+#now_time #nowTime {
+	font-size: 28px;
+	font-weight: bold;
+	color: #9a9a9c;
+	margin: -5px 0 0 0;
+}
+/* Main Contents
+------------------------------------------------------------ */
+
+.content {
+  margin-bottom: 20px;
+  text-align: left;
+  overflow: hidden;
+}
+
+h2.entry_header {
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_main_title_bg.jpg") no-repeat bottom;
+  text-align: left;
+  margin:0 0 7px 0;
+  padding: 14px 0 12px 20px;
+  color:#ffaa00;
+}
+
+h2.entry_header a:link,
+h2.entry_header a:visited  {
+  color:#ffaa00;
+  text-decoration:none;
+}
+
+h2.entry_header a:hover  {
+  color: #ffaa00;
+  text-decoration:none;
+}
+
+h2.entry_header a:active  {
+  color: #ff4f00;
+  text-decoration:none;
+}
+
+.entry_body {
+  text-align: left;
+  margin: 0px 0px 10px;
+  padding: 0 30px;
+}
+
+.entry_body p.entry_more {
+  padding: 15px 15px 15px 0px;
+  margin: 0px;
+}
+  
+.entry_body p.tag_lnk {
+  margin: 0px;
+}
+  
+.entry_body p.theme {
+  margin: 10px 0px 0px;
+}
+
+
+.entry_footer {
+  text-align: right;
+  margin-right: 22px;
+  margin-bottom: 10px;
+}
+
+.entry_footer li {
+  display: inline;
+  list-style-type: none;
+}
+
+/* clap + bookmark */
+.fc2_footer {
+  margin: 10px 0px 0px;
+}
+
+.page_navi {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.pagetop {
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_icon.gif") no-repeat 390px 6px;
+  text-align: right;
+  margin: 0 22px 0 0;
+}
+
+/* Entry (html tag)
+------------------------------------------------------------ */
+s {
+  color:#ccc9ba;
+}
+
+.entry_body h2,
+.entry_body h3,
+.entry_body h4,
+.entry_body h5,
+.entry_body h6 {
+  margin: 0em 0em 0.5em;
+}
+
+.entry_body p {
+  margin: 0.3em 1em;
+}
+
+.entry_body ul,
+.entry_body ol {
+  margin: 1em 0em 1em;
+}
+
+.entry_body ul li {
+  background:url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_icon.gif") no-repeat 8px 3px;
+  padding: 0px 0px 3px 20px;
+  line-height:14px;
+}
+
+.entry_body ol li {
+  list-style: decimal outside;
+  margin-left: 2em;
+}
+
+.entry_body dl {
+  margin: 1em 1.5em;
+  padding: 0 1em 0em;
+}
+
+.entry_body dt {
+  font-weight: bold;
+  padding-bottom: 2px;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+}
+
+.entry_body dd {
+  margin: 0em 0 1em;
+}
+
+.entry_body fieldset {
+  margin: 5px;
+  padding: 5px;
+  border: 1px #ffaa00 dotted;
+}
+
+.entry_body blockquote {
+  margin: 5px;
+  padding: 5px;
+  border: 1px #ffaa00 dotted;
+}
+
+.entry_body table {
+  border-collapse: separate;
+  border-collapse: collapse;
+   border-bottom:solid 1px #ccc9ba;
+  border-left:solid 1px #ccc9ba;
+}
+
+.entry_body table th,
+.entry_body table td {
+  padding: 5px;
+  border-top: solid 1px #ccc9ba;
+  border-right: solid 1px #ccc9ba;
+}
+
+.entry_body table th{
+  background-color: #edede7;
+}
+
+.entry_body pre {
+  margin: 1em auto;
+  padding: 0.5em;
+  border: 1px solid;
+  font-family: sans-serif;
+  overflow: auto;
+  width: 90%;
+}
+
+#cm h3{
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_sub_title_bg.jpg") no-repeat bottom;
+  padding: 5px 20px 12px 25px;
+  text-align: right;
+  color: #ffaa00;
+  margin-bottom: 20px;
+  font-size:130%;
+  font-weight:bold;
+}
+
+#cm .sub_body{
+  background-repeat:no-repeat;
+  padding:15px 5px 15px 25px;
+}
+
+/* for without MacIE5 \*/
+.entry_body pre { overflow: scroll; }
+/**/
+
+.entry_body > pre { width: auto; }
+
+.entry_body code { font-family: monospace; }
+
+/* Baton
+------------------------------------------------------------ */
+.baton_title {
+  font-size: 115%;
+  font-weight:bold;
+}
+
+.a_number {
+  margin: 0 0 0 2px;
+}
+
+/* Comment, Trackback, Entry list
+------------------------------------------------------------ */
+
+.sub_header {
+  background:url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_sub_title_bg.jpg") no-repeat bottom;
+  text-align: right;
+  color: #ffaa00;
+  margin-bottom: 20px;
+  padding: 5px 20px 12px 25px;
+  font-size:130%;
+  font-weight:bold;
+}
+
+.sub_title {
+  margin-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.sub_body {
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.list_body {
+  margin-bottom:10px;
+  margin-top: 0px;
+  margin-right: 30px;
+  margin-left: 35px;
+}
+
+.list_body li {
+  margin-bottom: 5px;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  padding-bottom: 1px;
+}
+
+.sub_footer {
+  text-align: right;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.sub_footer li {
+  display: inline;
+  list-style-type: none;
+}
+
+.form dl {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.form dl dd {
+  margin-bottom: 5px;
+}
+
+form input{
+  color:#6c6950;
+  border: 1px #b9b7aa solid;
+  background-color: #edede7;
+}
+
+form textarea {
+  color:#6c6950;
+  background-color: #edede7;
+  width: 400px;
+  height: 150px;
+  border: 1px #b9b7aa solid;
+}
+
+.form input#himitu {
+  margin-right: 0.5em;
+}
+
+.form .form_btn {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+input[type="submit"], input[type="button"] {
+  cursor: pointer !important;
+  color: #B9B7AA;
+  font-size: 92.3%;
+  margin-right: 3px;
+  padding: 1px 10px;
+}
+
+input[type="submit"]:hover, input[type="button"] :hover {
+  background-color: #ffffff !important;
+}
+
+.trackback_url {
+  margin:0 10px 10px 50px;
+  text-align: left;
+}
+
+.trackback_url input {
+  padding: 2px;
+  width: 85%;
+  border: 1px #b9b7aa solid;
+  background-color: #edede7;
+  margin:0 0 5px 0;
+}
+
+#comment_form {
+  margin-left: 40px;
+}
+
+/* Plugin (Main content)
+------------------------------------------------------------ */
+.plg3_header{
+  background:url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_sub_title_bg.jpg") no-repeat bottom;
+  padding: 5px 30px 12px 25px;
+  color:#ffaa00;
+  text-align:right !important;
+}
+.plg3_body {
+  margin-bottom: 20px;
+  padding: 12px 12px 12px 35px;
+}
+
+.plg3_body .plg_header,
+.plg3_body .plg_body,
+.plg3_body .plg_footer {
+  margin-top: 3px;
+}
+
+.plg_body li {
+  background:url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_icon.gif") no-repeat 10px 5px;
+  padding: 0px 0px 10px 20px;
+}
+
+/* Sidemenu (Plugin)
+------------------------------------------------------------ */
+.sidemenu_body {
+  margin-bottom: 15px;
+}
+  
+.sidemenu_body .plg_title {
+  padding: 5px 10px 13px 15px;
+  color: #b9b7aa;
+  background: url("http://blog-imgs-42.fc2.com/t/e/m/templates/grayish_style_side_title_bg.jpg") no-repeat bottom;
+  font-weight:bold;
+}
+
+  
+.sidemenu_body .plg_header,
+.sidemenu_body .plg_body,
+.sidemenu_body .plg_footer {
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.sidemenu_body .plg_body input[type="submit"]{
+  color:#b9b7aa;
+}
+
+.sidemenu_body .plg_body  textarea {
+  background-color: #edede7;
+  border: 1px solid #b9b7aa;
+  color: #6c6950;
+  height: 150px;
+  width: 400px;
+  margin: 0 0 5px;
+}
+
+.sidemenu_body .plg_body li {
+  line-height:14px;
+  margin:0 0 0 -10px;
+}
+
+/* Calendar(Plugin)
+------------------------------------------------------------ */
+
+table.calender {
+  width: 95% !important;
+  width /*ie5.5*/: 90%;
+  margin: 0px auto;
+}
+
+table.calender caption {
+  margin-bottom: 10px;
+  margin: 0px auto;
+  font-weight:bold;
+}
+
+table.calender th,
+table.calender td {
+  padding: 0.1em;
+  text-align: center;
+}
+
+table.calender td a:link,
+table.calender td a:visited {
+  display: block;
+  color: #ffffff;
+  background-color: #b9b7aa;
+  padding:0px 2px;
+}
+
+table.calender td a:focus,
+table.calender td a:hover,
+table.calender td a:active {
+  background-color: #edede7;
+  color: #6c6950;
+  padding:0px 2px;
+}
+
+table.calender th#sun {
+  color: #FFaa00;
+}
+
+/* plugin-search(Plugin)
+------------------------------------------------------------ */
+.plugin-search {
+  position: relative;
+}
+
+.plugin-search input[type="text"] {
+  width: 110px;
+  height: 16px;
+  padding: 2px;
+}
+
+.plugin-search input[type="submit"] {
+  position: absolute;
+  top: 0;
+  left: 130px;
+  padding:2px 3px 2px 3px;
+  font-size:92.3%;
+}
+
+/* plugin-search(Plugin)
+------------------------------------------------------------ */
+input[name="com"], input[value="投票"]  {
+  background-color:#ffffff !important;
+  color:#6c6950;
+}
+
+input[value="投票"]:hover {
+  background-color:#b9b7aa !important;
+  color:#ffffff;
+}
+
+/* Piyo(Plugin)
+------------------------------------------------------------ */
+.tab {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.tab input{
+  padding: 3px 5px;
+  font-size: 100% !important;  /* for Modern browser */
+  font-size: 70%;   /* IE5.5 */
+}
+
+.tab input.b1{
+  margin-right: 5px;
+}
+    
+.mylog {
+  padding: 5px;
+  border: 2px dashed #ffbf00;
+  text-align: left;
+  background-color: #ffffff;
+  font-size: 85% !important;  /* for Modern browser */
+  font-size: 93%;   /* for IE6 */
+}
+
+.mylog .title {
+  font-weight: bold;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: #A5A5A5;
+  margin: 0px 0px 10px;
+  padding: 0px 0px 3px;
+}
+
+.mylog dl {
+  margin: 0px;
+  padding: 0px;
+}
+
+.mylog dt.day {
+  margin: 0px;
+  padding: 0px 0px 5px;
+  background-color: #FFFFFF;
+  background-image: none;
+  text-align: left;
+  font-size: 85% !important;  /* for Modern browser */
+  font-size: 93%;   /* for IE6 */
+}
+
+.mylog dd.piyolog {
+  margin: 0px 0px 5px;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: #A5A5A5;
+  padding: 0px 0px 10px;
+}
+
+.license {
+  text-align: right;
+  font-size: 85% !important;  /* for Modern browser */
+  font-size: 93%;   /* for IE6 */
+}
+
+
+/* Footer
+------------------------------------------------------------ */
+#footer p {
+  margin-bottom: 3px;
+}
+
+#footer .copyright {
+  margin-bottom: 10px;
+}
+
+#footer a:link,
+#footer a:visited {
+  color:#afcf00;
+}
+
+#footer a:focus,
+#footer a:hover,
+#footer a:active{
+  color:#ffaa00;
+}
+
+/* for MacIE
+------------------------------------------------------------ */
+
+textarea,input,select {
+  font-family: "ＭＳ Ｐゴシック", "Osaka", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku GothicPro", sans-serif;
+}

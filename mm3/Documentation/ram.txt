@@ -1,0 +1,250 @@
+ Data CrystalのMegaman5 RAM MAPをベースにしています。
+
+0014 Keys pressed on pad 1
+0015 Keys pressed on pad 2
+0016 Keys held on pad 1
+0017 Keys held on pad 2
+0018 Palette changed
+0019 Draw horizontal data
+001A Draw vertical data
+001B CHR banks changed
+001C BGパレットフェードフラグ (ホログランでの使用を確認)
+001D BGパレットフェードの閾値
+001E BGパレットフェードの閾値増減量
+
+0020-0021 マップデータ読み取りベースアドレス？
+0022 Current level
+0023 一番最近のネームテーブル描画方向？(01 -> 右, 02 -> 左, 04 -> 下, 08 -> 上)
+0024 一番最近描画したネームテーブルのライン？
+0025
+0026
+0027 ロックマンのX座標(low)？
+0028 32x32単位の座標？
+0029 一番最近描画した部屋の番号？
+002A Scrolling direction (エリア毎のスクロールすべき方向)
+002B Area number
+002C Maximum screen
+002D Current screen
+002E 進行方向(ステージを逆方向に進んでいれば02,そうでなければ01)
+002F チップ属性チェック時のバンク番号退避
+
+0030 Current move
+  00 -> 地面に足をついている
+  01 -> ジャンプ中
+  02 -> スライディング中
+  03 -> はしごにつかまっている
+  04 -> 登場中
+  05 -> マグフライに引き付けられている
+  06 -> のけぞり中
+  07 -> ドクロボットフラッシュマンのタイムストッパー中
+  08 -> ラッシュマリン搭乗中
+  09 -> ボス登場中
+  0A -> タップスピンで敵を倒す
+  0B -> ハードナックルを撃つ
+  0C -> ボス撃破後
+  0D -> ステージから帰還
+  0E -> 死亡中
+  0F -> ハードマンでの硬直・ブルース,ブレイクマンの登場待ち
+0031 Direction
+0032 Shooting timer
+0033 Sliding timer
+
+0036 Platform direction
+0037 Platform X speed(low)
+0038 Platform X speed(high)
+0039 Flash counter (ロックマンの無敵時間のカウントに使用)
+003A ラッシュコイルでのジャンプ中フラグ
+003B 特殊武器オブジェクト生成カウンタ
+
+003D Next move
+
+0040 チップ属性チェック座標データへのポインタ
+0041 Largest block type found
+0042-0046? Block types in each tested position
+
+004F Flash frame counter (ボスの無敵時間のカウントに利用されている)
+
+0050-0052 武器選択メニュー関係
+  51 武器選択メニュー用split position
+  52 武器選択メニューのネームテーブルアドレス(high)
+0055-0057 ビッグスネーキー関係
+0058 Animation disable (0以外でアニメーションカウンタ更新無し)
+
+005A 0以外でインデックス#$10以上のオブジェクト描画にスプライトデータバンク(BANK 15)を使用(多分ボス用)
+005B-005C スパークショックで硬直中のオブジェクトのインデックス
+
+005E Next split position
+
+0061 Levels cleared(クリアしたステージのビットフラグ値, ドクロボットステージもここを使う)
+
+0064 ブーンブロック定義参照番号
+0065 ブーンブロック生成タイマー
+0066 ブーンブロック生成パターン読み出し相対アドレス
+0067 ブーンブロック生成パターン参照番号
+0068 ブルース撃破後のブロック破壊フラグ？
+
+006E Killed bosses in rematch
+006F Last screen visited
+
+0071 ホログランのホログラムスプライト生成フラグ？
+0072 ホログランのホログラムスプライト存在フラグ？
+
+0075 Wily level (この値 + #$0C がワイリーステージのCurrent level)
+
+0078 Current split effect number
+0079 Current X scroll
+007A Current name table
+007B Current split position
+007C-007D NMI return address
+
+0080-008F Thread info
+0090 VBL flag
+0091 Current thread
+0092 Asynchronous frame counter
+
+0095 Synchronous frame counter
+0096 Current sprite drawn (現在OAM tableに書き込み中のオブジェクトのインデックス)
+0097 Next OAM table offset
+
+0099 Gravity (ロックマンの動作中は#$40,他のオブジェクト動作中は#$55がセットされる)
+009A Screen disabled (0以外で画面の更新を行わない)
+009B Split effect enabled
+009C-009D Split effect execution routine
+009E Next enemy in level
+009F Previous enemy in level
+
+00A0 Current weapon (00 -> ロックバスター, 01 -> ジェミニレーザー, ...)
+00A1 武器選択メニュー内のカーソル位置？
+00A2 Life
+00A3-00AD Weapon energy
+  A3 ジェミニレーザー
+  A4 ニードルキャノン
+  A5 ハードナックル
+  A6 マグネットミサイル
+  A7 タップスピン
+  A8 サーチスネーク
+  A9 ラッシュコイル
+  AA スパークショック
+  AB ラッシュマリン
+  AC シャドーブレード
+  AD ラッシュジェット
+00AE Lives
+00AF E-tanks
+
+00B0 Boss life (ボスゲージに表示するライフ)
+00B1 Weapon bar select
+00B2 Life bar select
+00B3 Boss bar enable
+
+00B5 武器使用回数カウンタ(武器エネルギー消費までの武器使用回数をカウント)
+
+00B9 重力加算無効タイマー(この値が0でなければロックマンのY方向速度に重力が加算されなくなる。水中の浮力に使用)
+
+00C0 In sound code
+
+00C7 Song time(increment)
+00C8 Song time(low)
+00C9 Song speed(high)
+00CA Song speed(low)
+00CB Global transpose
+00CC SF channels playing
+
+00CE 効果音上書き優先順位
+00CF Current track bit (効果音で使用中のチャンネル)
+00D0-00D1 SF pointer
+00D2 SF transpose(効果音用の基本となるキーの高さ)
+00D3 SF ontime(効果音用の次の音までの時間)
+00D4 SF timer(効果音用の歯切れの良さ)
+00D5 SF on-timer(効果音用の実際に音を出す時間)
+00D6 効果音用ループカウンタ
+
+00D9 Current music track
+00DA Sound queue write pointer
+00DB Sound queue read pointer
+00DC-00E3 Sound queue
+00E4-00E7 LFSR (特性多項式 q = x^25 + x^17 ？)
+00E8-00E9 Background CHR banks
+00EA-00ED Sprite CHR banks
+00EE Critical section flag
+00EF Current sprite (Enemy Handler呼び出し中のオブジェクトのインデックス)
+
+00F0 Last MMC3 command(最後にバンク選択レジスタに書き込んだ値)
+
+00F2 Last PRG bank 8000-9FFF
+00F3 Last PRG bank A000-BFFF
+00F4 New PRG bank 8000-9FFF
+00F5 New PRG bank A000-BFFF
+00F6 In PRG change(バンク切り替え処理中かどうかのフラグ)
+00F7 Postponed PRG change(割り込みによってバンク切り替え処理が延期されたかのフラグ)
+
+00F8 Next split effect number
+00F9 Scroll X (high)
+00FA Scroll Y
+00FB 未使用？
+00FC Scroll X
+00FD Next name table
+00FE Display settings 1
+00FF Display settings 2
+
+0100-0103 Palette animation enabled
+0104-0107 Palette animation frame
+0108-010B Palette animation
+010C-010F Palette animation timer
+0110-012F Local destroy blocks (偶数ページ)
+0130-014F Local destroy blocks (奇数ページ)
+0150-016F アイテム回収フラグ
+
+0200-02FF OAM table (スプライトRAMに転送するデータ)
+
+/// ここからオブジェクトメモリ
+0300-031F 状態
+  bit7   -> オブジェクト領域使用フラグ(0だと未使用とみなされる)
+  bit6   -> ボスフラグ(このbitが立った敵を倒すとステージクリア)
+  bit3-0 -> 状態番号(どう使うかは自由)
+0320-033F ObjectID
+0340-035F X座標(fraction)
+0360-037F X座標(low)
+0380-039F X座標(high)
+03A0-03BF Y座標(fraction)
+03C0-03DF Y座標(low)
+03E0-03FF Y座標(high)
+0400-041F X方向速度(low)
+0420-043F X方向速度(high)
+0440-045F Y方向速度(low)
+0460-047F Y方向速度(high)
+0480-049F Sprite flags
+  bit7 -> ロックマンに対して当たり判定有り
+  bit6 -> 武器でダメージを受ける(ただし与えるダメージが0ならば弾く)
+  bit5 -> 武器を弾く(bit6-5共に0ならばすり抜ける)
+  bit4-0 -> 当たり判定参照番号
+04A0-04BF 方向
+04C0-04DF 設置番号
+04E0-04FF HP
+  bit7-5 -> Flash counter
+  bit4-0 -> HP
+0500-051F 変数A
+0520-053F 変数B
+0540-055F 変数C
+0560-057F 変数D
+0580-059F Display flags
+  bit7 -> スプライトを描画できたかどうか
+  bit6 -> 左右反転
+  bit5 -> 背景裏に隠れる
+  bit4 -> スプライトの表示位置にスクロール値を考慮する(通常1)
+  bit3 -> 画面外に出たとき消滅しない(画面外左右#$48ドット未満の範囲まで？)
+  bit2 -> 不可視
+  bit1 -> ブロックになる
+  bit0 -> 足場になる
+05A0-05BF Animation frame
+05C0-05DF Animation
+05E0-05FF Animation counter
+  bit7   -> 点滅フラグ
+  bit6-0 -> Animation counter
+/// ここまでオブジェクトメモリ
+
+0600-061F Palette
+0620-063F Original palette
+
+0700-077F Channel variables
+0780-07FF Drawing buffer
+

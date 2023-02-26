@@ -1,0 +1,42 @@
+Megaman 5 Palette Hacking Doc
+by Sephiroth X
+Comments, Flames, and Compliments made to danman42@hotmail.com
+4/17/00
+
+This will be a brief FAQ, but will certainly be worth it to anyone trying to hack Megaman 5. The
+problem with this ROM, if anyone has ever tried to hack it's palette, is that if you succeed in
+changing Megaman's colors, you'll quickly find that Megaman changes back to his normal colors
+the moment you shoot, and then back again when you get hit. So, I'll try to explain why this 
+happens, and how to fix it.
+
+--The First Changes--
+
+The initial changes to the palette go as normal. Search the ROM for the color sequence of 
+Megaman, which is 0F2C11, (which is universal in all MM games on the NES...) where 0F is black
+(and leave that color alone, btw...), 2C is Light Blue, and 11 is Dark Blue. In my 
+Megaman 5-->Protoman hack, I opted for making 2C into 00, which is a nice shade of grey, and 
+making 11 into 16, a good red. Search the ROM for that sequence in any hex editor, and make 
+your changes as normal. To the best of my memory, there's maybe 3-4 occurences. Check the rom 
+in your favorite NES emu, and the colors should have stuck. Shoot once, and the colors revert 
+back to Megaman's normal colors. Here's why:
+
+--Why It Does That--
+
+Took me a bit to figure out, and this is the best explaination I can give to help someone
+understand. There's a secondary palette, which we'll call the "shooting palette", for reference.
+When you want to charge the Megabuster, Megaman wil flash in many colors. Those colors are stored
+separately in the ROM. Thing is, Megaman will automatically fire a single shot when you try to 
+charge the weapon. So, the game switches to the shooting palette to prepare the charge. When you
+take a hit, Megaman automatically loses any charge he had, so the ROM cycles back to the 
+original palette. Here's how to go around it:
+
+--The Shooting Palette--
+
+Boy, did this take forever to find...Ok, open the ROM in any HEX Editor, and go to offset 225119,
+where you'll find a series of 2C's (3, i think). These are the colors for the shooting palette.
+The 2C at offset 225119 is the standard shooting color, and the only one really needing changing.
+Right near that, at offset 225127, you'll see 3 11's. Again, the first one is the only one that 
+needs to be changed to fix it, permanently. And that is all there is to it, folks. Hope this
+helps someone, and do send me your hacks, I'd love to see how they work out for you!
+
+Sephiroth X

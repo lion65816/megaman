@@ -1,0 +1,1722 @@
+;CAPCOM1990.txt
+;	A re-assemble-able dis-assembly of the Mega Man 4 sound engine.
+;	This is also used by Mega Man 3, 5, 6, and most other Capcom NES games released in the 90's.
+;	Optimized for assembling using ASM6.
+; disassembled/commented by Matrixz Nov 2012-Jan 2013
+
+;Memory labels
+
+zC0_playback_disable_and_gradual_fade_lc = $C0	;Upper 4 bits is Gradual Fade Low Counter. Lower 2 bits disable all playback or BGM playback.
+zC1_snd_temp1 = $C1
+zC2_snd_temp2 = $C2
+zC3_snd_temp3 = $C3
+zC4_snd_temp4 = $C4
+zC5_instrument_pointer = $C5
+;$C6 is covered by label above.
+zC7_song_frames_to_move = $C7
+zC8_speed_low_counter = $C8
+zC9_bgm_speed_hi = $C9
+zCA_bgm_speed_lo = $CA
+zCB_global_transpose = $CB
+zCC_gradual_fade_direction_and_rate = $CC
+zCD_gradual_fade_level = $CD
+zCE_current_sfx_priority_level = $CE
+zCF_sfx_channel_use = $CF
+
+zD0_sfx_address_lo = $D0
+zD1_sfx_address_hi = $D1
+zD2_sfx_transpose = $D2
+zD3_sfx_segment_remaining_frames = $D3
+zD4_sfx_note_hold_length = $D4
+zD5_sfx_segment_remaining_note_down_frames = $D5
+zD6_sfx_loop_count_and_mystery_flag = $D6
+zD7_sfx_repeat_setting = $D7
+zD8_sfx_pitch_add = $D8
+
+;An explanation of the memory layout:
+; Sound effects use Memory $700-$727 while
+; Songs (Background music) use $728-$77F.
+; For most of the routines, the X register functions
+; as a channel index, and index into the memory arrays
+; in $700-$77F.
+; For sound effects, it's value is 00 to 03. (It's actually
+; reverse from the conventional order of the NES channels, so 03 is
+; the index for Square 1, while 00 is the index for Noise channel.)
+; However, the Song playback routine adds $28 to the X register,
+; so the indexes for each channel become $28-$2B instead.
+; This allows the engine to use some routines for both Sound effects and BGM.
+; For BGM it will read $28 bytes further ahead in RAM and use $728-$7FF instead.
+; For the labels below, starting from "m728_data_pointer_low", they are
+; only used for music.
+; (If seen in a RAM viewer, the addresses of those labels won't make sense unless you keep
+; in mind that it actually reads $28 bytes further up because of the X register.)
+
+;Sound effect and Song memory shared labels.
+;(#$28 is added to these when handling BGM, using $728-$74F for these datas instead.)
+m700_current_instrument = $700
+m704_stats_and_ADSR_state = $0704
+m708_vibrato_count = $708
+m70C_channel_register1 = $70C
+m710_ADSR_current_vol = $0710
+m714_pitch_tune = $714
+m718_pitch_slide_setting = $718
+m71C_current_note = $71C
+m720_frequency_A = $720
+m724_frequency_B = $724
+
+;BGM-only memory labels (#$28 is added to these too, so the actual address range is $750-$77B.)
+m728_data_pointer_low = $0728
+m72C_data_pointer_high = $072C
+m730_song_playback_flags = $0730
+m734_channel_transpose = $734
+m738_note_remaining_time = $738
+m73C_note_sustain_length = $73C
+m740_note_sustain_remaining_time = $740
+m744_loop_counters = $744	;There are 4 loop counters for each channel, so 16 bytes total is devoted to loop counters.
+
+;The only channel memory range which is shared between
+;sound effects and songs.
+;When used in BGM handling the X register is also plainly the channel index. (#$28 is NOT added in this case.)
+m77C_last_write_register4 = $77C
+
+ .ORG $0000
+ .BASE $8000	;start at $8000.
+
+;8000, Game engine JSR's here each frame (at end of NMI handler).
+	jmp l806C_PLAY
+;8003, Game engine JSR's here for sound initializing.
+	jmp l80FE_INIT
+;A = Sound Id. (Can be BGM or SFX, depends on actual data pointed to.)
+;If its #$F0-$FF, do a global effect. (if global effect uses Parameter, this must be loaded into Y register).
+
+l8006_fraction:
+;Modify a value according to another value, that is a fraction of 255.
+;Arguments are $C1 and $C4.
+;$C1 is the value to modify, the result becomes a fraction of this depending on value of $C4.
+;$C4 is the fraction of 255 (numerator, denominator is 255.). This can be anything between 0-255.
+;If it's 0, the result becomes 0 as well.
+;If $C4 is 255, the result becomes the same as what was stored in $C1 before calling.
+;Result is placed in $C1.
+	lda #$00
+	sta <zC2_snd_temp2
+	ldy #$08
+l800C:
+	asl <zC2_snd_temp2
+	rol <zC1_snd_temp1
+	bcc l801F
+	clc
+	lda <zC2_snd_temp2
+	adc <zC4_snd_temp4
+	sta <zC2_snd_temp2
+	lda <zC1_snd_temp1
+	adc #$00
+	sta <zC1_snd_temp1
+l801F:
+	dey
+	bne l800C
+	rts
+
+;Jump-table Handler.
+l8023_jump_table:
+	asl
+	tay
+	iny
+	pla
+	sta <zC1_snd_temp1
+	pla
+	sta <zC2_snd_temp2
+	lda (zC1_snd_temp1),y
+	pha
+	iny
+	lda (zC1_snd_temp1),y
+	sta <zC2_snd_temp2
+	pla
+	sta <zC1_snd_temp1
+	jmp (zC1_snd_temp1)
+
+;Routine for reading Song / Sound effect data.
+l803A_read_data:
+	sty <zC1_snd_temp1
+	ldy #$00
+	cmp #$C0
+	bcs l8047
+	sta <zC2_snd_temp2
+	lda (zC1_snd_temp1),y
+	rts
+l8047:
+	;if pointer >= C000, temporary swap MMC3 bank at
+	;A000-BFFF, to the extra sound bank and modify pointer
+	;to read from there. (The Bank¨value is different from game to game.)
+	sec
+	sbc #$20
+	sta <zC2_snd_temp2
+	lda #$07
+	sta $8000
+	lda #$1D	;Swap to 3rd sound bank (Mega Man 4)
+	sta $8001
+	lda (zC1_snd_temp1),y
+	pha
+	lda #$07
+	sta $8000
+	lda #$1F	;Swap back to 2nd sound bank (Mega Man 4)
+	sta $8001
+	lda #$20
+	clc
+	adc <zC2_snd_temp2
+	sta <zC2_snd_temp2
+	pla
+	rts
+
+l806C_PLAY:
+	lda <zC0_playback_disable_and_gradual_fade_lc
+	lsr
+	bcs l80D7 ;Branch to RTS. Don't handle playback if LSB of $C0 set.
+	lda <zD0_sfx_address_lo	;Check if SFX is to be played back.
+	ora <zD1_sfx_address_hi
+	beq l807A
+	jsr l8252_handle_sfx_main
+l807A:
+	clc
+	lda <zCA_bgm_speed_lo
+	adc <zC8_speed_low_counter
+	sta <zC8_speed_low_counter
+	lda <zC9_bgm_speed_hi
+	adc #$00
+	sta <zC7_song_frames_to_move
+	lda <zCF_sfx_channel_use
+	pha
+	;Handle each channel.
+	ldx #$03
+l808C:
+	lsr <zCF_sfx_channel_use
+	bcc l8099
+	lda <zCF_sfx_channel_use
+	ora #$80
+	sta <zCF_sfx_channel_use
+	jsr l82DE_handle_sfx_channel
+l8099:
+	lda <zC0_playback_disable_and_gradual_fade_lc
+	and #$02
+	bne l80A6 ;Don't handle BGM playback if 2nd bit (LSB) is set
+	txa
+	pha
+	jsr l8393_handle_song_channel
+	pla
+	tax
+l80A6:
+	dex
+	bpl l808C
+	pla
+	sta <zCF_sfx_channel_use
+	;Clear LSB (Might be set in "l8252_handle_sfx_main").
+	lsr <zC0_playback_disable_and_gradual_fade_lc
+	asl <zC0_playback_disable_and_gradual_fade_lc
+	
+	;Check Fade registers and handle gradual fade.
+	lda <zCC_gradual_fade_direction_and_rate
+	and #$7F
+	beq l80D7
+	ldy #$00
+	sty <zC1_snd_temp1
+	ldy #$04
+l80BC:
+	asl
+	rol <zC1_snd_temp1
+	dey
+	bne l80BC
+	clc
+	adc <zC0_playback_disable_and_gradual_fade_lc
+	sta <zC0_playback_disable_and_gradual_fade_lc
+	lda <zC1_snd_temp1
+	adc <zCD_gradual_fade_level
+	bcc l80D5
+	lda <zCC_gradual_fade_direction_and_rate
+	and #$80
+	sta <zCC_gradual_fade_direction_and_rate
+	lda #$FF
+l80D5:
+	sta <zCD_gradual_fade_level
+l80D7:
+	rts
+
+;Clear Volume/Duty Register (4000/4004/4008/400C)
+l80D8_clear_sound_register_1:
+	txa
+	and #$03
+	eor #$03
+	asl
+	asl
+	tay
+	lda #$30
+	cpy #$08
+	bne l80E8 
+	lda #$00 ;Special case for Triangle, write #$00.
+l80E8:
+	sta $4000,y
+	rts
+
+;Y is the Sound Register to write to (00-03).
+;X is used to add to the address written, to write to the proper Audio Channel.
+l80EC_WRITE_sound_register:
+	pha
+	txa
+	and #$03
+	eor #$03
+	asl
+	asl
+	sty <zC4_snd_temp4
+	ora <zC4_snd_temp4
+	tay
+	pla
+	sta $4000,y
+	rts
+
+l80FE_INIT:
+	inc <zC0_playback_disable_and_gradual_fade_lc	;Disables playback (probably so its not done if PLAY routine is accidently called while handling INIT.)
+	jsr l8106
+	dec <zC0_playback_disable_and_gradual_fade_lc
+	rts
+
+l8106:
+	cmp #$F0
+	bcc l810D
+	jmp l81AE_handle_effect	;The Id is an effect. Y register contains parameter if the command uses it.
+l810D:
+	cmp l8A40_number_of_sound_ids
+	bcc l8118
+	sec
+	sbc l8A40_number_of_sound_ids
+	bcs l810D
+l8118:
+	asl
+	tax
+	ldy l8A43_sound_id_pointer_table+1,x
+	tya
+	ora l8A43_sound_id_pointer_table+0,x
+	beq l816E
+	lda l8A43_sound_id_pointer_table+0,x
+	jsr l803A_read_data
+	tay
+	beq l816F	;If the first byte is 00, its a Song, otherwise its a Sound Effect.
+	ldy #$00
+	inx
+	sta <zC4_snd_temp4
+	and #$7F
+	cmp <zCE_current_sfx_priority_level	;Compare Priority value with Priority value of currently (if any) playing Sound Effect.
+	bcc l816E	;If it's less, do not Init.
+	sta <zCE_current_sfx_priority_level
+	bne l8145
+	lda <zD6_sfx_loop_count_and_mystery_flag
+	bpl l8145
+	lda <zC4_snd_temp4
+	bmi l8145
+	sty <zD7_sfx_repeat_setting
+l8145:
+	sty <zD6_sfx_loop_count_and_mystery_flag
+	asl <zC4_snd_temp4
+	ror <zD6_sfx_loop_count_and_mystery_flag
+	bpl l814F
+	stx <zD7_sfx_repeat_setting
+l814F:
+	inc <zC1_snd_temp1
+	lda <zC1_snd_temp1
+	sta <zD0_sfx_address_lo
+	bne l8159
+	inc <zC2_snd_temp2
+l8159:
+	lda <zC2_snd_temp2
+	sta <zD1_sfx_address_hi
+	tya
+	;Reset (Zero) sound effect memory.
+	sta <zD2_sfx_transpose
+	sta <zD3_sfx_segment_remaining_frames
+	sta <zD4_sfx_note_hold_length
+	sta <zD5_sfx_segment_remaining_note_down_frames
+	ldy #$27
+l8168:
+	sta m700_current_instrument,y
+	dey
+	bpl l8168
+l816E:
+	rts
+
+l816F: ;Init Song
+	;set default speed value.
+	ldx #$01
+	stx <zC9_bgm_speed_hi
+	ldx #$99
+	stx <zCA_bgm_speed_lo
+	;A is 00, clear variables.
+	sta <zC8_speed_low_counter
+	sta <zCB_global_transpose
+	sta <zCC_gradual_fade_direction_and_rate
+	sta <zCD_gradual_fade_level
+	ldx #$53
+l8181:
+	sta m728_data_pointer_low,x
+	dex
+	bpl l8181
+	;Set up channel pointers. (read from bytes 01-08 of BGM data.)
+	ldx #$03
+l8189:
+	inc <zC1_snd_temp1
+	bne l818F
+	inc <zC2_snd_temp2
+l818F:
+	ldy <zC1_snd_temp1
+	lda <zC2_snd_temp2
+	jsr l803A_read_data
+	sta m72C_data_pointer_high+$28,x
+	inc <zC1_snd_temp1
+	bne l819F
+	inc <zC2_snd_temp2
+l819F:
+	ldy <zC1_snd_temp1
+	lda <zC2_snd_temp2
+	jsr l803A_read_data
+	sta m728_data_pointer_low+$28,x
+	dex
+	bpl l8189
+	bmi l81F1
+
+l81AE_handle_effect:
+	;Handle global effect.
+	sty <zC3_snd_temp3	;Store parameter, if the effect Id uses it.
+	and #$07
+	jsr l8023_jump_table
+	.dw l81C5_effect0
+	.dw l81C8_effect1
+	.dw l81E4_effect2
+	.dw l821E_effect3
+	.dw l8226_effect4
+	.dw l822D_effect5
+	.dw l8234_effect6
+	.dw l824A_effect7
+
+l81C5_effect0:
+	jsr l81E4_effect2
+l81C8_effect1:
+l81C8:
+	lda #$00
+	sta <zCE_current_sfx_priority_level
+	sta <zD0_sfx_address_lo
+	sta <zD1_sfx_address_hi
+	sta <zD7_sfx_repeat_setting
+	sta <zD8_sfx_pitch_add
+l81D4:
+	lda <zCF_sfx_channel_use
+	beq l81E3
+	eor #$0F
+	sta <zCF_sfx_channel_use
+	jsr l81F1
+	lda #$00
+	sta <zCF_sfx_channel_use
+l81E3:
+	rts
+
+l81E4_effect2:
+	lda #$00
+	ldx #$03
+l81E8:
+	sta m72C_data_pointer_high+$28,x
+	sta m728_data_pointer_low+$28,x
+	dex
+	bpl l81E8
+l81F1:
+	lda <zCF_sfx_channel_use
+	pha
+	ldx #$03
+l81F6:
+	lsr <zCF_sfx_channel_use
+	bcs l820A
+	jsr l80D8_clear_sound_register_1
+	lda m72C_data_pointer_high+$28,x
+	ora m728_data_pointer_low+$28,x
+	beq l820A
+	lda #$FF
+	sta m77C_last_write_register4,x
+l820A:
+	dex
+	bpl l81F6
+	pla
+	sta <zCF_sfx_channel_use
+	lda #$08
+	sta $4001
+	sta $4005
+	lda #$0F
+	sta $4015
+	rts
+	
+l821E_effect3:
+	lda <zC0_playback_disable_and_gradual_fade_lc
+	ora #$02
+	sta <zC0_playback_disable_and_gradual_fade_lc ;This disables BGM playback.
+	bne l81F1
+
+l8226_effect4:
+	lda <zC0_playback_disable_and_gradual_fade_lc
+	and #$FD
+	sta <zC0_playback_disable_and_gradual_fade_lc ;Clear bit 2, which Re-enables BGM playback.
+	rts
+
+l822D_effect5:
+	asl <zC3_snd_temp3
+	beq l8234
+	sec
+	ror <zC3_snd_temp3
+l8234:
+l8234_effect6:
+	;This clears the gradual fade Low counter, which
+	;is the upper 4 bits of $C0.
+	lda <zC0_playback_disable_and_gradual_fade_lc 
+	and #$0F
+	sta <zC0_playback_disable_and_gradual_fade_lc
+	ldy <zC3_snd_temp3
+	sty <zCC_gradual_fade_direction_and_rate
+	beq l8247
+	ldy #$FF
+	cpy <zCD_gradual_fade_level
+	bne l8249
+	iny
+l8247:
+	sty <zCD_gradual_fade_level
+l8249:
+	rts
+
+l824A_effect7:
+	lda #$00
+	sec
+	sbc <zC3_snd_temp3
+	sta <zD8_sfx_pitch_add
+	rts
+
+l8252_handle_sfx_main:
+	;Count-down of Video frames to play sound effect.
+	;If it reaches 00, read the next "Segment" of the sound effect.
+	lda <zD3_sfx_segment_remaining_frames
+	beq l825B
+	dec <zD3_sfx_segment_remaining_frames
+	dec <zD5_sfx_segment_remaining_note_down_frames
+	rts
+l825B:
+	jsr l8386_read_sfx_data_inc_pointer
+	sta <zC4_snd_temp4
+	asl
+	bcc l8273
+	;If the MSB bit of that byte was set, end the sound effect.
+	sty <zCE_current_sfx_priority_level
+	;Check to see if we are to Re-initialize the same sound effect.
+	lda <zD7_sfx_repeat_setting
+	lsr
+	bcc l8270
+	;Re-initialize.
+	jsr l8118
+	jmp l825B
+l8270:
+	jmp l81C8
+l8273:
+	;Check to see if various other bits are set in the byte read (in the 3 least significant bits),
+	;which triggers reading of more bytes to set up Loops, set Transpose or set Note Sustain length.
+	lsr <zC4_snd_temp4
+	bcc l82A6
+	;Loop Bit is set.
+	jsr l8386_read_sfx_data_inc_pointer
+	asl
+	beq l8289
+	asl <zD6_sfx_loop_count_and_mystery_flag
+	php
+	cmp <zD6_sfx_loop_count_and_mystery_flag
+	beq l8296
+	plp
+	ror <zD6_sfx_loop_count_and_mystery_flag
+	inc <zD6_sfx_loop_count_and_mystery_flag
+l8289:
+	jsr l8386_read_sfx_data_inc_pointer
+	tax
+	jsr l8386_read_sfx_data_inc_pointer
+	sta <zD0_sfx_address_lo
+	stx <zD1_sfx_address_hi
+	bne l825B
+l8296:
+	tya
+	plp
+	ror
+	sta <zD6_sfx_loop_count_and_mystery_flag
+	clc
+	lda #$02
+	adc <zD0_sfx_address_lo
+	sta <zD0_sfx_address_lo
+	bcc l82A6
+	inc <zD1_sfx_address_hi
+l82A6:
+	lsr <zC4_snd_temp4
+	bcc l82AF
+	;Note Sustain Length bit is set.
+	jsr l8386_read_sfx_data_inc_pointer
+	sta <zD4_sfx_note_hold_length
+l82AF:
+	lsr <zC4_snd_temp4
+	bcc l82B8
+	;Transpose bit is set.
+	jsr l8386_read_sfx_data_inc_pointer
+	sta <zD2_sfx_transpose
+l82B8:
+	jsr l8386_read_sfx_data_inc_pointer
+	sta <zD3_sfx_segment_remaining_frames
+	sta <zC1_snd_temp1
+	lda <zD4_sfx_note_hold_length
+	sta <zC4_snd_temp4
+	jsr l8006_fraction
+	ldy <zC1_snd_temp1
+	iny
+	sty <zD5_sfx_segment_remaining_note_down_frames
+	inc <zC0_playback_disable_and_gradual_fade_lc
+	jsr l8386_read_sfx_data_inc_pointer
+	pha
+	eor <zCF_sfx_channel_use
+	beq l82DA
+	sta <zCF_sfx_channel_use
+	jsr l81D4
+l82DA:
+	pla
+	sta <zCF_sfx_channel_use
+	rts
+
+l82DE_handle_sfx_channel:
+	;load Instrument to Y, and set up pointers to Instrument.
+	ldy m700_current_instrument,x
+	beq l82E6
+	jsr l8684_set_instrument_pointer
+l82E6:
+	lda <zC0_playback_disable_and_gradual_fade_lc
+	lsr
+	bcs l830A
+	jsr l86BA_update_playing_note
+	lda <zD3_sfx_segment_remaining_frames
+	beq l82FA
+	cpx #$01
+	beq l82FB
+	lda <zD5_sfx_segment_remaining_note_down_frames
+	beq l8300
+l82FA:
+	rts
+l82FB:
+	dec m710_ADSR_current_vol,x
+	bne l82FA
+l8300:
+	lda m704_stats_and_ADSR_state,x
+	and #$04
+	bne l82FA
+	jmp l85A3_set_ADSR_state_release
+l830A:
+	;Read the per-channel byte with the bit flags that decides
+	;what variables to set specifically for the current channel, then read
+	;and set bytes for the bits that are set.
+	lda #$00
+	sta <zC4_snd_temp4	;C4 is the counter for current bit.
+	jsr l8386_read_sfx_data_inc_pointer	;Get bits.
+	;This is how the bits correspond to variables that can be set:
+	;MSB
+	;7
+	;6
+	;5
+	;4 - Pitch Tune
+	;3 - Pitch Slide
+	;2 - Volume
+	;1 - Duty Cycle
+	;0 - Instrument
+	;LSB
+l8311:
+	lsr
+	bcc l8320
+	;Bit that was LSR'ed into Carry, is set.
+	pha	;Back up bits.
+	jsr l8386_read_sfx_data_inc_pointer	;Read variable.
+	sta <zC3_snd_temp3				;Store the variable temporarily, used later in specific handler depending on $C4.
+	lda <zC4_snd_temp4
+	jsr l8326	;JSR to handler jumptable.
+	pla
+l8320:
+	beq l8333	;Check if there are no more bits set, and jump to l8333 if so.
+	inc <zC4_snd_temp4	;Increase counter
+	bne l8311	;Loop.
+	
+l8326:	
+	;Jump to handler for the current bit. (depending on $C4).
+	;These routines are also used by BGM handler.
+	jsr l8023_jump_table
+	.dw l866F_cmd8_set_instrument
+	.dw l86AD_cmd18_set_duty_cycle
+	.dw l865A_cmd7_set_volume
+	.dw l86A7_cmdD_pitch_slide
+	.dw l86A1_cmdC_pitch_tune
+
+l8333:
+	jsr l8386_read_sfx_data_inc_pointer	;Read Note Frequency
+	tay
+	bne l8349
+	sta m710_ADSR_current_vol,x
+	lda m704_stats_and_ADSR_state,x
+	and #$F8
+	ora #$04
+	sta m704_stats_and_ADSR_state,x
+	jmp l80D8_clear_sound_register_1
+l8349:
+	lda m704_stats_and_ADSR_state,x
+	ora #$20
+	sta m704_stats_and_ADSR_state,x
+	lda m718_pitch_slide_setting,x
+	asl
+	lda #$54
+	bcs l835B
+	lda #$0A
+l835B:
+	sta m71C_current_note,x
+	tya
+	bpl l836B
+	cpx #$01
+	bne l8368
+	jsr l85AE_reset_ADSR
+l8368:
+	jmp l8644
+l836B:
+	jsr l85AE_reset_ADSR
+	lda #$FF
+	sta m77C_last_write_register4,x
+	dey
+	txa
+	bne l837F	;Branch if not Noise channel.
+	sta <zC3_snd_temp3
+	tya
+	eor #$0F
+	jmp l8636_init_noise_freq
+l837F:
+	tya
+	clc
+	adc <zD2_sfx_transpose
+	jmp l85DE_init_note_freq
+
+l8386_read_sfx_data_inc_pointer:
+	ldy <zD0_sfx_address_lo
+	lda <zD1_sfx_address_hi
+	inc <zD0_sfx_address_lo
+	bne l8390
+	inc <zD1_sfx_address_hi
+l8390:
+	jmp l803A_read_data
+
+l8393_handle_song_channel:
+	txa
+	ora #$28
+	tax
+	lda m728_data_pointer_low,x
+	ora m72C_data_pointer_high,x
+	beq l83CC
+	lda m738_note_remaining_time,x
+	beq l83CD
+	ldy m700_current_instrument,x
+	beq l83AF
+	jsr l8684_set_instrument_pointer
+	jsr l86BA_update_playing_note
+l83AF:
+	lda m740_note_sustain_remaining_time,x
+	sec
+	sbc <zC7_song_frames_to_move
+	sta m740_note_sustain_remaining_time,x
+	beq l83BC
+	bcs l83BF
+l83BC:
+	jsr l85A3_set_ADSR_state_release
+l83BF:
+	lda m738_note_remaining_time,x
+	sec
+	sbc <zC7_song_frames_to_move
+	sta m738_note_remaining_time,x
+	beq l83CD
+	bcc l83CD
+l83CC:
+	rts
+l83CD:
+	;Read next Song byte.
+	jsr l8592_read_data_inc_pointer
+	;Commands are 00-1F. Notes are 20-FF.
+	cmp #$20
+	bcs l83DA ;Branch to 83DA if it's a Note.
+	;Its a command.
+	jsr l8497_handle_song_cmd
+	;Read bytes until a non-command is found.
+	;(if $17, End Command is read in that subroutine,
+	;it breaks the loop by modifying the stack with
+	;PLA PLA.)
+	jmp l83CD
+l83DA:
+	pha
+	;Note length is defined by the upper 3 bits of the value.
+	;Rotate bits left so they become the lower 3 bits.
+	rol
+	rol
+	rol
+	rol
+	and #$07
+	tay
+	;Value 0 (00-1F before bitshift) is not possible
+	;(because of Commands) so decrease Y by 1.
+	dey
+	;Operations on note length is done depending on flags
+	;set..
+	lda m730_song_playback_flags,x
+	asl
+	asl
+	bpl l83EF
+	;Triplet flag set, load from Triplet table.
+	lda l8915_note_len_table_triplet,y
+	bne l8406
+l83EF:
+	asl
+	asl
+	lda l891C_note_len_table,y
+	bcc l8406
+	;Dotted note flag set. Clear flag,
+	;Make it so A = A + (A >> 1)
+	sta <zC3_snd_temp3
+	lda m730_song_playback_flags,x
+	and #$EF
+	sta m730_song_playback_flags,x
+	lda <zC3_snd_temp3
+	lsr
+	clc
+	adc <zC3_snd_temp3
+l8406:
+	;add and store to Note length.
+	clc
+	adc m738_note_remaining_time,x
+	sta m738_note_remaining_time,x
+	tay
+	pla
+	;lower 5 bits is frequency of note.
+	and #$1F
+	;If value is 00, (20, 40, 60, etc. before AND), it's a Break.
+	bne l8419
+	;Init Break.
+	jsr l85A3_set_ADSR_state_release
+	jmp l8491
+l8419:
+	pha
+	;Create a value which modifies note length based on Hold length.
+	sty <zC4_snd_temp4
+	lda m73C_note_sustain_length,x
+	sta <zC1_snd_temp1
+	jsr l8006_fraction
+	lda <zC1_snd_temp1
+	bne l842A
+	lda #$01
+l842A:
+	sta m740_note_sustain_remaining_time,x
+	pla
+	tay
+	dey
+	lda m730_song_playback_flags,x
+	bpl l8440
+	lda m718_pitch_slide_setting,x
+	bne l8454
+	jsr l8644
+	jmp l847E
+l8440:
+	jsr l85AE_reset_ADSR
+	lda <zCF_sfx_channel_use
+	bmi l8454
+	sty <zC3_snd_temp3
+	txa
+	and #$03
+	tay
+	lda #$FF
+	sta m77C_last_write_register4,y
+	ldy <zC3_snd_temp3
+l8454:
+	txa
+	and #$03
+	bne l8466	;Branch if not Noise Channel.
+	sta <zC3_snd_temp3
+	tya
+	and #$0F
+	eor #$0F
+	jsr l8636_init_noise_freq
+	jmp l847E
+l8466:
+	sty <zC3_snd_temp3
+	lda m730_song_playback_flags,x ;Get Octave
+	and #$0F
+	tay
+	lda l8923_octave_table,y
+	clc
+	adc <zC3_snd_temp3
+	clc
+	adc <zCB_global_transpose
+	clc
+	adc m734_channel_transpose,x
+	jsr l85DE_init_note_freq
+l847E:
+	lda m730_song_playback_flags,x
+	tay
+	and #$40
+	asl
+	sta <zC4_snd_temp4
+	tya
+	and #$7F
+	ora <zC4_snd_temp4
+	sta m730_song_playback_flags,x
+	bpl l8496
+
+l8491:
+	lda #$FF
+	sta m740_note_sustain_remaining_time,x
+l8496:
+	rts
+
+l8497_handle_song_cmd:
+	cmp #$04
+	;If Command Id is 04 or more, read one Parameter byte for the command.
+	;Commands may still use extra parameters.
+	bcc l84A4
+	sta <zC4_snd_temp4 ;temp. Store
+	;Read Song byte, which is the (or the first of multiple)
+	;Parameter for the command.
+	jsr l8592_read_data_inc_pointer 
+	sta <zC3_snd_temp3 ;Store Parameter to $C3.
+	lda <zC4_snd_temp4 ;Load Command Id again.
+
+l84A4:
+	;Jump to handler address for Song Command.
+	;A = Command Id#.
+	jsr l8023_jump_table
+	.dw l84D9_cmd0_triplet
+	.dw l84DD_cmd1_connect
+	.dw l84E1_cmd2_dotted_note
+	.dw l84E8_cmd3_octave_jump
+	.dw l8575_cmd4_set_flags
+	.dw l84F1_cmd5_set_speed
+	.dw l84FF_cmd6_set_note_sustain_len
+	.dw l865A_cmd7_set_volume
+	.dw l866F_cmd8_set_instrument
+	.dw l8505_cmd9_set_octave
+	.dw l8510_cmdA_global_transpose
+	.dw l8515_cmdB_channel_transpose
+	.dw l86A1_cmdC_pitch_tune
+	.dw l86A7_cmdD_pitch_slide
+	.dw l851B_cmdE_loop1
+	.dw l851F_cmdF_loop2
+	.dw l8523_cmd10_loop3
+	.dw l8527_cmd11_loop4
+	.dw l851B_cmd12_break1
+	.dw l851F_cmd13_break2
+	.dw l8523_cmd14_break3
+	.dw l8527_cmd15_break4
+	.dw l855A_cmd16_jump
+	.dw l8580_cmd17_stop
+	.dw l86AD_cmd18_set_duty_cycle
+
+l84D9_cmd0_triplet:
+	lda #$20
+	bne l84EA
+l84DD_cmd1_connect:
+	lda #$40
+	bne l84EA
+l84E1_cmd2_dotted_note:
+	lda #$10
+	ora m730_song_playback_flags,x
+	bne l84ED
+l84E8_cmd3_octave_jump:
+	lda #$08
+l84EA:
+	eor m730_song_playback_flags,x
+l84ED:
+	sta m730_song_playback_flags,x
+	rts
+
+l84F1_cmd5_set_speed:
+	lda #$00
+	sta <zC8_speed_low_counter
+	;read additional byte.
+	jsr l8592_read_data_inc_pointer
+	ldy <zC3_snd_temp3
+	sta <zCA_bgm_speed_lo
+	sty <zC9_bgm_speed_hi
+	rts
+
+l84FF_cmd6_set_note_sustain_len:
+	lda <zC3_snd_temp3
+	sta m73C_note_sustain_length,x
+	rts
+
+l8505_cmd9_set_octave:
+	lda m730_song_playback_flags,x
+	and #$F8
+	ora <zC3_snd_temp3
+	sta m730_song_playback_flags,x
+	rts
+
+l8510_cmdA_global_transpose:
+	lda <zC3_snd_temp3
+	sta <zCB_global_transpose
+	rts
+
+l8515_cmdB_channel_transpose:
+	lda <zC3_snd_temp3
+	sta m734_channel_transpose,x
+	rts
+	
+l851B_cmdE_loop1:
+l851B_cmd12_break1:
+	lda #$00
+	beq l8529
+l851F_cmdF_loop2:
+l851F_cmd13_break2:
+	lda #$04
+	bne l8529
+l8523_cmd10_loop3:
+l8523_cmd14_break3:
+	lda #$08
+	bne l8529
+l8527_cmd11_loop4:
+l8527_cmd15_break4:
+	lda #$0C
+l8529:
+	sta <zC2_snd_temp2
+	txa ;X contains the channel index.
+	clc
+	adc <zC2_snd_temp2
+	tay ;Add with C2 to get the RAM address for loop counter.
+	lda <zC4_snd_temp4
+	cmp #$12
+	bcs l8547 ;Check if command was a BREAK variant ($12-$15), and branch here if so.
+	lda m744_loop_counters,y ;It's a normal LOOP command.
+	sec
+	sbc #$01
+	bcs l8540
+	lda <zC3_snd_temp3
+l8540:
+	sta m744_loop_counters,y
+	beq l8566
+	bne l8555
+	
+l8547: ;BREAK handler.
+	lda m744_loop_counters,y
+	sec
+	sbc #$01
+	bne l8566 ;If result is >00, branch.
+	sta m744_loop_counters,y
+	jsr l8575_cmd4_set_flags ;Set flags, like command 04. The value used to modify the flags is the first byte after the command. (first argument). It's stored in $C3.
+l8555:
+	;Read the address that the loop/break command is pointing to, and modify channel's RAM accordingly.
+	jsr l8592_read_data_inc_pointer
+	sta <zC3_snd_temp3
+l855A_cmd16_jump: ;JUMP, LOOP and BREAK commands all share this code.
+	jsr l8592_read_data_inc_pointer
+	sta m728_data_pointer_low,x
+	lda <zC3_snd_temp3
+	sta m72C_data_pointer_high,x
+	rts
+l8566: ;Set the BGM address to point to the first byte after the loop command.
+	lda #$02
+	clc
+	adc m728_data_pointer_low,x
+	sta m728_data_pointer_low,x
+	bcc l8574
+	inc m72C_data_pointer_high,x
+l8574:
+	rts
+
+l8575_cmd4_set_flags:
+	lda m730_song_playback_flags,x
+	and #$97 ;The lower 3 bits is the Octave. Along with some other bits, it's retained.
+	ora <zC3_snd_temp3
+	sta m730_song_playback_flags,x
+	rts
+
+l8580_cmd17_stop:
+	pla ;Pull the address from the stack, of the routine that reads commands,
+	pla ;so that we don't return to it, but return to the routine one level higher in the stack.
+	lda #$00
+	sta m728_data_pointer_low,x
+	sta m72C_data_pointer_high,x
+	lda <zCF_sfx_channel_use
+	bmi l8591 ;if active Sound Effect uses the current channel, don't reset the NES register!
+	jmp l80D8_clear_sound_register_1
+l8591:
+	rts
+
+l8592_read_data_inc_pointer:
+	ldy m728_data_pointer_low,x
+	lda m72C_data_pointer_high,x
+	inc m728_data_pointer_low,x
+	bne l85A0
+	inc m72C_data_pointer_high,x
+l85A0:
+	jmp l803A_read_data
+
+l85A3_set_ADSR_state_release:
+	lda m704_stats_and_ADSR_state,x
+	and #$F8
+	ora #$03
+	sta m704_stats_and_ADSR_state,x
+	rts
+
+l85AE_reset_ADSR:
+	tya
+	pha
+	ldy #$00
+	lda m704_stats_and_ADSR_state,x
+	and #$F8
+	sta m704_stats_and_ADSR_state,x
+	cpx #$29	;special case: Triangle channel (Song)
+	beq l85D0
+	cpx #$01	;special case: Triangle channel (Sound effect)
+	bne l85D7
+	lda <zD3_sfx_segment_remaining_frames
+	sta <zC1_snd_temp1
+	lda m70C_channel_register1,x
+	sta <zC4_snd_temp4
+	jsr l8006_fraction
+	ldy <zC1_snd_temp1
+l85D0:
+	iny
+	inc m704_stats_and_ADSR_state,x
+	inc m704_stats_and_ADSR_state,x
+l85D7:
+	tya
+	sta m710_ADSR_current_vol,x
+	pla
+	tay
+	rts
+
+l85DE_init_note_freq:
+	cmp #$60
+	bcc l85E4
+	lda #$5F
+l85E4:
+	sta <zC3_snd_temp3
+	inc <zC3_snd_temp3
+	cpx #$28	;if routine is called from Sound Effect handler,
+	bcc l862A	;branch now.
+	
+	lda m71C_current_note,x
+	beq l861D
+	cmp <zC3_snd_temp3
+	bne l85FC
+	lda m730_song_playback_flags,x
+	bpl l861D
+	bmi l8644
+l85FC:
+	lda m718_pitch_slide_setting,x
+	beq l861D
+	bcs l8607
+	ora #$80
+	bne l8609
+l8607:
+	and #$7F
+l8609:
+	sta m718_pitch_slide_setting,x
+	lda m704_stats_and_ADSR_state,x
+	ora #$20
+	sta m704_stats_and_ADSR_state,x
+	lda <zC3_snd_temp3
+	ldy m71C_current_note,x
+	sty <zC3_snd_temp3
+	bne l8627
+l861D:
+	lda m704_stats_and_ADSR_state,x
+	and #$DF
+	sta m704_stats_and_ADSR_state,x
+	lda <zC3_snd_temp3
+l8627:
+	sta m71C_current_note,x
+l862A: ;branched to here from beginning of routine, if handling Sound Effect.
+	asl <zC3_snd_temp3
+	ldy <zC3_snd_temp3
+	lda l8959_frequency_table,y
+	sta <zC3_snd_temp3
+	lda l8959_frequency_table+1,y
+l8636_init_noise_freq:
+	sta m724_frequency_B,x
+	lda <zC3_snd_temp3
+	sta m720_frequency_A,x
+	ldy #$04
+	lda (zC5_instrument_pointer),y
+	bmi l864C
+
+l8644: ;Routine is JMP and JSR'ed to.
+	lda m704_stats_and_ADSR_state,x
+	and #$08
+	bne l864C
+	rts
+l864C:
+	lda #$00
+	sta m708_vibrato_count,x
+	lda m704_stats_and_ADSR_state,x
+	and #$37
+	sta m704_stats_and_ADSR_state,x
+	rts
+
+l865A_cmd7_set_volume:
+	cpx #$01	;If Triangle channel (Sound Effect only!),
+	bne l8662	;do it a bit differently..
+	lda <zC3_snd_temp3
+	bne l866B
+l8662:
+	lda m70C_channel_register1,x
+	and #$C0
+	ora <zC3_snd_temp3
+	ora #$30
+l866B:
+	sta m70C_channel_register1,x
+	rts
+
+l866F_cmd8_set_instrument:
+	inc <zC3_snd_temp3
+	lda <zC3_snd_temp3
+	cmp m700_current_instrument,x
+	beq l86A0
+	sta m700_current_instrument,x
+	tay
+	lda m704_stats_and_ADSR_state,x
+	ora #$08
+	sta m704_stats_and_ADSR_state,x
+l8684_set_instrument_pointer:
+	;Set up $C5/$C6 to point to Instrument.
+	;Y contains instrument Id#.
+	dey
+	lda #$00
+	sta <zC3_snd_temp3
+	tya
+	asl
+	rol <zC3_snd_temp3
+	asl
+	rol <zC3_snd_temp3
+	asl
+	rol <zC3_snd_temp3
+	clc
+	adc l8A41_instrument_pointer+1
+	sta <zC5_instrument_pointer
+	lda <zC3_snd_temp3
+	adc l8A41_instrument_pointer+0
+	sta <zC5_instrument_pointer+1	;Store to $C6
+l86A0:
+	rts
+
+l86A1_cmdC_pitch_tune:
+	lda <zC3_snd_temp3
+	sta m714_pitch_tune,x
+	rts
+
+l86A7_cmdD_pitch_slide:
+	lda <zC3_snd_temp3
+	sta m718_pitch_slide_setting,x
+	rts
+
+l86AD_cmd18_set_duty_cycle:
+	lda m70C_channel_register1,x
+	and #$0F
+	ora <zC3_snd_temp3
+	ora #$30
+	sta m70C_channel_register1,x
+	rts
+
+l86BA_update_playing_note:
+	lda m710_ADSR_current_vol,x	;Volume value is 8-bit. (converted to 4 bit when write to NES channel).
+	sta <zC4_snd_temp4
+	;load ADSR state and jump to proper handling address.
+	lda m704_stats_and_ADSR_state,x
+	and #$07
+	jsr l8023_jump_table
+	.dw l86D1_ADSR_attack
+	.dw l86E6_ADSR_decay
+	.dw l8720_ADSR_sustain
+	.dw l8702_ADSR_release
+	.dw l8914_instrument_idle
+l86D1_ADSR_attack:
+	ldy #$00
+	lda (zC5_instrument_pointer),y
+	tay
+	lda <zC4_snd_temp4
+	clc
+	adc l8933_ADSR_table,y ;Add Attack parameter
+	bcs l86E2
+	cmp #$F0
+	bcc l871D
+l86E2:
+	lda #$F0
+	bne l871A
+l86E6_ADSR_decay:
+	ldy #$01
+	lda (zC5_instrument_pointer),y
+	beq l86FB
+	tay
+	lda <zC4_snd_temp4
+	sec
+	sbc l8933_ADSR_table,y ;Subtract Decay parameter
+	bcc l86FB
+	ldy #$02
+	cmp (zC5_instrument_pointer),y ;Compare with Sustain
+	bcs l871D
+l86FB:
+	ldy #$02
+	lda (zC5_instrument_pointer),y ;Load Sustain
+	jmp l871A
+
+l8702_ADSR_release:
+	txa
+	and #$03
+	cmp #$01
+	beq l8718	;Triangle channel (set to Volume rate 00 immediately)
+	ldy #$03
+	lda (zC5_instrument_pointer),y ;Check if Release is > 0
+	beq l8720	;If it's 0, don't modify volume rate.
+	tay
+	lda <zC4_snd_temp4
+	sec
+	sbc l8933_ADSR_table,y	;Subtract Release parameter
+	bcs l871D
+l8718:
+	lda #$00
+l871A:
+	inc m704_stats_and_ADSR_state,x
+l871D:
+	sta m710_ADSR_current_vol,x
+l8720:
+l8720_ADSR_sustain:
+	;Here, the volume value which is to be writen to the NES
+	;register is calculated.
+	cpx #$28
+	bcc l8737	;If handling Sound Effect, branch now.
+	lda <zCF_sfx_channel_use
+	bpl l872B
+	jmp l88A0	;If Sound Effect is being played for the channel, don't update any NES registers, and Jump here.
+l872B:
+	lda <zCD_gradual_fade_level
+	ldy <zCC_gradual_fade_direction_and_rate
+	bmi l8733
+	eor #$FF
+l8733:
+	cmp #$FF
+	bne l8740
+l8737:
+	txa
+	and #$03
+	cmp #$01
+	bne l8760
+	beq l8752
+l8740:
+	cpx #$29	;If NOT handling Triangle channel (BGM)
+	bne l875B	;branch here.
+	sta <zC4_snd_temp4
+	lda m740_note_sustain_remaining_time,x
+	sta <zC1_snd_temp1
+	jsr l8006_fraction
+	lda <zC1_snd_temp1
+	beq l87AA
+l8752:
+	lda m710_ADSR_current_vol,x
+	beq l87AA
+	lda #$FF
+	bne l87AA
+l875B:
+	cmp m710_ADSR_current_vol,x
+	bcc l8763
+l8760:
+	lda m710_ADSR_current_vol,x
+l8763:
+	lsr
+	lsr
+	lsr
+	lsr
+	eor #$0F
+	sta <zC3_snd_temp3	;Used to calculate actual 4-bit 2A03 volume.
+	ldy #$06
+	lda (zC5_instrument_pointer),y	;Load Volume Vibrato rate parameter of Instrument
+	cmp #$05
+	bcc l8797
+	sta <zC4_snd_temp4
+	ldy m708_vibrato_count,x
+	lda m704_stats_and_ADSR_state,x
+	asl
+	asl
+	tya
+	bcc l8782
+	eor #$FF
+l8782:
+	beq l8797
+	sta <zC1_snd_temp1
+	jsr l8006_fraction
+	lda <zC1_snd_temp1
+	lsr
+	lsr
+	cmp #$10
+	bcs l87A5
+	cmp <zC3_snd_temp3
+	bcc l8797
+	sta <zC3_snd_temp3
+l8797:
+	lda #$10
+	sta <zC4_snd_temp4
+	lda m70C_channel_register1,x
+	sec
+	sbc <zC3_snd_temp3
+	bit <zC4_snd_temp4
+	bne l87AA
+l87A5:
+	lda m70C_channel_register1,x
+	and #$F0
+l87AA:
+	ldy #$00
+	jsr l80EC_WRITE_sound_register
+	txa
+	and #$03
+	tay
+	lda m77C_last_write_register4,y
+	bmi l880C
+	ldy #$05
+	lda (zC5_instrument_pointer),y	;Load Pitch Vibrato rate parameter of Instrument
+	beq l880C
+	sta <zC4_snd_temp4
+	ldy m708_vibrato_count,x
+	lda m704_stats_and_ADSR_state,x
+	asl
+	asl
+	tya
+	bcc l87CD
+	eor #$FF
+l87CD:
+	beq l880C
+	sta <zC1_snd_temp1
+	jsr l8006_fraction
+	lda <zC1_snd_temp1
+	lsr
+	ror <zC2_snd_temp2
+	lsr
+	ror <zC2_snd_temp2
+	lsr
+	ror <zC2_snd_temp2
+	lsr
+	ror <zC2_snd_temp2
+	tay
+	ora <zC2_snd_temp2
+	beq l880C
+	lda m704_stats_and_ADSR_state,x
+	bmi l87FA
+	clc
+	lda <zC2_snd_temp2
+	adc m720_frequency_A,x
+	sta <zC2_snd_temp2
+	tya
+	adc m724_frequency_B,x
+	bne l8809
+l87FA:
+	sec
+	lda m720_frequency_A,x
+	sbc <zC2_snd_temp2
+	sta <zC2_snd_temp2
+	lda m724_frequency_B,x
+	sty <zC1_snd_temp1
+	sbc <zC1_snd_temp1
+l8809:
+	tay
+	bne l8814
+l880C:
+	lda m720_frequency_A,x
+	sta <zC2_snd_temp2
+	ldy m724_frequency_B,x
+l8814:
+	cpx #$28	;If handling BGM,
+	bcs l8835	;branch now.
+	lda <zD6_sfx_loop_count_and_mystery_flag
+	bpl l8835
+	lda <zD8_sfx_pitch_add
+	beq l8835
+	sta <zC4_snd_temp4
+	sty <zC1_snd_temp1
+	lda <zC2_snd_temp2
+	pha
+	jsr l8006_fraction
+	pla
+	clc
+	adc <zC2_snd_temp2
+	sta <zC2_snd_temp2
+	lda #$00
+	adc <zC1_snd_temp1
+	tay
+l8835:
+	txa
+	and #$03	;If NOT handing Noise channel,
+	bne l8849	;branch now.
+	tya
+	and #$0F
+	ldy #$07
+	ora (zC5_instrument_pointer),y	;Load Random Noise flag parameter of Instrument, for Noise channel.
+	sta <zC2_snd_temp2			;(Written to NES register in the same byte as Frequency value).
+	lda #$00
+	sta <zC1_snd_temp1
+	beq l8884
+l8849:
+	tya
+	ldy #$08
+l884C:
+	dey
+	cmp l8953_frequency_calculate_table,y
+	bcc l884C
+	sta <zC1_snd_temp1
+	tya
+	clc
+	adc <zC1_snd_temp1
+	tay
+	and #$07
+	clc
+	adc #$07
+	sta <zC1_snd_temp1
+	tya
+	and #$38
+	eor #$38
+	beq l8870
+l8867:
+	lsr <zC1_snd_temp1
+	ror <zC2_snd_temp2
+	sec
+	sbc #$08
+	bne l8867
+l8870:
+	ldy #$00
+	lda m714_pitch_tune,x
+	beq l8884
+	bpl l887A
+	dey
+l887A:
+	clc
+	adc <zC2_snd_temp2
+	sta <zC2_snd_temp2
+	tya
+	adc <zC1_snd_temp1
+	sta <zC1_snd_temp1
+l8884:
+	ldy #$02
+	lda <zC2_snd_temp2
+	jsr l80EC_WRITE_sound_register	;Write low byte of Frequency
+	txa
+	and #$03
+	tay
+	lda <zC1_snd_temp1
+	cmp m77C_last_write_register4,y
+	beq l88A0
+	sta m77C_last_write_register4,y
+	ora #$08
+	ldy #$03
+	jsr l80EC_WRITE_sound_register	;Write high byte of Frequency
+l88A0:	;Can be JMP'ed to from 8728.
+	;Handle Pitch Slide.
+	lda m704_stats_and_ADSR_state,x
+	and #$20
+	beq l88FA
+	lda m718_pitch_slide_setting,x
+	beq l88F2
+	ldy #$00
+	asl
+	php
+	bcc l88B8
+	eor #$FF
+	clc
+	adc #$01
+	dey
+l88B8:
+	clc
+	adc m720_frequency_A,x
+	sta m720_frequency_A,x
+	tya
+	adc m724_frequency_B,x
+	sta m724_frequency_B,x
+	lda m71C_current_note,x
+	asl
+	tay
+	sec
+	lda m720_frequency_A,x
+	sbc l8959_frequency_table,y
+	lda m724_frequency_B,x
+	and #$3F
+	sbc l8959_frequency_table+1,y
+	lda #$FF
+	adc #$00
+	plp
+	adc #$00
+	bne l88FA
+	txa
+	beq l88FA
+	lda l8959_frequency_table,y
+	sta m720_frequency_A,x
+	lda l8959_frequency_table+1,y
+	sta m724_frequency_B,x
+l88F2:
+	lda m704_stats_and_ADSR_state,x
+	and #$DF
+	sta m704_stats_and_ADSR_state,x
+l88FA:
+	;Update Vibrato counter.
+	ldy #$04
+	lda (zC5_instrument_pointer),y ;Load Vibrato rate parameter of Instrument
+	and #$7F
+	beq l8914_instrument_idle
+	clc
+	adc m708_vibrato_count,x
+	sta m708_vibrato_count,x
+	bcc l8914_instrument_idle
+	lda m704_stats_and_ADSR_state,x
+	clc
+	adc #$40
+	sta m704_stats_and_ADSR_state,x
+l8914_instrument_idle:
+	rts
+
+l8915_note_len_table_triplet:
+	.db $02,$04,$08,$10,$20,$40,$80
+l891C_note_len_table:
+	.db $03,$06,$0C,$18,$30,$60,$C0
+
+l8923_octave_table:
+	.db $00,$0C,$18,$24,$30,$3C,$48,$54
+	.db $18,$24,$30,$3C,$48,$54,$60,$6C
+
+l8933_ADSR_table:
+	.db $00,$01,$02,$03,$04,$05,$06,$07
+	.db $08,$09,$0A,$0B,$0C,$0E,$0F,$10
+	.db $12,$13,$14,$16,$18,$1B,$1E,$23
+	.db $28,$30,$3C,$50,$7E,$7F,$FE,$FF
+
+l8953_frequency_calculate_table:
+	.db $00,$07,$0E,$15,$1C,$23
+
+l8959_frequency_table:
+	;Not like usual NES frequency tables.
+	;Values go through some kind of processing before they
+	;become what's actually written to the NES registers.
+	.db $2A
+	.db $31,$5C,$37,$9C,$36,$E7,$35,$3C
+	.db $35,$9B,$34,$02,$34,$72,$33,$EA
+	.db $32,$6A,$32,$F1,$31,$80,$31,$14
+	.db $31,$5C,$30,$9C,$2F,$E7,$2E,$3C
+	.db $2E,$9B,$2D,$02,$2D,$72,$2C,$EA
+	.db $2B,$6A,$2B,$F1,$2A,$80,$2A,$14
+	.db $2A,$5C,$29,$9C,$28,$E7,$27,$3C
+	.db $27,$9B,$26,$02,$26,$72,$25,$EA
+	.db $24,$6A,$24,$F1,$23,$80,$23,$14
+	.db $23,$5C,$22,$9C,$21,$E7,$20,$3C
+	.db $20,$9B,$1F,$02,$1F,$72,$1E,$EA
+	.db $1D,$6A,$1D,$F1,$1C,$80,$1C,$14
+	.db $1C,$5C,$1B,$9C,$1A,$E7,$19,$3C
+	.db $19,$9B,$18,$02,$18,$72,$17,$EA
+	.db $16,$6A,$16,$F1,$15,$80,$15,$14
+	.db $15,$5C,$14,$9C,$13,$E7,$12,$3C
+	.db $12,$9B,$11,$02,$11,$72,$10,$EA
+	.db $0F,$6A,$0F,$F1,$0E,$80,$0E,$14
+	.db $0E,$5C,$0D,$9C,$0C,$E7,$0B,$3C
+	.db $0B,$9B,$0A,$02,$0A,$72,$09,$EA
+	.db $08,$6A,$08,$F1,$07,$80,$07,$14
+	.db $07,$5C,$06,$9C,$05,$E7,$04,$3C
+	.db $04,$9B,$03,$02,$03,$72,$02,$EA
+	.db $01,$6A,$01,$F1,$00,$80,$00
+
+;Random data (filled bytes until 8A40).
+	.db $14,$00,$40,$0C,$24,$00,$00,$27,$40
+	.db $0C,$27,$00,$00,$29,$40,$0C,$29
+	.db $00,$0C,$29,$40,$0C,$29,$00,$0C
+	.db $2A,$40,$18,$2A,$00,$00,$2B,$40
+	.db $0C,$2B,$00,$0C,$F9,$00
+
+l8A40_number_of_sound_ids:
+	.db $47
+;Note: All pointers from here on are Big-endian.
+;Instrument and sound pointers are as in Mega Man 4,
+;only the 4 first sound pointers are put as an example.
+l8A41_instrument_pointer:
+	.db $8A	;Instrument table (high)
+	.db $D1	;Instrument table (low)
+
+l8A43_sound_id_pointer_table:
+	.db $8D	;0: Brightman (high)
+	.db $09	;0: Brightman (low)
+	.db $90	;1: Toadman (high)
+	.db $73	;1: Toadman (low)
+	.db $93	;2: Ringman (high)
+	.db $D9	;2: Ringman (low)
+	.db $97	;3: Drillman (high)
+	.db $7D	;3: Drillman (low)
+	;.db ...	;...
+
+;Mega Man 4 instrument table. (@ $8AD1)
+;	.db $1F,$1F,$F0
+;	.db $1F,$00,$00,$00,$00,$1F,$15,$20
+;	.db $01,$80,$00,$00,$00,$1F,$1E,$C0
+;	.db $07,$80,$00,$00,$80,$1F,$19,$C0
+;	.db $09,$E4,$05,$00,$00,$1F,$1F,$F0
+;	.db $1F,$94,$7F,$00,$00,$1A,$1F,$E0
+;	.db $1C,$80,$00,$00,$00,$1F,$11,$50
+;	.db $01,$E2,$04,$00,$00,$1F,$1A,$D0
+;	.db $17,$92,$00,$26,$00,$1F,$18,$B0
+;	.db $06,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $11,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$FF,$03,$39,$00,$1F,$1C,$90
+;	.db $03,$FF,$04,$25,$00,$1F,$00,$B0
+;	.db $09,$E3,$02,$00,$00,$1F,$1D,$C0
+;	.db $11,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$94,$7F,$00,$00,$18,$1B,$B0
+;	.db $0E,$84,$7F,$00,$00,$1F,$00,$B0
+;	.db $07,$E3,$02,$00,$00,$1B,$01,$A0
+;	.db $16,$80,$00,$00,$00,$1F,$0C,$00
+;	.db $02,$A3,$00,$09,$00,$1F,$1A,$D0
+;	.db $0D,$DC,$06,$00,$00,$1F,$17,$D0
+;	.db $05,$98,$02,$2C,$00,$1F,$1F,$F0
+;	.db $13,$D0,$03,$7F,$00,$19,$13,$D0
+;	.db $18,$80,$00,$00,$00,$1F,$00,$C0
+;	.db $18,$80,$00,$00,$00,$1F,$01,$20
+;	.db $09,$99,$10,$00,$00,$1A,$1F,$D0
+;	.db $01,$80,$00,$00,$00,$1F,$16,$C0
+;	.db $14,$AB,$02,$00,$00,$1F,$1B,$80
+;	.db $05,$C9,$00,$38,$00,$1F,$1F,$B0
+;	.db $09,$00,$00,$00,$00,$1F,$1D,$B0
+;	.db $0C,$80,$00,$00,$00,$1F,$19,$A0
+;	.db $02,$80,$00,$00,$00,$17,$02,$E0
+;	.db $0F,$80,$00,$00,$00,$1E,$18,$C0
+;	.db $12,$00,$00,$00,$00,$1F,$07,$20
+;	.db $16,$82,$14,$00,$00,$1F,$19,$B0
+;	.db $04,$E4,$05,$00,$00,$1F,$1E,$A0
+;	.db $0A,$AA,$00,$4B,$00,$1F,$18,$90
+;	.db $05,$00,$00,$00,$00,$00,$00,$00
+;	.db $00,$80,$00,$00,$00,$1A,$1F,$D0
+;	.db $07,$80,$00,$00,$00,$00,$00,$00
+;	.db $00,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$00,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$FF,$02,$00,$00,$1F,$1F,$F0
+;	.db $1F,$92,$7F,$00,$00,$1F,$1C,$C0
+;	.db $15,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$FF,$4C,$00,$00,$1F,$1F,$F0
+;	.db $1F,$99,$7F,$00,$00,$1D,$1F,$F0
+;	.db $1F,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$B7,$27,$00,$00,$1F,$1F,$F0
+;	.db $0F,$D7,$09,$7F,$00,$1F,$1F,$F0
+;	.db $1F,$A6,$7F,$00,$80,$1F,$1F,$F0
+;	.db $1F,$80,$00,$00,$80,$1F,$01,$F0
+;	.db $05,$E1,$0D,$00,$00,$1F,$1F,$F0
+;	.db $1F,$C1,$04,$7F,$00,$1C,$13,$10
+;	.db $1F,$FF,$7F,$00,$00,$1F,$01,$00
+;	.db $0F,$E3,$7F,$00,$00,$1E,$10,$F0
+;	.db $0E,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$FF,$7F,$00,$00,$1F,$17,$00
+;	.db $16,$80,$00,$00,$00,$1F,$1F,$F0
+;	.db $16,$80,$00,$00,$00,$1F,$01,$F0
+;	.db $05,$E1,$0D,$00,$00,$1F,$1A,$A0
+;	.db $07,$CF,$36,$00,$80,$1D,$04,$20
+;	.db $12,$00,$00,$00,$00,$11,$12,$30
+;	.db $04,$00,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$D0,$16,$00,$00,$1C,$1F,$F0
+;	.db $07,$FF,$7F,$36,$00,$19,$0B,$F0
+;	.db $12,$FF,$7F,$36,$80,$1F,$12,$40
+;	.db $1E,$FF,$7F,$51,$80,$17,$1F,$F0
+;	.db $02,$FF,$7F,$5A,$00,$12,$02,$A0
+;	.db $05,$00,$00,$00,$00,$1F,$1F,$F0
+;	.db $1F,$FF,$19,$00,$00,$17,$14,$F0
+;	.db $07,$CA,$54,$00,$00

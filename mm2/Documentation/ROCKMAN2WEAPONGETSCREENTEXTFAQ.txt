@@ -1,0 +1,131 @@
+ROCKMAN (MEGAMAN) 2 WEAPON GET SCREEN TEXT TUTORIAL
+WRITTEN BY: DragonMage98
+
+VERSION HISTORY:
+(1.1) 2016-03-16 (Final)
+* Fixed some minor issues with the guide
+* Added more info
+
+(1.0) 2016-02-11
+* Started writing this guide
+
+Intro:
+Hello everyone, I'm DragonMage98. Today, I'm going to teach you on how to edit the
+text in the Weapon Get screen in ROCKMAN 2. Before we get started, there are a few
+things you'll need:
+* FCEUX (An NES Emulator with debugging features)
+* RockMan 2 Rom (must be Japanese)
+* HexEdit 4.0 (a Hex editor)
+Once you have these, we'll begin on where to edit the text.
+
+Weapon Get Screen:
+NOTES:
+DO NOT ADD OR REMOVE BYTES! Doing so will cause your game to freeze upon loading the ROM.
+Otherwise, just change the bytes.
+Also, do not change the 25 and 0D values. Doing so will not show that part of the message properly.
+
+*Heat Man:
+0x037D03: X Axis posistion for typing out the weapon you got from Heat Man (Default is 25)
+0x037D04: Y Axis posistion for typing out the weapon you got from Heat Man (Default is 0D)
+0x037D05 to 0x037D0E: Text of the weapon you got from Heat Man
+
+*Air Man:
+0x037D0F: X Axis posistion for typing out the weapon you got from Air Man (Default is 25)
+0x037D10: Y Axis posistion for typing out the weapon you got from Air Man (Default is 0D)
+0x037D11 to 0x037D1A: Text of the weapon you got from Air Man
+
+*Wood Man:
+0x037D1B: X Axis posistion for typing out the weapon you got from Wood Man (Default is 25)
+0x037D1C: Y Axis posistion for typing out the weapon you got from Wood Man (Default is 0D)
+0x037D1D to 0x037D26: Text of the weapon you got from Wood Man
+
+*Bubble Man:
+0x037D27: X Axis posistion for typing out the weapon you got from Bubble Man (Default is 25)
+0x037D28: Y Axis posistion for typing out the weapon you got from Bubble Man (Default is 0D)
+0x037D29 to 0x037D32: Text of the weapon you got from Bubble Man
+
+*Quick Man:
+0x037D33: X Axis posistion for typing out the weapon you got from Quick Man (Default is 25)
+0x037D34: Y Axis posistion for typing out the weapon you got from Quick Man (Default is 0D)
+0x037D35 to 0x037D3E: Text of the weapon you got from Quick Man
+
+*Flash Man:
+0x037D3F: X Axis posistion for typing out the weapon you got from Flash Man (Default is 25)
+0x037D40: Y Axis posistion for typing out the weapon you got from Flash Man (Default is 0D)
+0x037D41 to 0x037D4A: Text of the weapon you got from Flash Man
+
+*Metal Man:
+0x037D4B: X Axis posistion for typing out the weapon you got from Metal Man (Default is 25)
+0x037D4C: Y Axis posistion for typing out the weapon you got from Metal Man (Default is 0D)
+0x037D4D to 0x037D56: Text of the weapon you got from Metal Man
+
+*Clash Man:
+0x037D57: X Axis posistion for typing out the weapon you got from Clash Man (Default is 25)
+0x037D58: Y Axis posistion for typing out the weapon you got from Clash Man (Default is 0D)
+0x037D59 to 0x037D62: Text of the weapon you got from Metal Man
+
+*Text below the weapon you got:
+NOTE: This also appears if you got Item 1, 2, and 3.
+
+0x037D63: X Axis posistion for typing out the text below the weapon you got (Default is 25)
+0x037D64: Y Axis posistion for typing out the text below the weapon you got (Default is 4D)
+0x037D65 to 0x037D6E: Text below the weapon you got
+
+*Dr. Light message (1):
+Line 1:
+0x037D6F: X Axis posistion for typing out the message from Dr. Light (Line 1) (Default is 25)
+0x037D70: Y Axis posistion for typing out the message from Dr. Light (Line 1) (Default is 2D)
+0x037D71 to 0x037D7A: Text of the message from Dr. Light (Line 1)
+
+Line 2:
+0x037D7B: X Axis posistion for typing out the message from Dr. Light (Line 2) (Default is 25)
+0x037D7C: Y Axis posistion for typing out the message from Dr. Light (Line 2) (Default is 2D)
+0x037D7D to 0x037D86: Text of the message from Dr. Light (Line 2)
+
+*Dr. Light message (2):
+NOTE: Although Line 1 is displayed first in game, Line 2 is shown first in code from top to bottom.
+
+Line 2:
+0x037D87: X Axis posistion for typing out the message from Dr. Light (Line 2) (Default is 25)
+0x037D88: Y Axis posistion for typing out the message from Dr. Light (Line 2) (Default is 4D)
+0x037D89 to 0x037D92: Text of the message from Dr. Light (Line 2)
+
+Line 3:
+0x037D93: X Axis posistion for typing out the message from Dr. Light (Line 3) (Default is 25)
+0x037D94: Y Axis posistion for typing out the message from Dr. Light (Line 3) (Default is 8D)
+0x037D95 to 0x037D9E: Text of the message from Dr. Light (Line 3)
+
+Line 4:
+0x037D9F: X Axis posistion for typing out the message from Dr. Light (Line 4) (Default is 25)
+0x037DA0: Y Axis posistion for typing out the message from Dr. Light (Line 4) (Default is CD)
+0x037DA1 to 0x037DAA: Text of the message from Dr. Light (Line 4)
+
+Line 1:
+0x037DAB: X Axis posistion for typing out the message from Dr. Light (Line 1) (Default is 25)
+0x037DAC: Y Axis posistion for typing out the message from Dr. Light (Line 1) (Default is 0D)
+0x037DAD to 0x037DB6: Text of the message from Dr. Light (Line 1)
+
+*Item # Text:
+NOTES: A1 = 1, A2 = 2, and A3 = 3.
+       This text also appears after the Dr. Light message in game.
+
+Item 1:
+0x037DB7: X Axis posistion for typing out Item 1 (Default is 25)
+0x037DB8: Y Axis posistion for typing out Item 1 (Default is 0D)
+0x037DB9 to 0x037DC2: Text of the message for Item 1
+
+Item 2:
+0x037DC3: X Axis posistion for typing out Item 2 (Default is 25)
+0x037DC4: Y Axis posistion for typing out Item 2 (Default is 0D)
+0x037DC5 to 0x037DCE: Text of the message for Item 2
+
+Item 3:
+0x037DCF: X Axis posistion for typing out Item 3 (Default is 25)
+0x037DD0: Y Axis posistion for typing out Item 3 (Default is 0D)
+0x037DD1 to 0x037DDA: Text of the message for Item 3
+
+
+
+CONTACT:
+Anything missing or incorrect? Contact me at: orionh98@gmail.com
+Make sure the Subject is "Missing/Wrong Info On Your Guide" (no quotations!)

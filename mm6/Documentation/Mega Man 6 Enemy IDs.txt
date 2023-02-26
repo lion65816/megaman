@@ -1,0 +1,269 @@
+Mega Man 6 Enemy IDs
+By Vagla
+Written 3/16/02; Released 5/21/03
+Dragon Eye Studios
+http://dragoneye.cg-games.net/
+
+If you find mistakes, or know what some of the 'Nothing?' IDs do, don't hesitate to email me vagla@hotmail.com and tell me what they are
+so that I can add them to this document. Thanks.
+
+00- Nothing?
+01- Nothing?
+02- Nothing?
+03- At READY, Mega Man keeps repeatedly trying to become non-distorted after beaming in
+04- READY replaced by jumping Mega Man frame, jumping is impaired, as well as sliding. Some frames missing
+05- Nothing?
+06- Nothing?
+07- The 'dust graphics' from when Mega Man is hit appear above READY
+08- A vertical-moving explosion which repeats until moving offscreen
+09- The sound effect of Mega Man shooting is played
+0A- The sound effect of Mega Man shooting is played
+0B- The sound effect of Mega Man shooting is played
+0C- The sound effect of Mega Man shooting is played
+0D- Nothing?
+0E- The sound effect of Mega Man shooting is played
+0F- The sound effect of Mega Man shooting is played
+10- The squid enemy that launches ice and missiles at you
+11- A homing torpedo? Mega Man acts like he's landing on the ground when it leaves the screen
+12- Rocket-powered flying shielded enemy that can only be attacked from behind
+13- Ceiling enemy that walks around and shoots at you when you walk beneath it
+14- Upwards-moving shot with enemy shooting sound effect
+15- Jumping/shooting metool
+16- Left-moving ice block?
+17- Single stand-still explosion
+18- A normal MM1-type metool
+19- Upward-pointed bomb
+1A- Upward-moving shot without enemy shooting sound effect
+1B- Vertical-flying enemy that shoots bombs
+1C- The bomb that $1B shoots. Moves in a very odd pattern (Up, then a curved diagnol direction)
+1D- E-tank
+1E- Enemy that slides along on the ice and bounces off walls
+1F- Sniper Joe that shoots from a mounted gun on the submarine
+20- Sniper Joe that shoots from a mounted gun on the submarine
+21- A left-pointed bomb
+22- A right-pointed bomb
+23- A downward-pointed bomb
+24- Flying spy-camera enemies that home in on you after finding your location
+25- Bomb explosions (They are larger than the normal explosions, have sound effect)
+26- A propellor appears above Mega Man's head
+27- The large panda bear enemy that shoots at you
+28- The panda bear's vertical shot (The one that curves down at you)
+29- The motorcycle enemy
+2A- The Flame Man fire enemy that stands there and throws fire at you (Like the fire enemy in MM2's Quick Man stage)
+2B- The small dome-like Flame Man enemy that you can shoot to make a raft to use across the oil
+2C- The flying Flame Man enemy that drops fire
+2D- The enemy that slides along the ground and is immune to most shots (Like the MM2 sliding enemy)
+2E- The panda bear's vertical shot, but uses Mega Man's standing frame
+2F- $2A's fire weapon 
+30- $2C's fire weapon; incorrect palette and starting graphics
+31- The bird that is in an egg, but then breaks out and flies at you
+32- $31, but without the egg
+33- $31, but has a delayed start and doesn't break open for quite a while
+34- Floating platform that switches sides when Mega Man lands on it
+35- A solid, invisible platform
+36- Propellor for the fans that lift you into the air (Pointed up)
+37- Extra life
+38- Small energy capsule
+39- Large energy capsule
+3A- Nothing?
+3B- A scrambled sprite that has several frames; does not hurt you
+3C- The spider bombs that fall from the ceiling and crawl around on the ground until they explode
+3D- The 'barrels' in Knight Man's stage that the elf-like enemies shoot at you from
+3E- A solid, invisible enemy that can hurt you
+3F- Nothing?
+40- A small tile of God-knows-what momentarily appears immediately before READY
+41- Propellor for the fans that lift you into the air (Pointed down)
+42- The game completely freezes
+43- A walking/shooting metool
+44- Nothing?
+45- The game completely freezes
+46- *Something* small is dropped in a curving direction (down-right)
+47- $46, but is dropped down-left
+48- A single explosion
+49- Small weapon energy capsule
+4A- Large weapon energy capsule
+4B- A collapsing platform the size of 4 TSA sections. It pushes you through the ground into a pit if you are underneath
+4C- $1A
+4D- The seal enemy
+4E- $4D's shot
+4F- The part of the metool dispensor that dispenses the metools
+50- The game completely freezes
+51- $3E, maybe a bit larger
+52- Part of the metool dispensor?
+53- Some sort of scrambled reflective enemy
+54- The gun enemy that shoots at you... Is purple, stands on a single leg
+55- Upward-moving shot with enemy shooting sound effect; is blue in color (in the test run with it, at least)
+56- Nothing?
+57- The graphics for when you bounce on a spring
+58- The flying platform that you shoot to open (Plant Man's stage)
+59- The large enemy that flies up at you diagnolly and then drops quickly; bomb-type explotion when destroyed
+5A- An enemy that jumps out of water, lands in it again, and then disappears?
+5B- A leaf that falls to the bottom of the screen, then disappears
+5C- A leaf the falls in a different direction... There is a delay before it starts
+5D- The eyes for $59 when it falls down
+5E- A splash? No sound effect
+5F- A piranna fish that jumps out of the water at you and then lands in it again... No splash?
+60- The grasshopper enemy
+61- The enemy that comes out of the trees in Plant Man's stage... Scrambled leaves?
+62- The same enemy as $61, except it comes shooting from the left, has a different palette, and doesn't come out of a tree
+63- Nothing?
+64- Nothing?
+65- The enemy with a shield that it lifts to shoot from the front, or lowers to shoot from the top
+66- The flying enemy that drops bomb-like objects
+67- The spider-skull enemy
+68- Upward-moving shot with enemy shooting sound effect; is orange in color
+69- The dragonfly type enemy that drops a skull bomb
+6A- $69's skull bomb; is blue in color
+6B- The part of $69 that drops the bomb, as well as the bomb, are attached to Mega Man and continuously hurt him
+6C- The western-themed enemy that shoots at you with a revolver
+6D- $6C's bullet shot upward with $6C's shooting sound effect; is blue in color
+6E- The treaded enemy with drills on the front that rolls at you
+6F- A solid platform the size of 1 TSA block; appears about 2 structures higher than its actual position
+70- Flip-Top, aka Eddie
+71- A shot that is shot upward and curves downward; is shot in Mega Man's direction. No sound effect
+72- Nothing?
+73- Same as $2D?
+74- Messes up the pattern table, affecting Mega Man's sprites
+75- Same as $2D/$73, but is upside-down and moves slowly upward until offscreen
+76- 2 small tiles flash for a single frame; they resemble the dust that comes off of Mega Man
+77- Upward-moving shot without enemy shooting sound effect
+78- Same as $3D, but scrambled
+79- A large, solid invisible enemy
+7A- $25, but with no sound effect
+7B- The game completely freezes
+7C- The game completely freezes
+7D- The game completely freezes
+7E- The game completely freezes
+7F- Tons of $25 explosions with sound effects, like when the metool dispensor explodes
+80- Scroll byte- very important!!!
+81- Nothing?
+82- Nothing?
+83- Nothing?
+84- Nothing?
+85- Nothing?
+86- Nothing?
+87- Nothing?
+88- Nothing?
+89- Nothing?
+8A- Proto Man; beams in and drops the weapon energy distributor. Music changes to Tomahawk's Stage after he leaves!
+8B- A platform that resembles a bullet pointed downward; it falls after about a second
+8C- The weapon energy distributor that $8A leaves
+8D- Nothing?
+8E- A tile of god-knows-what the moves upward. No sound effect
+8F- A popping block- very hard to position correctly
+90- Blizzard Man
+91- Blizzard Man's snowflake weapon
+92- A tile of dust that appears above Mega Man when he is hit
+93- Blizzard Man appears, but then a second one appears and the game loops, infinitely filling its life bar
+94- Nothing?
+95- Knight Man who cannot jump, is nearly-invincible (shield is always up), has a messed up weapon
+96- Knight Man's mace weapon
+97- Yamato Man's spear head- fires upward, has sound effect
+98- Yamato Man; he does *nothing*!
+99- Wind Man
+9A- Wind Man's weapon- bad CHR
+9B- Centaur Man
+9C- Flame Man
+9D- A flame with messed up CHR- moves upward
+9E- Flame Man's weapon- bad CHR
+9F- Tomahawk Man
+A0- A flying platform- moves up and down
+A1- A platform with spikes on bottom- turns when you step on it
+A2- The large enemy that takes a spear out of its pack, spins it, and then has the spear fly at you while spinning
+A3- $A2's weapon- moves upward
+A4- A small pointed enemy that moves downward
+A5- A submarine in a cloud
+A6- Nothing?
+A7- A spring enemy
+A8- $A7's head
+A9- A spider bomb that drops into water, floats for a second, and then explodes
+AA- A piece of shrapnel from $A9? Moves upward
+AB- A pellican that drops fish
+AC- Like $26, but a different type of propellor, and it doesn't stay directly above Mega Man's head
+AD- $AB's fish
+AE- The graphic for the bouncy balls (like the spring setup)
+AF- The same as $AE
+B0- Tomahawk Man's tomahawk- moves downward
+B1- Tomahawk Man's hair- moves upward
+B2- Plant Man
+B3- Some random tiles flash on the screen for a second?
+B4- Same as $97?
+B5- Something that moves to the right for about a second, is scrambled, disappears immediately
+B6- Mr.X 1 boss that moves along a track, has the weakpoints on the sides, drops bomb-like objects
+B7- A lifebar fills up, empties, game continues as normal
+B8- Something constantly hits Mega Man- 4 damage lost each hit
+B9- The bomb dropped by $B6?
+BA- The game completely freezes
+BB- The game completely freezes
+BC- The game completely freezes
+BD- The game completely freezes
+BE- The game completely freezes
+BF- The game completely freezes
+C0- Wall gun- left wall (faces right)
+C1- Left/right moving piranna fish
+C2- Strange-looking enemy that spits out bouncing balls
+C3- Explosion without sound effect- leaves behind $38 (small energy capsule) every time?
+C4- Hopping enemy from Centaur Man's stage that hops into the upside-down water- shoots from the top of its head
+C5- Mega Man 5-type enemy that has 2 large legs and a large single eye
+C6- The enemy with the graduate hat on; gets pissed when you ruin its hat
+C7- The thing used to show that $C6 is angry stays above Mega Man's head
+C8- The $C6 glasses stay on Mega Man (not on his face, though)
+C9- Wall gun- right wall (faces left)
+CA- The fan enemy that sucks you in or blows you away
+CB- Nothing?
+CC- Nothing?
+CD- The word CAPCOM flashes in the center of the screen, messes up the pattern table
+CE- The game completely freezes
+CF- Nothing?
+D0- Palette changes, 2 strange enemies appear, game freezes
+D1- Nothing?
+D2- Nothing?
+D3- Life bar fills up, a scrambled boss appears, game goes crazy (music speeds up, screen goes haywire, etc.)
+D4- A scrambled upward moving thing
+D5- The teleport capsules/their flashing light
+D6- Mega Man is upside-down, the left-running frames are the same as the right, etc.
+D7- The game completely freezes
+D8- A scrambled object that moves left
+D9- A scrambled object that explodes when it hits a wall- uses bomb explosion (the big one), with sound effect
+DA- Nothing?
+DB- The game completely freezes
+DC- The game completely freezes
+DD- The game completely freezes
+DE- The game completely freezes
+DF- The game completely freezes
+E0- A very odd boss appears, life bar fills up, game freezes
+E1- Nothing?
+E2- A right-moving enemy with scrambled graphics
+E3- A left-moving enemy that curves up; has scrambled graphics
+E4- Nothing?
+E5- Much like $E0, game freezes at the end
+E6- Nothing?
+E7- A very strange-looking enemy falls down-left, explodes when it hits a wall (bomb explosion with sound effect)
+E8- Somewhat like $D3
+E9- Nothing?
+EA- A very strange-looking object that moves left
+EB- Mr.X 2 boss- it works, but is very scrambled, and can't be harmed
+EC- Mr.X 2 boss' shot? Moves vertically, bad CHR
+ED- Mr.X 2 boss' block that falls from the top of the screen- explodes when it hits the ground, bad CHR
+EE- The shrapnel from $ED's explosion?
+EF- Mr.X 3 boss? Bad CHR, screws up the game like $E8 and $D3
+F0- A large object that travels upward- bad CHR
+F1- The game freezes completely; I can't explain what happens before that, though... The screen goes...haywire
+F2- Boss appears (unsure as to what stage), can't be harmed, bad CHR
+F3- $F2's shot?
+F4- The game completely freezes
+F5- The game completely freezes
+F6- The game completely freezes
+F7- The game completely freezes
+F8- The game completely freezes
+F9- The game completely freezes
+FA- The game completely freezes
+FB- The game completely freezes
+FC- The game completely freezes
+FD- The game completely freezes
+FE- The game completely freezes
+FF- The game completely freezes
+
+This document is Copyright © 2002 Vagla. All rights reserved. No part of this document can be taken
+without credit given to the author, Vagla. Vagla can not be held responsible for any mistakes
+contained inside this document. Mega Man and all related characters and themes are Copyright © Capcom.
